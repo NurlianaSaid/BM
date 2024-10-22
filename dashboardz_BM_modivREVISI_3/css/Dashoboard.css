@@ -11497,6 +11497,7 @@ footer {
 }
 
 .copyright span {
+  margin-left: 400px;
   font-size: 14px; /* Ukuran font */
   color: #000; /* Warna teks */
 }
