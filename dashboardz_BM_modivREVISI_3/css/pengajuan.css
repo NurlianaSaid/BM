@@ -11538,3 +11538,15 @@ footer {
 .status-success {
   background-color: green;
 }
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+tbody tr {
+  transition: background-color 0.3s ease;
+}
+
+tbody tr:hover {
+  background-color: #f0f0f0; /* Ganti dengan warna yang diinginkan */
+}

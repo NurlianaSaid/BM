@@ -1,4 +1,37 @@
 <!DOCTYPE html>
+<?php
+include "koneksi.php";
+
+        $id = '';
+        $nama_industri = '';
+        $bidang_industri = '';
+        $ceo ='';
+        $jalan = '';
+        $kabupaten = '';      
+        $status = '';       
+        $tahun = '';      
+
+    if(isset($_GET['ubah'])){
+        $id = $_GET['ubah'];
+        
+        $query = "SELECT * FROM tabel_industri WHERE id = '$id';";
+        $sql = mysqli_query($conn, $query);
+
+        $result = mysqli_fetch_assoc($sql);
+
+        $nama_industri = $result['nama_industri'];
+        $bidang_industri = $result['bidang_industri'];
+        $ceo = $result['ceo'];
+        $jalan = $result['jalan'];
+        $kabupaten = $result['kabupaten'];        
+        $status = $result['status'];        
+        $tahun = $result['tahun'];        
+
+        // var_dump($result);
+        // die();
+    }
+?>
+
 <html lang="en">
 
 <head>
@@ -18,7 +51,8 @@
         rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="css/input.css" rel="stylesheet">
+    <link href='css/input.css?v2' rel= stylesheet>
+    <!-- <link href="css/input.css" rel="stylesheet"> -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
 
     <!-- Custom styles for this page -->
@@ -316,42 +350,43 @@
                                     <thead>
                                          <form method="POST" action="proses.php">
                                          <div class="form-group">
-                                                            <label for="nama-industri">Nama Industri:</label>
-                                                            <input type="text" id="nama-industri" name="nama-industri">
+                                            <input type="hidden" value="<?php echo $id; ?>" name="id">
+                                                            <label for="form-group">Nama Industri:</label>
+                                                            <input type="text" id="nama_industri" name="nama_industri" value="<?php echo $nama_industri; ?>">
                                                         </div>
                                         
                                                         <div class="form-group">
                                                             <label for="bidang-industri">Bidang Industri:</label>
-                                                            <input type="text" id="bidang-industri" name="bidang-industri">
+                                                            <input type="text" id="bidang_industri" name="bidang_industri"  value="<?php echo $bidang_industri; ?>">
                                                         </div>
                                         
                                                         <div class="form-group">
                                                             <label for="ceo">CEO:</label>
-                                                            <input type="text" id="ceo" name="ceo">
+                                                            <input type="text" id="ceo" name="ceo"  value="<?php echo $ceo; ?>">
                                                         </div>
                                         
                                                         <div class="form-group">
                                                             <label for="jalan">Jalan:</label>
-                                                            <input type="text" id="jalan" name="jalan">
+                                                            <input type="text" id="jalan" name="jalan"  value="<?php echo $jalan; ?>">
                                                         </div>
                                         
                                                         <div class="form-group">
                                                             <label for="kabupaten">Kabupaten:</label>
-                                                            <input type="text" id="kabupaten" name="kabupaten">
+                                                            <input type="text" id="kabupaten" name="kabupaten"  value="<?php echo $kabupaten; ?>">
                                                         </div>
                                         
                                                         <div class="form-group">
                                                             <label for="status">Status:</label>
                                                             <select id="status" name="status">
-                                                                <option value="aktif">Pilih status</option>
-                                                                <option value="aktif">Aktif</option>
-                                                                <option value="tidak-aktif">Tidak Aktif</option>
+                                                                <option <?php if($status == 'pilih' ){echo "selected";} ?> value="aktif">Pilih status</option>
+                                                                <option <?php if($status == 'Menerima' ){echo "selected";} ?>  value="Menerima">Menerima</option>
+                                                                <option <?php if($status == 'Tidak menerima' ){echo "selected";} ?> value="Tidak menerima">Tidak menerima</option>
                                                             </select>
                                                         </div>
                                                         
                                                         <div class="form-group">
                                                             <label for="tahun">Tahun:</label>
-                                                            <input type="text" id="tahun" name="tahun">
+                                                            <input type="text" id="tahun" name="tahun"  value="<?php echo $tahun; ?>">
                                                         </div>
                                                         
                                                         <div class="form-group">

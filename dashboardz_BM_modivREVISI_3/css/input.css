@@ -11457,10 +11457,9 @@ body.sidebar-toggled footer.sticky-footer {
 }
 
 .text {
-  margin: 5px 0; /* Jarak antar kalimat */
+  margin: 5px 0;
   text-transform: uppercase;
-  margin-top: 70px;
-
+  margin-top: 10px;
 }
 
 .text-bawah{

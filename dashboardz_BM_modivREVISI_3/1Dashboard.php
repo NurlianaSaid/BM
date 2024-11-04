@@ -1,3 +1,11 @@
+<?php 
+    include 'koneksi.php';
+    $query = "SELECT * FROM tabel_industri;";
+    $sql = mysqli_query($conn, $query);
+    $no = 0;
+    
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,7 +26,7 @@
         rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="css/Dashoboard.css" rel="stylesheet">
+    <link href="css/Dashoboard.css?v2" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
 
     <!-- Custom styles for this page -->
@@ -372,7 +380,7 @@
                                 <a href="#" class="btn btn-none"></a>
                                 <h5 class="card-img"><img src="img/card2.png" alt=""></h5>
                                 <p class="card-text">45</p>
-                                <h5 class="card-title">Data siswa Magang</h5>
+                                <h5 class="card-title">Data Guru Pedamping</h5>
                              
                             </div>
                         </div>
@@ -381,7 +389,7 @@
                                 <a href="#" class="btn btn-none"></a>
                                 <h5 class="card-img"><img src="img/card3.png" alt=""></h5>
                                 <p class="card-text">45</p>
-                                <h5 class="card-title">Data siswa Magang</h5>
+                                <h5 class="card-title">Data Admin Terdaftar</h5>
                                
                             </div>
                         </div>
@@ -390,7 +398,7 @@
                                 <a href="#" class="btn btn-none"></a>
                                 <h5 class="card-img"><img src="img/card4.png" alt=""></h5>
                                 <p class="card-text">45</p>
-                                <h5 class="card-title">Data siswa Magang</h5>
+                                <h5 class="card-title">Product Shared</h5>
                               
                             </div>
                         </div>
@@ -406,7 +414,7 @@
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
-                        <div class="card-header py-3"style="background-color: #295BDB; color: white;>
+                        <div class="card-header py-3"style="background-color: #295BDB; color: white;">
                             <h6 class="m-0 font-weight-bold text-primary"></h6>
                         </div>
                         <div class="card-body">
@@ -422,24 +430,42 @@
                                       </tr>
                                     </thead>
                                     <tbody>
+                                    <?php
+                                        while($result = mysqli_fetch_assoc($sql)){
+                                        ?>
                                       <tr>
-                                        <td style="text-align: center;">1</td>
-                                        <td style="text-align: center;">Indigo Hub</td>
-                                        <td style="text-align: center;">Makassar</td>
-                                        <td style="text-align: center;">Software House</td>
-                                        <td style="text-align: center;">
-                                          <span class="status-label status-danger">Tidak Menerima</span>
-                                        </td>
+                                      <td style="text-align: center;">
+                                                <?php
+                                                echo ++$no;
+                                                ?>.
+                                            </td>
+                                            <td style="text-align: center;">
+                                            <?php
+                                                echo $result['nama_industri'];
+                                                ?>
+                                            </td>
+                                            <td style="text-align: center;">
+                                            <?php
+                                                echo $result['kabupaten'];
+                                                ?>
+                                            </td>
+                                            <td style="text-align: center;">
+                                            <?php
+                                                echo $result['bidang_industri'];
+                                                ?>   
+                                            </td>
+                                            <td style="text-align: center;">
+                                                <span class="status-label status-danger"> 
+                                                <?php
+                                                echo $result['status'];
+                                                ?>
+                                                
+                                                </span>   
+                                              </td>
                                       </tr>
-                                      <tr>
-                                        <td style="text-align: center;">2</td>
-                                        <td style="text-align: center;">Afila Media Karya</td>
-                                        <td style="text-align: center;">Makassar, Gowa</td>
-                                        <td style="text-align: center;">Software House</td>
-                                        <td style="text-align: center;">
-                                          <span class="status-label status-success">Menerima</span>
-                                        </td>
-                                      </tr>
+                                      <?php 
+                                        }
+                                        ?>
                                     </tbody>
                                   </table>
                                   

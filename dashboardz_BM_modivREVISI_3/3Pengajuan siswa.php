@@ -26,7 +26,7 @@
         rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="css/pengajuan.css" rel="stylesheet">
+    <link href="css/pengajuan.css?v1" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
 
     <!-- Custom styles for this page -->
@@ -342,17 +342,18 @@
                                                 <?php
                                                 echo $result['status'];
                                                 ?>
-                                                </span>
+                                                
+                                                </span>   
                                               </td>
                                             <td style="text-align: center;">
-                                                <a class="nav-link1" href="proses.php?hapus<?php echo $result['id']; ?>" aria-label="Dashboard">
+                                                <a class="nav-link1" href="proses.php?hapus=<?php echo $result['id']; ?>" aria-label="Dashboard" onclick="return confirm('Apakah anda yakin ingin menghapus?')">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 44 44" fill="none">
                                                         <rect width="43.7588" height="44" rx="10" fill="#FF0000"/>
                                                         <path d="M19.6313 10C17.7123 10 16.1422 11.35 16.1422 13H12.6531C10.7341 13 9.16406 14.35 9.16406 16H33.5876C33.5876 14.35 32.0175 13 30.0985 13H26.6094C26.6094 11.35 25.0394 10 23.1204 10H19.6313ZM12.6531 19V33.43C12.6531 33.76 12.9323 34 13.3161 34H29.4705C29.8543 34 30.1334 33.76 30.1334 33.43V19H26.6443V29.5C26.6443 30.34 25.8767 31 24.8998 31C23.9229 31 23.1553 30.34 23.1553 29.5V19H19.6662V29.5C19.6662 30.34 18.8986 31 17.9216 31C16.9447 31 16.1771 30.34 16.1771 29.5V19H12.688H12.6531Z" fill="white"/>
                                                         </svg>                                                                
                                                         <!-- <span>hapus</span> -->
                                                 </a>
-                                                <a class="nav-link1" href="3-inputIndustri.php?ubah<?php echo $result['id']; ?>" aria-label="Dashboard">
+                                                <a class="nav-link1" href="3-inputIndustri.php?ubah=<?php echo $result['id']; ?>" aria-label="Dashboard">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 44 44" fill="none">
                                                         <rect x="0.113281" width="43.7588" height="44" rx="10" fill="#008000"/>
                                                         <path d="M28.098 10L24.7907 13.11L31.4054 19.3299L34.7127 16.2199L28.098 10ZM21.4833 16.2199L8.25391 28.6597V34.8796H14.8686L28.098 22.4398L21.4833 16.2199Z" fill="white"/>
