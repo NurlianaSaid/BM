@@ -409,32 +409,31 @@ include "koneksi.php";
                                                         </div>
                                                         
                                                         <div class="form-group">
-                                                            <?php
-                                                                if(isset($_GET['ubah'])){
-                                                            ?>
-                                                                <input type="submit" name="aksi" value="Simpan Perubahan"  class="btn btn-submit">
-                                                         <?php
-                                                         } else {
-                                                         ?> 
-                                                            <input type="submit"  name="aksi"  value="Tambahkan"  class="btn btn-submit">
                                                         <?php
-                                                         } 
-                                                         ?>
+                                                        // Cek jika parameter 'detail' tidak ada di URL
+                                                        if (!isset($_GET['detail'])) {
+                                                            // Jika ada parameter 'ubah', tampilkan tombol "Simpan Perubahan"
+                                                            if (isset($_GET['ubah'])) {
+                                                                echo '<input type="submit" name="aksi" value="Simpan Perubahan" class="btn btn-submit">';
+                                                            } else {
+                                                                // Jika tidak ada parameter 'ubah', tampilkan tombol "Tambahkan"
+                                                                echo '<input type="submit" name="aksi" value="Tambahkan" class="btn btn-submit">';
+                                                            }
+                                                        }
+                                                        ?>
 
-                                                         <?php if(isset($_GET['detail'])) {
+                                                        <?php
+                                                        // Tampilkan hanya tombol "Lihat Saja" jika parameter 'detail' ada di URL
+                                                        if (isset($_GET['detail'])) {
+                                                            echo '<input type="button" value="Lihat Saja" class="btn-cancel" onclick="window.location.href=\'3Pengajuan siswa.php\';">';
+                                                        } else {
+                                                            // Jika 'detail' tidak ada, tampilkan tombol "Batal"
+                                                            echo '<input type="button" value="Batal" class="btn-cancel" onclick="window.location.href=\'3Pengajuan siswa.php\';">';
+                                                        }
+                                                        ?>
+                                                    </div>
 
-                                                         ?>
-                                                         <input type="button" value="Lihat Saja" class="btn-cancel" onclick="window.location.href='3Pengajuan siswa.php';">
-                                                         <?php
-                                                         }else {
-                                                            ?> 
-                                                               <input type="button" value="Batal" class="btn-cancel" onclick="window.location.href='3Pengajuan siswa.php';">
-                                                           <?php
-                                                            } 
-                                                         ?>
-                                                         
-                                                         
-                                                        </div>
+                                                        
                                             </div>    
                                          </form>
                                 </table>
@@ -482,7 +481,7 @@ include "koneksi.php";
                 </div>
                 
                 <div class="modal-footer">
-                    <a class="btn btn-primary" style="width: 125.184px;" href="login2.php">Yes,Logout</a>
+                    <a class="btn btn-primary" style="width: 125.184px;" href="login2.html">Yes,Logout</a>
                     <button class="btn btn-white" type="button" data-dismiss="modal" style="border: 1px solid #D9D9D9; width: 89px;">Cancel</button>
                    
                 </div>
