@@ -1,0 +1,38 @@
+.card_ket h3{
+    color: #FFF;
+text-align: center;
+-webkit-text-stroke-width: 1;
+-webkit-text-stroke-color: rgba(41, 91, 219, 0.00);
+font-family: Inter;
+font-size: 24px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+letter-spacing: 2.4px;
+}
+.card-body {
+    display: flex;
+    align-items: center; /* Vertically center items */
+    margin-bottom: 20px; /* Space between cards */
+}
+
+.icon-text-container {
+    display: flex;
+    align-items: flex-start; /* Align icon and text at the start */
+}
+
+.card_ket {
+    margin-left: 10px; /* Space between the icon and text */
+    display: flex;
+    flex-direction: column; /* Stack heading and paragraph vertically */
+    align-items: center; /* Center text horizontally */
+}
+
+h3 {
+    margin: 0; /* Remove default margins */
+}
+
+p {
+    margin: 0; /* Remove default margins */
+    text-align: center; /* Center text horizontally */
+}

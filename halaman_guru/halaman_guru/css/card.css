@@ -1,0 +1,101 @@
+ 
+.row{
+    position: relative;
+}
+.col-xl-2 {
+    position: relative;
+    border: 1px solid #d9d9d9;
+    background: #F5F5F5;
+    margin-bottom: 10px;
+    /* padding-left: 10px; */
+    margin-right: 2%;
+    
+}
+.card {
+    position: relative;
+    background: #33C8F8; /* Latar belakang card */
+    text-align: center;
+    align-items: center;
+    margin-top: 20px;
+    /* margin: 10px 10px; */
+    height: 100px;
+
+    
+}
+
+.card-body {
+    margin: 20px;
+    width: 195px;
+    height: 120px; /* Atur tinggi otomatis */
+    display: flex; 
+    flex-direction: column; /* Susunan kolom */
+    justify-content: center; /* Memusatkan secara horizontal */
+    align-items: center; /* Memusatkan secara vertical */
+    
+    
+    justify-content: space-between; /* Mengatur jarak antar elemen */
+}
+
+.card-body h4{
+    text-align: left;
+    padding-left: 5px;
+    /* margin-left: 5px;
+    margin-top: 5px; */
+}
+.card-body img {
+    width: 69px;
+    height: 50px;
+    /* flex-shrink: 0; */
+    /* padding: auto; */
+    padding-bottom: 10px;
+    margin-right:5px;
+
+}
+.card-body{
+    margin-top: 1px;
+}
+    
+.card-body h4{
+    text-align: left;
+    padding-left: 5px;
+    /* margin-left: 5px;
+    margin-top: 5px; */
+}
+.row .card-body h4{
+    text-align: right;
+    margin-right: 120px;
+    position: static;
+    display: block;
+}
+.row .card-body{
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+.isi {
+    margin-top: 15px; /* Jarak dengan card-body1 */
+    /* background-color: rgb(187, 44, 44); */
+    background-color: whitesmoke;
+    border-radius: none;
+    padding: 5px; /* Menambahkan padding dalam isi */
+}
+.isi p {
+    margin: 0; /* Menghapus margin default */
+    padding-bottom: 5px; /* Atur padding sesuai kebutuhan */
+    color:black;
+    text-align: left;
+}
+
+@media(min-width: 768px) {
+    
+    .card-body h4{
+        text-align: left;
+        margin-left: 5px;
+        margin-top: 5px;
+    }
+    .row .card-body h4{
+        text-align: right;
+       padding-left: 1%;
+        
+    }
+    }

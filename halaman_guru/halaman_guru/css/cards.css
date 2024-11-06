@@ -1,0 +1,91 @@
+.card_ket h3{
+color: #FFF;
+text-align: center;
+-webkit-text-stroke-width: 1;
+-webkit-text-stroke-color: rgba(41, 91, 219, 0.00);
+font-family: Inter;
+font-size: 24px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+letter-spacing: 2.4px;
+}
+.card-body {
+    display: flex;
+    align-items: center; /* Vertically center items */
+    margin-bottom: 20px; /* Space between cards */
+}
+
+.icon-text-container {
+    display: flex;
+    align-items: flex-start; /* Align icon and text at the start */
+}
+
+.card_ket {
+    margin-right: 2%; 
+    margin-left: 60px;
+    display: flex;
+    flex-direction: column; /* Stack heading and paragraph vertically */
+    align-items: center; /* Center text horizontally */
+    display:block;
+}
+
+h3 {
+    margin: 0; /* Remove default margins */
+}
+
+p {
+    margin: 0; /* Remove default margins */
+    text-align: center; /* Center text horizontally */
+}
+.collapse {
+    display: none;
+}
+
+.collapse.show {
+    display: block; /* Menampilkan elemen ketika kelas 'show' ditambahkan */
+}
+.nav-item.active .nav-link {
+    color: white; /* Text color when active */
+}
+
+.nav-item:hover .nav-link {
+    color: white; /* Text color on hover */
+}
+
+
+.modal-content {
+    text-align: center; /* Memusatkan teks di dalam modal */
+}
+
+.modal-header {
+    justify-content: center; /* Memusatkan elemen dalam header modal */
+}
+
+.modal-footer {
+    justify-content: center; /* Memusatkan elemen dalam footer modal */
+}
+
+.modal-title {
+    margin: 0; /* Menghapus margin default */
+    text-align: center;
+}
+
+.btn {
+    margin: 0 5px; /* Memberi sedikit jarak antar tombol */
+}
+
+@media (max-width: 768px){
+    .card_ket{
+       margin-left: 50px;
+    }
+}
+/* Menyembunyikan .card_ket saat sidebar ditampilkan di mobile */
+@media (max-width: 319px) { /* Aturan untuk tampilan mobile */
+    body.sidebar-toggled .card_ket {
+      display: none; /* Sembunyikan saat sidebar terbuka */
+    }
+  }
+  .modal-content .modal-header{
+    text-align: center;
+  }

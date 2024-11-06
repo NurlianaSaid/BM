@@ -1,0 +1,16 @@
+
+/* 
+.nav-item:hover{
+ width: 216px;
+ height: 54px;
+ flex-shrink: 0;
+ background: #A1CCCF;
+ margin: 3px;
+  } */
+  @media (max-width: 716px) {
+    .navbar-nav .sidebar-brand-text{
+      display: none;
+    }
+  }
+
+

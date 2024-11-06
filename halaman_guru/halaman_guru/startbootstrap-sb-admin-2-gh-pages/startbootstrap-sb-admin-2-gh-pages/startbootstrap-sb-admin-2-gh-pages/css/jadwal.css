@@ -1,0 +1,21 @@
+
+
+.kett {
+    background-color: #008000; /* Warna hijau */
+    color: #fff; /* Warna teks putih */
+    font-size: 14px; /* Ukuran font */
+    font-weight: 600; /* Ketebalan font */
+    padding: 4px 8px; /* Padding untuk spasi di sekitar teks */
+    border-radius: 10px; /* Membulatkan sudut jika diinginkan */
+    display: inline-block; /* Menggunakan inline-block untuk mengatur ukuran elemen sesuai konten */
+}
+
+.sel {
+    background-color:  #FF7F0A;; /* Warna hijau */
+    color: #fff; /* Warna teks putih */
+    font-size: 14px; /* Ukuran font */
+    font-weight: 600; /* Ketebalan font */
+    padding: 4px 8px; /* Padding untuk spasi di sekitar teks */
+    border-radius: 10px; /* Membulatkan sudut jika diinginkan */
+    display: inline-block; /* Menggunakan inline-block untuk mengatur ukuran elemen sesuai konten */
+}
