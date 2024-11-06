@@ -1,0 +1,284 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f7f7f7;
+}
+/* 
+.containertable {
+    display: flex;
+    height: 100vh;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #fff;
+    padding: 20px;
+} */
+/* 
+.sidebar ul {
+    list-style: none;
+}
+
+.sidebar ul li {
+    margin-bottom: 15px;
+}
+
+.sidebar ul li a {
+    text-decoration: none;
+    color: #18e7dd;
+    padding: 10px 15px;
+    display: block;
+    background-color: #fff;
+    border-left: 4px solid transparent;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.sidebar ul li a.active, .sidebar ul li a:hover {
+    background-color: #dce9f7;
+    border-left: 4px solid #007bff;
+} */
+
+.main {
+    flex: 1;
+    padding: 20px;
+    background-color: white;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.title-section h1 {
+    font-size: 18px;
+    font-weight: bold;
+    color: #007bff;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+}
+
+.user-profile span {
+    font-size: 14px;
+    background-color: #f7f7f7;
+    padding: 5px 10px;
+    border-radius: 10px;
+}
+
+.breadcrumb {
+    margin: 15px 0;
+    margin-top: -90px;
+    font-size: 14px;
+    color: #000000;
+}
+
+.unified-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.table-title {
+    font-size: 16px;
+    text-align: left;
+    padding: 10px;
+    font-weight: bold;
+    background-color: #007bff;
+    color: white;
+}
+
+.data-table th {
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+}
+
+.data-table td {
+    /* background-color: #f0f0f0; */
+    color: #333;
+    /* padding: 10px; */
+}
+
+/* Styling for Nested Table */
+.nested-table {
+    width: 100%;
+    background-color: white; /* White background for the nested table */
+    color: #333;
+    border-collapse: collapse;
+}
+
+.nested-table td {
+    padding: 8px;
+    border: 1px solid #ddd;
+}
+
+/* Button Styling */
+.daftar-btn {
+    width: 90px;
+    padding: 5px 10px;
+    background-color: orange;
+    color: black;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+}
+
+.info-circle 
+{
+    position: absolute;
+    display: inline-flex;
+    margin-left: 12px;
+    margin-top: -30px;
+    width: 20px;
+    height: 20px;
+    background-color: orange;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.icon {
+    font-size: 10px;
+    color: black;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+}
+
+.content .textd{
+    color: blue;
+    }
+
+.daftar-btn:hover {
+    background-color: darkorange;
+}
+
+.nav-item a.active {
+    background-color: #A1CCCF; /* Biru muda */
+    color: #fff; /* Warna teks saat hover */
+    /* opacity: 0.5; */
+    height: 54px;
+    border-left: 4px solid blue;
+  }
+  
+  /* Menjamin bahwa warna teks aktif tetap putih saat kursor tidak ada di atasnya */
+  .nav-item a.active:not(:hover) span{
+    color: #fff; /* Pastikan warna tetap putih */
+  }
+  .nav-item .nav-link.active:not(:hover) svg path {
+    fill: white; /* Icon color */
+  }
+  
+
+  .container1 {
+    margin-left: 50px;
+    margin-top: -100px;
+      width: 1000px; /* Made wider */
+      /* background-color: white; */
+      border-radius: 10px;
+      /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+      padding: 20px;
+    }
+.dropdown-icon {
+  cursor: pointer;
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.dropdown-icon.open {
+  transform: rotate(90deg); /* Mengubah arah ke bawah */
+}
+
+h2 {
+  margin-top: 50px;
+  background-color: #0055D4;
+  color: white;
+  text-align: left;
+  padding: 10px;
+  border-radius: 5px 5px 0 0;
+  font-size: 1.5em;
+}
+h2 span {
+  margin-left: 700px;
+}
+
+.form1 {
+
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease, visibility 0s 0.5s; 
+}
+
+.form1.show {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.5s ease; /* Transisi untuk opacity */
+}
+
+table {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: -6px;
+  background-color: white;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+td {
+  padding: 0px;
+  vertical-align: middle;
+  /* width: 50%;  */
+}
+
+label {
+    margin-left: 95px;
+  font-size: 1.1em;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 1em;
+    border-radius: 10px;
+    border: none;
+  }
+  .statis{
+    margin: 15px 0;
+    margin-top: -90px;
+    font-size: 14px;
+    color: #000000;
+}
+.breadcrumb-text{
+  width: 130%;
+  margin-left: 20px;
+    margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  list-style: none;
+  background: rgba(161, 204, 207, 0.50);
+  border-radius: 0.35rem;
+}
+.content.text1{
+  color: black;
+  }
+.tebal{
+  color: #000000;
+  font-weight: 700;
+}
+.tebal1{
+  color: #000000;
+}

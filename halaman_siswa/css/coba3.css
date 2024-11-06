@@ -1,0 +1,118 @@
+
+.container1 {
+  margin-top: 20px;
+  width: 1000px; /* Made wider */
+  /* background-color: white; */
+  border-radius: 10px;
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+  padding: 20px;
+}
+.dropdown-icon {
+  cursor: pointer;
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.dropdown-icon.open {
+  transform: rotate(90deg); /* Mengubah arah ke bawah */
+}
+
+h2 {
+  margin-top: 50px;
+  background-color: #0055D4;
+  color: white;
+  text-align: left;
+  padding: 10px;
+  border-radius: 5px 5px 0 0;
+  font-size: 1.5em;
+}
+h2 span {
+  margin-left: 700px;
+}
+
+.form1 {
+
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease, visibility 0s 0.5s; 
+}
+
+.form1.show {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.5s ease; /* Transisi untuk opacity */
+}
+
+table {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: -6px;
+  background-color: white;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+td {
+  padding: 10px;
+  vertical-align: middle;
+  width: 50%; /* Adjusts column width for better spacing */
+}
+
+label {
+  font-size: 1.1em;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  font-size: 1em;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.btn-save {
+  background-color: #007BFF;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-cancel {
+  background-color: #FF4B4B;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.breadcrumb {
+  margin: 15px 0;
+  margin-top: 10px;
+  font-size: 14px;
+  color: #000000;
+}
+.breadcrumb {
+  width: 110%;
+  margin-left: -50px;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  list-style: none;
+  background-color: #eaecf4;
+  border-radius: 0.35rem;
+}
+
+.content .textd{
+  color: blue;
+  }
+
+
