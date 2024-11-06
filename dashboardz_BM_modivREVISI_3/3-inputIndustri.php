@@ -30,6 +30,25 @@ include "koneksi.php";
         // var_dump($result);
         // die();
     }
+    if(isset($_GET['detail'])){
+        $id = $_GET['detail'];
+        
+        $query = "SELECT * FROM tabel_industri WHERE id = '$id';";
+        $sql = mysqli_query($conn, $query);
+
+        $result = mysqli_fetch_assoc($sql);
+
+        $nama_industri = $result['nama_industri'];
+        $bidang_industri = $result['bidang_industri'];
+        $ceo = $result['ceo'];
+        $jalan = $result['jalan'];
+        $kabupaten = $result['kabupaten'];        
+        $status = $result['status'];        
+        $tahun = $result['tahun'];        
+
+        // var_dump($result);
+        // die();
+    }
 ?>
 
 <html lang="en">
