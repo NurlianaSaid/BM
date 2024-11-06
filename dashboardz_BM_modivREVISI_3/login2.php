@@ -13,7 +13,7 @@
             <img src="img/Screenshot (7).png" alt="Logo" class="logo-image">
         </div>
         <h2>Silahkan Log In</h2>
-        <form action="login_process.php" method="POST">
+        <form action="proses_login.php" method="POST" name="form_input">
             <div class="input-group">
                 <div class="input-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" version="1.1" id="Layer_1" width="24px" height="24px" viewBox="0 0 512 512" xml:space="preserve">
@@ -35,10 +35,10 @@
                         <g id="Layer_1"/>
                     </svg>
                 </div>
-                <input type="password" id="password" name="password" placeholder="Password">
+                <input type="password" id="password" name="kode_admin" placeholder="kode admin">
             </div>
-            
-            <button type="button" class="login-button" onclick="window.location.href='0index.html'"><h1>Log In</h1></button>
+            <button type="submit" class="login-button" name="input"><h1>Log In</h1></button>
+            <!-- <button type="submit" class="login-button" name="input" onclick="window.location.href='0index.php'"><h1>Log In</h1></button> -->
         </form>
     </div>
 </div>

@@ -476,7 +476,7 @@
                 </div>
                 
                 <div class="modal-footer">
-                    <a class="btn btn-primary" style="width: 125.184px;" href="login2.html">Yes,Logout</a>
+                    <a class="btn btn-primary" style="width: 125.184px;" href="login2.php">Yes,Logout</a>
                     <button class="btn btn-white" type="button" data-dismiss="modal" style="border: 1px solid #D9D9D9; width: 89px;">Cancel</button>
                    
                 </div>
