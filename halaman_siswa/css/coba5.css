@@ -1,0 +1,26 @@
+.dropdown-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 200px;
+    z-index: 1000;
+}
+
+.dropdown-menu li {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.dropdown-menu li:hover {
+    background-color: #f1f1f1;
+}
+
+/* Menambahkan efek rotasi pada ikon dropdown */
+.dropdown-icon {
+    margin-left: 10px;
+    transition: transform 0.3s ease;
+}

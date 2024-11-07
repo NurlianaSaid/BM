@@ -4532,6 +4532,7 @@ input[type="button"].btn-block {
 }
 
 .card {
+  margin-top: 20px;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -10450,20 +10451,24 @@ a:focus {
 
 .sidebar .nav-item .collapse .collapse-inner .collapse-item:hover,
 .sidebar .nav-item .collapsing .collapse-inner .collapse-item:hover {
-  background-color: #eaecf4;
+  background-color: #A1CCCF; /* Biru muda */
+  color: #fff; /* Warna teks saat hover */
+  /* opacity: 0.5; */
+  height: 2.5rem;
+  border-left: 4px solid blue;
 }
 
 .sidebar .nav-item .collapse .collapse-inner .collapse-item:active,
 .sidebar .nav-item .collapsing .collapse-inner .collapse-item:active {
   background-color: #dddfeb;
 }
-
+/* text warna putih dropdown*/
 .sidebar .nav-item .collapse .collapse-inner .collapse-item.active,
 .sidebar .nav-item .collapsing .collapse-inner .collapse-item.active {
-  color: #4e73df;
-  font-weight: 700;
+  color: #fff;
+  font-weight: normal;
 }
-
+/*penutup text warna putih dropdown*/
 .sidebar #sidebarToggle {
   width: 2.5rem;
   height: 2.5rem;
@@ -10813,7 +10818,7 @@ a:focus {
 }
 
 .sidebar-dark .nav-item .nav-link[data-toggle="collapse"]::after {
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(0,0,0,0);
 }
 
 .sidebar-dark .nav-item.active .nav-link {
@@ -11401,7 +11406,12 @@ body.sidebar-toggled footer.sticky-footer {
   height: 54px;
   border-left: 4px solid blue;
 }
-
+.collapse a.active{
+  height: 2.5rem;
+}
+.collapse a .collapse-item {
+  display: block;
+}
 /* Menjamin bahwa warna teks aktif tetap putih saat kursor tidak ada di atasnya */
 .nav-item a.active:not(:hover) span{
   color: #fff; /* Pastikan warna tetap putih */
@@ -11505,7 +11515,7 @@ footer {
 .btn-icon-split {
   display: inline-block;
   top: 10rem; /* Atur posisi dengan properti top */
-  margin-top: 10px; /* Hapus margin-top */
+  margin-top: 1px; /* Hapus margin-top */
   padding: 0;
   align-items: center;
   justify-content: center;
@@ -11538,7 +11548,14 @@ footer {
 }
 
 .text-center {
-  margin-left: 890px;
+  color: #000;
+font-family: Inter;
+font-size: 16px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+letter-spacing: 1.6px;
+  margin-left: 860px;
   color: #000;
 }
 
