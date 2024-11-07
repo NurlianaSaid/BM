@@ -1,3 +1,10 @@
+<?php
+session_start();
+if (!isset($_SESSION['password'])) {
+    // header("Location: login2.php");
+    // exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
