@@ -18,14 +18,31 @@
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
-
+<style>
+        .nav-item a.active {
+            background-color: #A1CCCF; /* Biru muda */
+            color: #fff; /* Warna teks saat hover */
+            /* opacity: 0.5; */
+            height: 54px;
+            border-left: 4px solid blue;
+        }
+        
+        /* Menjamin bahwa warna teks aktif tetap putih saat kursor tidak ada di atasnya */
+        .nav-item a.active:not(:hover) span{
+            color: #fff; /* Pastikan warna tetap putih */
+        }
+        .nav-item .nav-link.active:not(:hover) svg path {
+            fill: white; /* Icon color */
+        }
+</style>
     <!-- Custom styles for this template -->
     <link href="css/sb-admin-2.css" rel="stylesheet">
     <link rel="stylesheet" href="css/card.css?v2">
 
     <!-- Custom styles for this page -->
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-
+ 
+    
 </head>
 
 <body id="page-top">
@@ -74,7 +91,7 @@
                     <span>Laporan Anak Magang</span></a>
             </li>
             <li class="nav-item ">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                <a class="nav-link collapsed" href="jadwalmonitoring.php" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-cog"></i>
                     <span>Monitoring</span>
@@ -301,4 +318,15 @@
                 <!/.container-fluid -->
             </div>
             <!-- End of Main Content -->
+            <script>
+                const currentLocation = location.href; // Mendapatkan URL halaman saat ini
+                const menuItem = document.querySelectorAll('li.nav-item a'); // Mendapatkan semua elemen 'a' di dalam 'li.nav-item'
+                
+                menuItem.forEach(item => {
+                  if(item.href.includes("laporananakmagang.php")){ 
+                    item.classList.add('active'); // Tambahkan class 'active' jika URL mengandung "industri.html"
+                  }
+                });
+              </script>
+            
 <?php require 'footer.php' ?>

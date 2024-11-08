@@ -25,7 +25,19 @@
         .topbar{
             height: 4.375rem; 
             }
-
+            .nav-item .active {
+            background-color: #A1CCCF; 
+            color: #fff; 
+            border-left: 4px solid blue;
+        } 
+        
+        /* Menjamin bahwa warna teks aktif tetap putih saat kursor tidak ada di atasnya */
+        .nav-item .active:not(:hover) span{
+            color: #fff; 
+        }
+        .nav-item .nav-link.active:not(:hover) svg path {
+            fill: white; 
+        }
      </style>
 
     <!-- Custom styles for this template -->
@@ -511,5 +523,15 @@ function adjustSiswaInputs(id) {
         return confirm("Apakah Anda yakin ingin menghapus data ini?");
     }
 </script>
+<script>
+                const currentLocation = location.href; // Mendapatkan URL halaman saat ini
+                const menuItem = document.querySelectorAll('li.nav-item a'); // Mendapatkan semua elemen 'a' di dalam 'li.nav-item'
+                
+                menuItem.forEach(item => {
+                  if(item.href.includes("laporanmonitoring.php")){ 
+                    item.classList.add('active'); // Tambahkan class 'active' jika URL mengandung "industri.html"
+                  }
+                });
+              </script>
 
 <?php require 'footer.php' ?>

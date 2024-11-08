@@ -4084,7 +4084,7 @@ input[type="button"].btn-block {
 
 .nav-tabs .nav-link.active,
 .nav-tabs .nav-item.show .nav-link {
-  color: #6e707e;
+  color: #fff;
   background-color: #fff;
   border-color: #dddfeb #dddfeb #fff;
 }

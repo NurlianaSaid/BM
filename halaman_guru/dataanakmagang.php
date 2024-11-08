@@ -22,6 +22,23 @@
         .topbar{
             height: 4.375rem; 
             }
+
+            .nav-item a.active {
+            background-color: #A1CCCF; /* Biru muda */
+            color: #fff; /* Warna teks saat hover */
+            /* opacity: 0.5; */
+            height: 54px;
+            border-left: 4px solid blue;
+        }
+        
+        /* Menjamin bahwa warna teks aktif tetap putih saat kursor tidak ada di atasnya */
+        .nav-item a.active:not(:hover) span{
+            color: #fff; /* Pastikan warna tetap putih */
+        }
+        .nav-item .nav-link.active:not(:hover) svg path {
+            fill: white; /* Icon color */
+        }
+
      </style>
     <!-- Custom styles for this template -->
     <link href="css/sb-admin-2.css?v3" rel="stylesheet">
@@ -68,7 +85,7 @@
             </div> -->
 
             <li class="nav-item active">
-                <a class="nav-link" href="dataanakmagang.php">
+                <a class="nav-link active" href="dataanakmagang.php">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Data Anak Magang</span></a>
             </li>
@@ -86,7 +103,7 @@
             </li>
 
             <li class="nav-item" id="monir">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                <a class="nav-link collapsed" href="jadwalmonitoing.php" data-toggle="collapse" data-target="#collapseTwo"
                    aria-expanded="false" aria-controls="collapseTwo" id="monitoring-link">
                     <i class="fas fa-fw fa-cog"></i>
                     <span>Monitoring</span>
@@ -391,5 +408,16 @@
                 <!-- /.container-fluid -->
 
             </div>
+
+            <script>
+                const currentLocation = location.href; // Mendapatkan URL halaman saat ini
+                const menuItem = document.querySelectorAll('li.nav-item a'); // Mendapatkan semua elemen 'a' di dalam 'li.nav-item'
+                
+                menuItem.forEach(item => {
+                  if(item.href.includes("dataanakmagang.php")){ 
+                    item.classList.add('active'); // Tambahkan class 'active' jika URL mengandung "industri.html"
+                  }
+                });
+              </script>
             <!-- End of Main Content -->
 <?php require 'footer.php' ?>

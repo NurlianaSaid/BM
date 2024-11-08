@@ -19,14 +19,33 @@
         rel="stylesheet">
 
     <!-- Custom styles for this template-->
-     <style>
-        .topbar{
-            height: 4.375rem; 
-            }
-     </style>
+  
     <link href="css/sb-admin-2.css?v3" rel="stylesheet">
     <link rel="stylesheet" href="css/dashbroad.css">
     <link rel="stylesheet" href="css/cards.css">
+
+    <style>
+        .topbar{
+            height: 4.375rem; 
+            }
+
+        .nav-item a.active {
+            background-color: #A1CCCF; /* Biru muda */
+            color: #fff; /* Warna teks saat hover */
+            /* opacity: 0.5; */
+            height: 54px;
+            border-left: 4px solid blue;
+        }
+        
+        /* Menjamin bahwa warna teks aktif tetap putih saat kursor tidak ada di atasnya */
+        .nav-item a.active:not(:hover) span{
+            color: #fff; /* Pastikan warna tetap putih */
+        }
+        .nav-item .nav-link.active:not(:hover) svg path {
+            fill: white; /* Icon color */
+        }
+
+     </style>
 </head>
 
 <body id="page-top">
@@ -42,7 +61,7 @@
                 <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
                     <div class="sidebar-brand-icon rotate-n-0">
                         <div class="sidebar-brand-icon rotate-n-" style="color:#000;">
-                            <i href="0index.html"><img src="logo.svg"alt=""></i>
+                            <i href="index.html"><img src="logo.svg"alt=""></i>
                         </div>
                     </div>
                     <div class="sidebar-brand-text mx-3">Halaman Guru</div>
@@ -51,7 +70,7 @@
             <hr class="sidebar-divider my-0">
     
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item">
+            <li class="nav-item active">
                 <a class="nav-link active" href="index.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
@@ -77,8 +96,8 @@
                     <span>Laporan Anak Magang</span></a>
             </li>
 
-            <li class="nav-item" id="monir">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+            <li class="nav-item " id="monir">
+                <a class="nav-link collapsed" href="jadwalmonitoring.php" data-toggle="collapse" data-target="#collapseTwo"
                    aria-expanded="false" aria-controls="collapseTwo" id="monitoring-link">
                     <i class="fas fa-fw fa-cog"></i>
                     <span>Monitoring</span>
@@ -325,7 +344,7 @@
                 const menuItem = document.querySelectorAll('li.nav-item a'); // Mendapatkan semua elemen 'a' di dalam 'li.nav-item'
                 
                 menuItem.forEach(item => {
-                  if(item.href.includes("Pengajuansiswa.html")){ 
+                  if(item.href.includes("index.php")){ 
                     item.classList.add('active'); // Tambahkan class 'active' jika URL mengandung "industri.html"
                   }
                 });
