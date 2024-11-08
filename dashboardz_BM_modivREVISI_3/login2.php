@@ -13,14 +13,14 @@
             <img src="img/Screenshot (7).png" alt="Logo" class="logo-image">
         </div>
         <h2>Silahkan Log In</h2>
-        <form action="login_process.php" method="POST">
+        <form action="proses_login.php" method="POST" name="form_input">
             <div class="input-group">
                 <div class="input-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" version="1.1" id="Layer_1" width="24px" height="24px" viewBox="0 0 512 512" xml:space="preserve">
                         <path d="M256,246.296c-64.182,0-116.398-52.216-116.398-116.398S191.818,13.5,256,13.5s116.398,52.216,116.398,116.398  S320.182,246.296,256,246.296z M256,38.5c-50.397,0-91.398,41.001-91.398,91.398s41.001,91.398,91.398,91.398  s91.398-41.001,91.398-91.398S306.397,38.5,256,38.5z M403.196,498.5H108.804c-31.754,0-57.588-25.834-57.588-57.588v-36.027  c0-74.966,60.989-135.955,135.955-135.955h137.657c74.966,0,135.955,60.989,135.955,135.955v36.027  C460.784,472.666,434.95,498.5,403.196,498.5z M187.171,293.93c-61.181,0-110.955,49.774-110.955,110.955v36.027  c0,17.969,14.619,32.588,32.588,32.588h294.392c17.969,0,32.588-14.619,32.588-32.588v-36.027  c0-61.181-49.774-110.955-110.955-110.955H187.171z"/>
                     </svg>
                 </div>
-                <input type="text" id="username" name="username" placeholder="Username">
+                <input type="text" id="username" name="username" placeholder="Username" required>
             </div>
             
             <div class="input-group">
@@ -35,12 +35,13 @@
                         <g id="Layer_1"/>
                     </svg>
                 </div>
-                <input type="password" id="password" name="password" placeholder="Password">
+                <input type="password" id="password" name="password" placeholder="kode admin" required>
             </div>
-            
-            <button type="button" class="login-button" onclick="window.location.href='0index.html'"><h1>Log In</h1></button>
+            <button type="submit" class="login-button" name="input"><h1>Log In</h1></button>
+            <!-- <button type="submit" class="login-button" name="input" onclick="window.location.href='0index.php'"><h1>Log In</h1></button> -->
         </form>
     </div>
 </div>
+      
 </body>
 </html>
