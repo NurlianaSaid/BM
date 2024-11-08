@@ -1,8 +1,8 @@
 <?php 
-    include 'koneksi.php';
-    $query = "SELECT * FROM tabel_industri;";
-    $sql = mysqli_query($conn, $query);
-    $no = 0;
+    // include 'koneksi.php';
+    // $query = "SELECT * FROM tabel_industri;";
+    // $sql = mysqli_query($conn, $query);
+    // $no = 0;
     
 ?>
 
@@ -26,7 +26,7 @@
         rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="css/pengajuan.css?v1" rel="stylesheet">
+    <link href="css/detail.css?v1" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
 
     <!-- Custom styles for this page -->
@@ -274,25 +274,6 @@
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="text">Pengajuan <span>Industri</span></h1>
-                        <a href="3-inputIndustri.php" class="btn btn-primary btn-icon-split">
-                            <span class="icon text-white-50">
-                                <i>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 32 32" fill="none">
-                                        <g clip-path="url(#clip0_1162_269)">
-                                        <path d="M16.0006 30C12.2606 30 8.7456 28.544 6.1016 25.899C1.7796 21.578 0.753603 15.025 3.5476 9.595C3.8006 9.104 4.4026 8.911 4.8946 9.163C5.3856 9.415 5.5796 10.018 5.3266 10.51C2.9316 15.165 3.8106 20.781 7.5156 24.485C9.7816 26.752 12.7946 28 16.0006 28C19.2056 28 22.2196 26.752 24.4856 24.485C26.7516 22.218 28.0006 19.205 28.0006 16C28.0006 12.794 26.7526 9.781 24.4856 7.515C22.2186 5.249 19.2066 4 16.0006 4C12.7946 4 9.7816 5.249 7.5156 7.515C7.1246 7.906 6.4926 7.906 6.1016 7.515C5.7106 7.124 5.7106 6.492 6.1016 6.101C8.7456 3.457 12.2606 2 16.0006 2C19.7406 2 23.2566 3.457 25.8996 6.101C28.5446 8.745 30.0006 12.26 30.0006 16C30.0006 19.739 28.5446 23.255 25.8996 25.899C23.2566 28.544 19.7406 30 16.0006 30Z" fill="white"/>
-                                        <path d="M16 22C15.448 22 15 21.553 15 21V11C15 10.448 15.448 10 16 10C16.552 10 17 10.448 17 11V21C17 21.553 16.552 22 16 22Z" fill="white"/>
-                                        <path d="M21 17H11C10.448 17 10 16.552 10 16C10 15.448 10.448 15 11 15H21C21.553 15 22 15.448 22 16C22 16.552 21.553 17 21 17Z" fill="white"/>
-                                        </g>
-                                        <defs>
-                                        <clipPath id="clip0_1162_269">
-                                        <rect width="32" height="32" fill="white"/>
-                                        </clipPath>
-                                        </defs>
-                                        </svg>
-                                </i>
-                            </span>
-                            <span class="text">INPUT DATA</span>
-                        </a> 
                     </div>
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
@@ -305,79 +286,84 @@
                                     <thead>
                                         <tr>
                                             <th style="text-align: center;">No</th>
-                                            <th style="text-align: center;">Nama Industri</th>
-                                            <th style="text-align: center;">Daerah</th>
-                                            <th style="text-align: center;">Bergerak di bidang</th>
-                                            <th style="text-align: center;">status</th>
+                                            <th style="text-align: center;">Nama</th>
+                                            <th style="text-align: center;">Kelas</th>
+                                            <th style="text-align: center;">Jurusan</th>
+                                            <th style="text-align: center;">Tanggal dimasukkan</th>
+                                            <th style="text-align: center;">Status</th>
+                                            <th style="text-align: center;">File</th>
                                             <th style="text-align: center;">Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php
-                                        while($result = mysqli_fetch_assoc($sql)){
-                                        ?>
                                         <tr>
+                                            <td style="text-align: center;">1</td>
+                                            <td style="text-align: center;">Indigo hub</td>
+                                            <td style="text-align: center;">XII RPL</td>
+                                            <td style="text-align: center;">Rekayasa Perangkat Lunak</td>
+                                            <td style="text-align: center;">08/November/2024</td>
+                                            <td style="text-align: center;"> <span class="status-label status-gray" style=" font-weight: 700;"> Belum dilihat</td>
+                                            <td style="text-align: center;"><img src="img/pdf cv.png" height="40px"></td>
                                             <td style="text-align: center;">
-                                                <?php
-                                                echo ++$no;
-                                                ?>.
-                                            </td>
-                                            <td style="text-align: center;">
-                                            <?php
-                                                echo $result['nama_industri'];
-                                                ?>
-                                            </td>
-                                            <td style="text-align: center;">
-                                            <?php
-                                                echo $result['kabupaten'];
-                                                ?>
-                                            </td>
-                                            <td style="text-align: center;">
-                                            <?php
-                                                echo $result['bidang_industri'];
-                                                ?>   
-                                            </td>
-                                            <td style="text-align: center;">
-                                                <span class="status-label status-danger"> 
-                                                <?php
-                                                echo $result['status'];
-                                                ?>
-                                                
-                                                </span>   
-                                              </td>
-                                            <td style="text-align: center;">
-                                                <a class="nav-link1" href="proses.php?hapus=<?php echo $result['id']; ?>" aria-label="Dashboard" onclick="return confirm('Apakah anda yakin ingin menghapus?')">
+                                                <a class="nav-link1" href="Dashboard.html" aria-label="Dashboard">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 44 44" fill="none">
                                                         <rect width="43.7588" height="44" rx="10" fill="#FF0000"/>
                                                         <path d="M19.6313 10C17.7123 10 16.1422 11.35 16.1422 13H12.6531C10.7341 13 9.16406 14.35 9.16406 16H33.5876C33.5876 14.35 32.0175 13 30.0985 13H26.6094C26.6094 11.35 25.0394 10 23.1204 10H19.6313ZM12.6531 19V33.43C12.6531 33.76 12.9323 34 13.3161 34H29.4705C29.8543 34 30.1334 33.76 30.1334 33.43V19H26.6443V29.5C26.6443 30.34 25.8767 31 24.8998 31C23.9229 31 23.1553 30.34 23.1553 29.5V19H19.6662V29.5C19.6662 30.34 18.8986 31 17.9216 31C16.9447 31 16.1771 30.34 16.1771 29.5V19H12.688H12.6531Z" fill="white"/>
                                                         </svg>                                                                
                                                         <!-- <span>hapus</span> -->
                                                 </a>
-                                                <a class="nav-link1" href="3-inputIndustri.php?ubah=<?php echo $result['id']; ?>" aria-label="Dashboard">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 44 44" fill="none">
-                                                        <rect x="0.113281" width="43.7588" height="44" rx="10" fill="#008000"/>
-                                                        <path d="M28.098 10L24.7907 13.11L31.4054 19.3299L34.7127 16.2199L28.098 10ZM21.4833 16.2199L8.25391 28.6597V34.8796H14.8686L28.098 22.4398L21.4833 16.2199Z" fill="white"/>
-                                                    </svg>
+                                                <a class="nav-link1" href="Dashboard.html" aria-label="Dashboard">
+                                                <svg width="24" height="24" viewBox="0 0 33 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <rect width="32.6152" height="32" rx="10" fill="#3E92CC"/>
+                                                <path d="M25.0505 14.839L18.9017 20.7266C18.3644 21.2448 17.5151 20.8258 17.5151 20.019V16.6275C12.0961 16.7132 9.76101 18.2134 11.345 23.8633C11.5208 24.4902 10.8416 24.9761 10.3647 24.5888C8.83625 23.3489 7.45312 20.9799 7.45312 18.5835C7.45312 12.6531 11.904 11.3984 17.5147 11.3244V8.208C17.5147 7.4026 18.363 6.98217 18.9014 7.5004L25.0501 13.388C25.4383 13.7948 25.4383 14.465 25.0505 14.839Z" fill="white"/>
+                                                </svg>
+                                                             
+                                            
                                                 </a>
-                                                
-                                                    <a class="nav-link1" href="detailpengajuan.php?detail=<?php echo $result['id']; ?>" aria-label="Dashboard">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 45 44" fill="none">
-                                                            <rect width="44.2588" height="44" rx="10" fill="#295BDB"/>
-                                                            <path d="M33.9438 22.0125C31.1125 18.75 27.2 15 22 15C19.9 15 17.975 15.5938 15.9438 16.8625C14.2313 17.9375 12.475 19.45 10.0625 21.9375L10 22L10.4187 22.4312C13.8625 25.9562 16.8375 29 22 29C24.2812 29 26.4938 28.2563 28.7625 26.725C30.6938 25.4188 32.3375 23.7625 33.6562 22.425L34 22.0812L33.9438 22.0125ZM22 16C24.0688 16 26.0563 16.5938 28.075 17.9125C29.5688 18.8875 31.0375 20.2063 32.6812 22.0438C30.2875 24.4625 26.6938 28 22 28C19.8625 28 17.9875 27.475 16.1125 26.2375C14.3938 25.1062 12.8438 23.5312 11.35 22C15.0437 18.2687 18.125 16 22 16Z" fill="white"/>
-                                                            <path d="M22 27C24.7562 27 27 24.7562 27 22C27 19.2438 24.7562 17 22 17C19.2438 17 17 19.2438 17 22C17 24.7562 19.2438 27 22 27ZM22 18.0188C24.2 18.0188 26 19.8063 26 22C26 24.1937 24.2 25.9813 22 25.9813C19.8 25.9813 18.0063 24.1937 18.0063 22C18.0063 19.8063 19.8 18.0188 22 18.0188Z" fill="white"/>
-                                                            <path d="M23.9996 22C23.9996 23.0938 23.0996 24 22.0121 24C20.9246 24 19.9996 23.05 19.9996 21.9563C19.9996 20.8625 20.9871 20 21.9996 20V19C20.3434 19 19.0059 20.35 19.0059 22.0125C19.0059 23.675 20.3496 25.0187 21.9996 25.0187C23.6496 25.0187 24.9996 23.6688 24.9996 22.0125V22H23.9996Z" fill="white"/>
+                                                <a class="nav-link1" href="#" aria-label="Dashboard" onclick="toggleIcon(this)">
+                                                <svg class="icon-default" width="24" height="24" viewBox="0 0 33 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <rect x="0.382812" width="32.6152" height="32" rx="10" fill="#008000"/>
+                                                    <rect x="5.60156" y="5.09082" width="22.3602" height="21.8182" fill="white"/>
+                                                </svg>
+                                            </a>
+
+                                            <script>
+                                            function toggleIcon(element) {
+                                                // Periksa apakah ikon sudah dalam bentuk baru (dengan path tambahan)
+                                                if (element.querySelector('.icon-toggled')) {
+                                                    // Jika sudah dalam bentuk baru, kembalikan ke bentuk awal
+                                                    element.innerHTML = `
+                                                        <svg class="icon-default" width="24" height="24" viewBox="0 0 33 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <rect x="0.382812" width="32.6152" height="32" rx="10" fill="#008000"/>
+                                                            <rect x="5.60156" y="5.09082" width="22.3602" height="21.8182" fill="white"/>
                                                         </svg>
-                                                    </a>
+                                                    `;
+                                                } else {
+                                                    // Jika belum, ubah ke bentuk baru dengan path tambahan
+                                                    element.innerHTML = `
+                                                        <svg class="icon-toggled" width="24" height="24" viewBox="0 0 33 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <rect width="32.6152" height="32" rx="10" fill="#008000"/>
+                                                            <rect x="5.21875" y="5.09082" width="22.3602" height="21.8182" fill="white"/>
+                                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M12.619 23.1202L7.01901 16.4002L5.15234 18.6402L12.619 27.6002L20.619 18.0002L28.619 8.40016L26.7523 6.16016L12.619 23.1202Z" fill="#62F71D"/>
+                                                        </svg>
+                                                    `;
+                                                }
+                                            }
+                                            </script>
+
+
+                                        </tr>
                                             </td>
                                         </tr>
-                                        <?php 
-                                        }
-                                        ?>
+                                        
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
+                    <button onclick="window.location.href='3Pengajuan siswa.php';">
+                        <span class="to_back">Kembali</span> 
+                    </button>
 
                 </div>
                 <!-- /.container-fluid -->

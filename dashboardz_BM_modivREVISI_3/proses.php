@@ -64,6 +64,6 @@
         }
 
         if(isset($_GET['detail'])){
-            echo "Detail Data <a href='3pengajuan siswa.php'>KEMBALI</a>";
+            echo "Detail Data <a href='detailpengajuan.php'>KEMBALI</a>";
         }
     ?>
