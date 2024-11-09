@@ -1,3 +1,55 @@
+<?php include 'laporanmonir/koneksi.php' ;
+
+if (isset($_POST['id_jadwal']) && isset($_POST['status'])) {
+    // Ambil data dari AJAX untuk memperbarui status
+    $id_jadwal = $_POST['id_jadwal'];
+    $status = $_POST['status'];
+
+    // Update status di database
+    $sql_update = "UPDATE tb_jadwal SET status = '$status' WHERE id_jadwal = $id_jadwal";
+    if ($conn->query($sql_update) === TRUE) {
+        echo "Status berhasil diperbarui di server<br>";
+    } else {
+        echo "Error updating status: " . $conn->error . "<br>";
+    }
+}
+
+// Query SQL
+$sql = "SELECT 
+            tb_jadwal.id_jadwal,
+            tb_guru.kode_guru,
+            tb_perusahaan.nama_perusahaan,
+            tb_jadwal.tanggal_monitoring,
+            tb_jadwal.kegiatan,
+            tb_jadwal.status
+        FROM 
+            tb_jadwal
+        JOIN 
+            tb_perusahaan ON tb_jadwal.id_perusahaan = tb_perusahaan.id_perusahaan
+        JOIN 
+            tb_guru ON tb_jadwal.kode_guru = tb_guru.kode_guru
+        ORDER BY 
+            tb_jadwal.tanggal_monitoring DESC";
+
+// Eksekusi query
+$result = $conn->query($sql);
+
+// Tampilkan hasil
+// if ($result->num_rows > 0) {
+//     while($row = $result->fetch_assoc()) {
+//         echo "ID Jadwal: " . $row["id_jadwal"] . " - Guru: " . $row["kode_guru"] . " - Perusahaan: " . $row["nama_perusahaan"] . " - Tanggal: " . $row["tanggal_monitoring"] . " - Kegiatan: " . $row["kegiatan"] . "<br>";
+//     }
+// } else {
+//     echo "No results found.";
+// }
+
+// // Tutup koneksi
+// $conn->close();
+
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -37,7 +89,7 @@
      </style>
 
 <link href="css/sb-admin-2.css?v3" rel="stylesheet">
-    <link rel="stylesheet" href="css/jadwal.css">
+    <link rel="stylesheet" href="css/jadwal.css?v2">
 
     <!-- Custom styles for this page -->
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
@@ -226,16 +278,7 @@
                                             <th>Aksi</th> 
                                         </tr>
                                     </thead>
-                                    <!-- <tfoot>
-                                        <tr>
-                                            <th>No</th>
-                                            <th>Nama Industri</th>
-                                            <th>Hari, Tanggal</th>
-                                            <th>Kegiatan</th>
-                                            <th>Aksi</th> 
-                                        </tr>
-                                    </tfoot> -->
-                                    <tbody>
+                                    <!-- <tbody>
                                         <tr>
                                             <td>1</td>
                                             <td>Afila Media Karya</td>
@@ -254,7 +297,45 @@
                                                 <span class="kett">Selesai</span> 
                                             </td>
                                         </tr>
-                                    </tbody>
+                                    </tbody> -->
+                                    <?php
+if ($result->num_rows > 0) {
+    $no = 1;
+    while ($row = $result->fetch_assoc()) {
+        // Translasi hari dalam bahasa Indonesia
+        $days = [
+            'Sunday' => 'Minggu',
+            'Monday' => 'Senin',
+            'Tuesday' => 'Selasa',
+            'Wednesday' => 'Rabu',
+            'Thursday' => 'Kamis',
+            'Friday' => 'Jumat',
+            'Saturday' => 'Sabtu'
+        ];
+        $dayInEnglish = date("l", strtotime($row["tanggal_monitoring"]));
+        $dayInIndonesian = $days[$dayInEnglish]; // Mengonversi ke bahasa Indonesia
+
+        // Format tanggal lengkap
+        $tanggal = $dayInIndonesian . ", " . date("d/m/Y", strtotime($row["tanggal_monitoring"]));
+
+           // Menampilkan status di halaman
+           $statusButton = $row["status"] == "selesai" ? 
+           "<span class='kett'>Selesai</span>" : 
+           "<span class='sel' onclick='confirmAndComplete(this, " . $row['id_jadwal'] . ")'>Konfirmasi</span>";
+           
+                echo "<tr>
+                        <td>" . $no . "</td>
+                        <td>" . $row["nama_perusahaan"] . "</td>
+                        <td>" . $tanggal . "</td>
+                        <td>" . $row["kegiatan"] . "</td>
+                         <td class='aksi'>" . $statusButton . "</td>
+                      </tr>";
+                $no++;
+            }
+        } else {
+            echo "<tr><td colspan='5'>No results found.</td></tr>";
+        }
+        ?>
                                 </table>
                             </div>
                         </div>
@@ -275,6 +356,42 @@
                     item.classList.add('active'); // Tambahkan class 'active' jika URL mengandung "industri.html"
                   }
                 });
+
+
+                function confirmAndComplete(element, idJadwal) {
+
+                      // Jika status sudah selesai, tidak ada aksi yang dilakukan
+    if (element.className === 'kett') {
+        return; // Jangan lakukan apa-apa jika status sudah "selesai"
+    }
+    // Menampilkan pesan konfirmasi
+    if (confirm("Apakah yakin sudah menyelesaikannya?")) {
+        // Ubah teks menjadi "Selesai" dan ubah kelas menjadi "kett"
+        element.innerHTML = "Selesai";
+        element.className = "kett";
+
+        // Tampilkan alert "Selamat bertugas"
+        alert("Selamat bertugas");
+
+          // Kirim data status ke server menggunakan AJAX
+          const xhr = new XMLHttpRequest();
+        xhr.open("POST", "", true);  // Menggunakan file yang sama (jadwalmonitoring.php)
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                console.log("Status berhasil diperbarui di server");
+                // Perbarui status setelah pembaruan di server
+                element.innerHTML = "Selesai";  // Ubah teks elemen status
+                element.className = "kett";  // Menambahkan kelas untuk status selesai
+            }
+        };
+        xhr.send("id_jadwal=" + idJadwal + "&status=selesai");
+    }
+}
               </script>
             <!-- Footer -->
+            <?php
+// Tutup koneksi
+$conn->close();
+?>
             <?php require 'footer.php' ?>
