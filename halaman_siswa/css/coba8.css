@@ -1,0 +1,181 @@
+
+
+.sidebar h2 {
+    font-size: 20px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin: 15px 0;
+}
+
+.sidebar ul li a {
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+}
+
+.dropdown {
+    margin-top: 20px;
+}
+
+.dropdown-btn {
+    background-color: #c7e0f4;
+    border: none;
+    padding: 10px;
+    width: 100%;
+    text-align: left;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.dropdown-content {
+    display: none;
+    flex-direction: column;
+}
+
+.dropdown-content a {
+    padding: 10px;
+    text-decoration: none;
+    color: #333;
+    font-size: 14px;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.main-content {
+    flex: 1;
+    padding: 20px;
+    background-color: #fff;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.breadcrumb {
+    font-size: 14px;
+    color: #777;
+}
+
+.profile-btn {
+    background: none;
+    border: none;
+    font-size: 16px;
+    color: #333;
+    cursor: pointer;
+}
+
+.upload-section h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.upload-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed #ddd;
+    padding: 30px;
+    margin-bottom: 20px;
+    color: #777;
+    text-align: center;
+    color: #434040;
+text-align: center;
+font-family: Inter;
+font-size: 16px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+letter-spacing: 0.8px;
+border: 4px dashed #D9D9D9;
+background: rgba(217, 217, 217, 0.50);
+}
+
+
+.file-btn {
+    margin-top: 10px;
+    margin-bottom: 50px;
+    width: 122px;
+    height: 32px;
+    flex-shrink: 0;
+    color: #000;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: 1.4px;
+    }
+button{
+    border-radius: 10px;
+    background: #E5DEDE  ;
+    border: 1px solid rgba(0,0,0,0.50);
+}
+
+.file-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.file-card {
+    display: flex;
+    align-items: center;
+    background-color: #f4f4f4;
+    padding: 15px;
+    width: 118%;
+    height: 30px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #333;
+}
+
+.file-card i {
+    margin-right: 10px;
+    color: #333;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.upload-btn {
+    border-radius: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.delete-btn {
+    border-radius: 10px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+footer {
+    text-align: center;
+    font-size: 14px;
+    color: #b32727;
+    margin-top: 20px;
+}

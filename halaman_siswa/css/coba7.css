@@ -1,0 +1,152 @@
+.container1{
+    display: flex;
+}
+/* 
+.sidebar {
+    width: 250px;
+    background-color: #f8f9fa;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-right: 20px;
+} */
+
+.sidebar h2 {
+    font-size: 18px;
+    margin-bottom: 20px;
+    color: #007bff;
+}
+
+.sidebar ul {
+    list-style-type: none;
+}
+
+.sidebar ul li {
+    margin-bottom: 15px;
+}
+
+.sidebar ul li a {
+    text-decoration: none;
+    color: #333;
+    padding: 10px;
+    display: block;
+    border-radius: 5px;
+}
+
+.sidebar ul li a:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+.main-content {
+    margin-bottom: 20px;
+    margin-right: -350px;
+    margin-top: 700px;
+    margin-left: -670px;
+    flex-grow: 1;
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.breadcrumb {
+    width: 90%;
+  margin-left: -660px;
+    margin-top: 70px;
+    position: absolute;
+     display: flex;
+     flex-wrap: wrap;
+     padding: 0.75rem 1rem;
+     list-style: none;
+     background-color: #eaecf4;
+     border-radius: 0.35rem;
+   }
+
+h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.section-title {
+    font-weight: 700;
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    font-size: 26px;
+}
+
+form label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+form input, form select, form button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+form input[type="file"] {
+    padding: 3px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+}
+
+.button-container button {
+    margin-right: 800px;
+     margin-left: 0px;
+     background-color: #007bff;
+     color: white;
+     border: none;
+     cursor: pointer;
+     padding: 15px 30px;
+     font-size: 16px;
+ }
+
+.button-container button:hover {
+    background-color: #0056b3;
+}
+
+.form-group {
+    display: flex;
+    justify-content: space-between;
+}
+
+.form-group div {
+    width: 48%;
+}
+
+.info-text {
+    font-size: 12px;
+    color: #666;
+    margin-top: -10px;
+    margin-bottom: 15px;
+}
+
+.profile {
+    text-align: right;
+    margin-bottom: 20px;
+}
+
+.profile img {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+}
+
+.content .textd{
+    color: blue;
+    }
+
+.profile p {
+    display: inline-block;
+    margin-left: 10px;
+    vertical-align: middle;
+}
