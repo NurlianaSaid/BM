@@ -338,12 +338,38 @@
                                                 ?>   
                                             </td>
                                             <td style="text-align: center;">
-                                                <span class="status-label status-danger"> 
-                                                <?php
-                                                echo $result['status'];
-                                                ?>
-                                                
-                                                </span>   
+                                            <?php
+                                            $status = $result['status'];
+                                            // Tentukan kelas berdasarkan status
+                                            $statusClass = ($status == 'Menerima') ? 'status-success' : (($status == 'Tidak menerima') ? 'status-danger' : 'status-default');
+                                            ?>
+                                            <span class="status-label <?php echo $statusClass; ?>">
+                                                <?php echo $status; ?>
+                                            </span>
+                                        </td>
+                                        <style>
+                                            .status-label {
+                                                padding: 5px 10px;
+                                                border-radius: 4px;
+                                                color: #fff;
+                                            }
+
+                                            .status-success {
+                                                border-radius: 30px;
+                                                background: #62F61D;/* Warna hijau untuk status 'Menerima' */
+                                            }
+
+                                            .status-danger {
+                                                border-radius: 30px;
+                                                background: #FF3131; /* Warna merah untuk status 'Tidak menerima' */
+                                            }
+
+                                            .status-default {
+                                                background-color: gray; /* Warna default untuk status lainnya */
+                                            }
+
+                                        </style>
+                                            </span>   
                                               </td>
                                             <td style="text-align: center;">
                                                 <a class="nav-link1" href="proses.php?hapus=<?php echo $result['id']; ?>" aria-label="Dashboard" onclick="return confirm('Apakah anda yakin ingin menghapus?')">

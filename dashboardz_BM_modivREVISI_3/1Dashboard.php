@@ -365,16 +365,17 @@
                 <div class="container-fluid">
                     <!-- Page Heading -->
                     <div class="card-container">
-                        <div class="card" style="width: 206px; height: 207px; border-radius: 25px;">
+                    
+                      <div class="card" style="width: 206px; height: 207px; border-radius: 25px;">
                             <div class="card-body">
                                 <a href="#" class="btn btn-danger" style="color: #f1f1f1; padding-left: 13px; font-weight: 700;">New</a>
                                 <h5 class="card-img"><img src="img/card1.png" alt="">
                                 </h5>
                                 <p class="card-text">45</p>
                                 <h5 class="card-title">Data siswa Magang</h5>
-                               
                             </div>
                         </div>
+                 
                         <div class="card" style="width: 206px; height: 207px; border-radius: 25px;">
                             <div class="card-body">
                                 <a href="#" class="btn btn-none"></a>
@@ -455,12 +456,38 @@
                                                 ?>   
                                             </td>
                                             <td style="text-align: center;">
-                                                <span class="status-label status-danger"> 
-                                                <?php
-                                                echo $result['status'];
-                                                ?>
-                                                
-                                                </span>   
+                                            <?php
+                                            $status = $result['status'];
+                                            // Tentukan kelas berdasarkan status
+                                            $statusClass = ($status == 'Menerima') ? 'status-success' : (($status == 'Tidak menerima') ? 'status-danger' : 'status-default');
+                                            ?>
+                                            <span class="status-label <?php echo $statusClass; ?>">
+                                                <?php echo $status; ?>
+                                            </span>
+                                        </td>
+                                        <style>
+                                            .status-label {
+                                                padding: 5px 10px;
+                                                border-radius: 4px;
+                                                color: #fff;
+                                            }
+
+                                            .status-success {
+                                                border-radius: 30px;
+                                                background: #62F61D;/* Warna hijau untuk status 'Menerima' */
+                                            }
+
+                                            .status-danger {
+                                                border-radius: 30px;
+                                                background: #FF3131; /* Warna merah untuk status 'Tidak menerima' */
+                                            }
+
+                                            .status-default {
+                                                background-color: gray; /* Warna default untuk status lainnya */
+                                            }
+
+                                        </style>
+                                            </span>   
                                               </td>
                                       </tr>
                                       <?php 

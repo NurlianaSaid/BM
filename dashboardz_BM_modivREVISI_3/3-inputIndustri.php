@@ -397,13 +397,14 @@ include "koneksi.php";
                                                         </div>
                                         
                                                         <div class="form-group">
-                                                            <label for="status">Status:</label>
-                                                            <select id="status" name="status">
-                                                                <option <?php if($status == 'pilih' ){echo "selected";} ?> value="aktif">Pilih status</option>
-                                                                <option <?php if($status == 'Menerima' ){echo "selected";} ?>  value="Menerima">Menerima</option>
-                                                                <option <?php if($status == 'Tidak menerima' ){echo "selected";} ?> value="Tidak menerima">Tidak menerima</option>
-                                                            </select>
-                                                        </div>
+                                                        <label for="status">Status:</label>
+                                                        <select id="status" name="status">
+                                                            <option <?php if($status == 'pilih'){echo "selected";} ?> value="pilih">Pilih status</option>
+                                                            <option <?php if($status == 'Menerima'){echo "selected";} ?> value="Menerima">Menerima</option>
+                                                            <option <?php if($status == 'Tidak menerima'){echo "selected";} ?> value="Tidak menerima">Tidak menerima</option>
+                                                        </select>
+                                                    </div>
+
                                                         
                                                         <div class="form-group">
                                                             <label for="tahun">Tahun:</label>
