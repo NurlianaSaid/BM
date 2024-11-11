@@ -52,6 +52,10 @@ if (!isset($_SESSION['password'])) {
         .nav-item .nav-link.active:not(:hover) svg path {
             fill: white; /* Icon color */
         }
+        .img_profile{
+            margin-right: 0px;
+            width: 50px;
+        }
 
      </style>
 </head>
@@ -69,7 +73,7 @@ if (!isset($_SESSION['password'])) {
                 <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
                     <div class="sidebar-brand-icon rotate-n-0">
                         <div class="sidebar-brand-icon rotate-n-" style="color:#000;">
-                            <i href="index.html"><img src="logo.svg"alt=""></i>
+                            <i href="index.html"><img src="logo.svg"class="img_logo" alt=""></i>
                         </div>
                     </div>
                     <div class="sidebar-brand-text mx-3">Halaman Guru</div>
@@ -156,7 +160,7 @@ if (!isset($_SESSION['password'])) {
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                                <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
+                                <img class="img_profile rounded-circle" src="img/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"

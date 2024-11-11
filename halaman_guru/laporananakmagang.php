@@ -34,9 +34,13 @@
         .nav-item .nav-link.active:not(:hover) svg path {
             fill: white; /* Icon color */
         }
+        .img_profile{
+            margin-right: 0px;
+            width: 50px;
+        }
 </style>
     <!-- Custom styles for this template -->
-    <link href="css/sb-admin-2.css" rel="stylesheet">
+    <link href="css/laporan.css" rel="stylesheet">
     <link rel="stylesheet" href="css/card.css?v2">
 
     <!-- Custom styles for this page -->
@@ -56,8 +60,8 @@
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
                     <div class="sidebar-brand-icon rotate-n-0">
-                        <div class="sidebar-brand-icon rotate-n-" style="color:#000;">
-                            <i href="0index.html"><img src="logo.svg"alt=""></i>
+                    <div class="sidebar-brand-icon rotate-n-" style="color:#000;">
+                    <i href="index.html"><img src="logo.svg"class="img_logo" alt=""></i>
                         </div>
                     </div>
                 <div class="sidebar-brand-text mx-3">Halaman Guru</div>
@@ -139,11 +143,11 @@
                         <div class="topbar-divider d-none d-sm-block"></div>
 
                         <!-- Nav Item - User Information -->
-                        <li class="nav-item dropdown no-arrow">
+                        <li class="nav-item1 dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                                <img class="img-profile rounded-circle"
+                                <img class="img_profile rounded-circle"
                                     src="img/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->

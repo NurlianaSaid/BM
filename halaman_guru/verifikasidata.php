@@ -1,3 +1,45 @@
+<?php include 'laporanmonir/koneksi.php' ;
+
+if (isset($_POST['id_jurnal']) && isset($_POST['status'])) {
+    // Ambil data dari AJAX untuk memperbarui status
+    $id_jurnal = $_POST['id_jurnal'];
+    $status = $_POST['status'];
+
+    // Update status di database
+    $sql_update = "UPDATE tb_jurnal SET status = '$status' WHERE id_jurnal = $id_jurnal";
+    if ($conn->query($sql_update) === TRUE) {
+        echo "Status berhasil diperbarui di server<br>";
+    } else {
+        echo "Error updating status: " . $conn->error . "<br>";
+    }
+}
+
+// Query SQL
+$sql = "SELECT 
+            tb_jurnal.id_jurnal,
+            tb_jurnal.tanggal,
+            tb_jurnal.kegiatan,
+            tb_jurnal.uraian,
+            tb_jurnal.status,
+            tb_siswa.Nama_siswa,
+            tb_siswa.Kelas_siswa,
+            tb_perusahaan.nama_perusahaan
+        FROM 
+            tb_jurnal
+        JOIN 
+            tb_perusahaan ON tb_jurnal.id_perusahaan = tb_perusahaan.id_perusahaan
+        JOIN 
+            tb_siswa ON tb_jurnal.Id_siswaa = tb_siswa.Id_siswaa
+        ORDER BY 
+            tb_jurnal.tanggal DESC";
+
+// Eksekusi query
+$result = $conn->query($sql);
+
+
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -33,10 +75,15 @@
         .nav-item .nav-link.active:not(:hover) svg path {
             fill: white; /* Icon color */
         }
-        </style>
+        .img_profile{
+            margin-right: 0px;
+            width: 50px;
+        }
+       
+ </style>
 
     <!-- Custom styles for this template -->
-    <link href="css/sb-admin-2.css?v3" rel="stylesheet">
+    <link href="css/sb-admin-2.css?v1" rel="stylesheet">
 
     <!-- Custom styles for this page -->
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
@@ -54,8 +101,8 @@
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
                     <div class="sidebar-brand-icon rotate-n-0">
-                        <div class="sidebar-brand-icon rotate-n-" style="color:#000;">
-                            <i href="0index.html"><img src="logo.svg"alt=""></i>
+                    <div class="sidebar-brand-icon rotate-n-" style="color:#000;">
+                    <i href="index.html"><img src="logo.svg"class="img_logo" alt=""></i>
                         </div>
                     </div>
                 <div class="sidebar-brand-text mx-3">Halaman Guru</div>
@@ -150,12 +197,11 @@
                         <div class="topbar-divider d-none d-sm-block"></div>
 
                         <!-- Nav Item - User Information -->
-                        <li class="nav-item dropdown no-arrow">
+                        <li class="nav-ite1 dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                                <img class="img-profile rounded-circle"
-                                    src="img/undraw_profile.svg">
+                                <img class="img_profile rounded-circle" src="img/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -217,12 +263,13 @@
                                             <th>No</th>
                                             <th>Nama Industri</th>
                                             <th>Nama Siswa</th>
+                                            <th>Kelas</th>
                                             <th>Tanggal</th>
                                             <th>Keterangan</th>
                                             <th>Aksi</th> 
                                         </tr>
                                     </thead>
-                                    <tfoot>
+                                    <!-- <tfoot>
                                         <tr>
                                             <th>No</th>
                                             <th>Nama Industri</th>
@@ -231,8 +278,8 @@
                                             <th>Keterangan</th>
                                             <th>Aksi</th> 
                                         </tr>
-                                    </tfoot>
-                                    <tbody>
+                                    </tfoot> -->
+                                    <!-- <tbody>
                                         <tr>
                                             <td>1</td>
                                             <td>Afila Media Karya</td>
@@ -250,7 +297,41 @@
                                              </svg>
                                               </td>
                                         </tr>
-                                    </tbody>
+                                    </tbody> -->
+                                    <?php
+if ($result->num_rows > 0) {
+    $no = 1;
+    while ($row = $result->fetch_assoc()) {
+        // Translasi hari dalam bahasa Indonesia
+           // Menampilkan status di halaman
+           $statusButton = $row["status"] == "Terbaca" ? 
+           "<span class='kett'>Terbaca</span>" : 
+           "<span class='sel' onclick='confirmAndComplete(this, " . $row['id_jurnal'] . ")'>Belum Terbaca</span>";
+           
+                echo "<tr>
+                        <td>" . $no . "</td>
+                        <td>" . $row["nama_perusahaan"] . "</td>
+                        <td>" . $row["Nama_siswa"] . "</td>
+                        <td>" . $row["Kelas_siswa"] . "</td>
+                        <td>" . $row["tanggal"] . "</td>
+                         <td class='aksi'>" . $statusButton . "</td>
+                        <td> <button class='btn' data-toggle='modal' data-target='#detailModal$id'>
+                                                <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 44 44' fill='none'>
+                                                    <rect width='44.2588' height='44' rx='10' fill='#295BDB' />
+                                                    <g transform='translate(5, 5)'>
+                                                        <path d='M27.9438 16.0125C25.1125 12.75 21.2 9 16 9C13.9 9 11.975 9.59375 9.94375 10.8625C8.23125 11.9375 6.475 13.45 4.0625 15.9375L4 16L4.41875 16.4312C7.8625 19.9562 10.8375 23 16 23C18.2812 23 20.4938 22.2563 22.7625 20.725C24.6938 19.4188 26.3375 17.7625 27.6562 16.425L28 16.0812L27.9438 16.0125ZM16 10C18.0688 10 20.0563 10.5938 22.075 11.9125C23.5688 12.8875 25.0375 14.2063 26.6812 16.0438C24.2875 18.4625 20.6938 22 16 22C13.8625 22 11.9875 21.475 10.1125 20.2375C8.39375 19.1062 6.84375 17.5312 5.35 16C9.04375 12.2687 12.125 10 16 10Z' fill='white' />
+                                                        <path d='M16 21C18.7562 21 21 18.7562 21 16C21 13.2438 18.7562 11 16 11C13.2438 11 11 13.2438 11 16C11 18.7562 13.2438 21 16 21ZM16 12.0188C18.2 12.0188 20 13.8063 20 16C20 18.1937 18.2 19.9813 16 19.9813C13.8 19.9813 12.0063 18.1937 12.0063 16C12.0063 13.8063 13.8 12.0188 16 12.0188Z' fill='white' />
+                                                        <path d='M18.0016 16C18.0016 17.0938 17.1016 18 16.0141 18C14.9266 18 14.0016 17.05 14.0016 15.9563C14.0016 14.8625 14.9891 14 16.0016 14V13C14.3453 13 13.0078 14.35 13.0078 16.0125C13.0078 17.675 14.3516 19.0187 16.0016 19.0187C17.6516 19.0187 19.0016 17.6688 19.0016 16.0125V16H18.0016Z' fill='white' />
+                                                    </g>
+                                                </svg>
+                                                   </button></td>
+                      </tr>";
+                $no++;
+            }
+        } else {
+            echo "<tr><td colspan='5'>No results found.</td></tr>";
+        }
+        ?>
                                 </table>
                             </div>
                         </div>
