@@ -1,0 +1,65 @@
+
+.container1 {
+    display: flex;
+    justify-content: center; /* Agar container berada di tengah secara horizontal */
+    align-items: center; /* Agar container berada di tengah secara vertikal */
+    height: 100vh; /* Agar container memenuhi tinggi layar */
+}
+.form9 {
+    background-color: #fff;
+    padding:50px;
+    border: 1px solid #d3cece;
+    border-radius: 10px;
+    width: 100%; /* Mengatur lebar 100% dari parent */
+    max-width: 1000px; /* Lebar maksimal form */
+    margin: 0 auto; /* Agar form berada di tengah */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Memberikan bayangan agar lebih menarik */
+}
+.form9 label {
+    display: block;
+    margin-bottom: 14px;
+    color: #000;
+}
+.form9 input {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 10px;
+    border: 1px solid #3b3737;
+    border-radius: 5px;
+}
+.form9 input[readonly] {
+    background-color: #918f8f;
+}
+.buttons1{
+    position: absolute;
+    display: flex;
+    gap: 10px;
+    justify-content: center; /* Untuk memposisikan tombol di tengah */
+}
+
+.save{
+    position: absolute;
+    margin-left: 600px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.cancel{
+    margin-left: 820px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+button.save {
+    background-color: #007bff;
+    color: white;
+}
+
+button.cancel {
+    background-color: #ff5c5c;
+    color: white;
+}

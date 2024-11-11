@@ -11342,7 +11342,7 @@ ffooter.sticky-footer {
  }
 
 footer.sticky-footer .copyright {
-  line-height: 1;
+  line-height: 5;
   font-size: 0.8rem;
 }
 

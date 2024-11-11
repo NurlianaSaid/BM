@@ -32,12 +32,14 @@
 }
 
 .upload-btn {
-    background-color: #4CAF50;
+    border-radius: 10px;
+background: #295BDB;
     color: white;
 }
 
 .delete-btn {
-    background-color: #e74c3c;
+    border-radius: 10px;
+    background: #FD7777;
     color: white;
 }
 
@@ -56,14 +58,14 @@
 
 /* Gaya modal box */
 .modal-box {
+    margin-bottom: 500px;
     background: #fff;
     padding: 20px;
     width: 300px;
-    border-radius: 8px;
+    border-radius: 10px;
     text-align: center;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
-
 .modal-btn {
     padding: 8px 16px;
     margin: 10px;
@@ -73,6 +75,7 @@
 }
 
 .confirm-btn {
+    margin-top: 50px;
     background-color: #e74c3c;
     color: white;
 }
@@ -85,7 +88,8 @@
 /* Gaya untuk bilah status sukses */
 .status-bar {
     display: none;
-    background-color: #4CAF50;
+    border-radius: 10px;
+    background: rgba(255, 49, 49, 0.50);
     color: white;
     padding: 10px;
     border-radius: 5px;
