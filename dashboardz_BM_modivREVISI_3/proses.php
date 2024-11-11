@@ -16,7 +16,7 @@
             $query = "INSERT INTO tabel_industri VALUES(null,'$nama_industri', '$bidang_industri', '$ceo', '$jalan', '$kabupaten', '$status', '$tahun')";
             $sql = mysqli_query($conn, $query);
             if ($sql){
-                header("location: 3pengajuan siswa.php");
+                header("location:2Data Industri.php");
                 //echo "data berhasil ditambahkan <a href='3pengajuan siswa.php'>KEMBALI</a>";
             }else {
                 echo $query;
@@ -41,7 +41,7 @@
 
             $sql = mysqli_query($conn, $query);
             if ($sql){
-                header("location: 3pengajuan siswa.php");
+                header("location: 2Data Industri.php");
                 //echo "data berhasil ditambahkan <a href='3pengajuan siswa.php'>KEMBALI</a>";
             }else {
                 echo $query;
@@ -55,7 +55,7 @@
             $sql = mysqli_query($conn, $query);
 
             if ($sql){
-                header("location: 3pengajuan siswa.php");
+                header("location: 2Data Industri.php");
                 //echo "data berhasil ditambahkan <a href='3pengajuan siswa.php'>KEMBALI</a>";
             }else {
                 echo $query;
@@ -64,6 +64,6 @@
         }
 
         if(isset($_GET['detail'])){
-            echo "Detail Data <a href='detailpengajuan.php'>KEMBALI</a>";
+            echo "Detail Data <a href='2Data Industri'>KEMBALI</a>";
         }
     ?>

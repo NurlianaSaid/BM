@@ -140,7 +140,7 @@
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="pesan siswa.php">
+                <a class="nav-link" href="pesan.php">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M22 24H2C0.897 24 0 22.6545 0 21V3C0 1.3455 0.897 0 2 0H22C23.103 0 24 1.3455 24 3V21C24 22.6545 23.103 24 22 24ZM2 1.5C1.4485 1.5 1 2.17275 1 3V21C1 21.8272 1.4485 22.5 2 22.5H22C22.5515 22.5 23 21.8272 23 21V3C23 2.17275 22.5515 1.5 22 1.5H2Z" fill="black"/>
                         <path d="M12.0002 15.8932L3.22871 7.37998C2.99671 7.15423 2.93021 6.69073 3.08021 6.34273C3.23021 5.99473 3.53971 5.89573 3.77171 6.11998L12.0002 14.1067L20.2287 6.11998C20.4607 5.89573 20.7702 5.99473 20.9202 6.34273C21.0702 6.69073 21.0037 7.15423 20.7717 7.37998L12.0002 15.8932Z" fill="black"/>
@@ -273,7 +273,7 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="text">Pengajuan <span>Industri</span></h1>
+                        <h1 class="text">Pengajuan <span>Siswa</span></h1>
                     </div>
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">

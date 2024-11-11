@@ -1,3 +1,11 @@
+<?php 
+    include 'koneksi.php';
+    $query = "SELECT * FROM tabel_industri;";
+    $sql = mysqli_query($conn, $query);
+    $no = 0;
+    
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -135,7 +143,7 @@
 
 <!-- Nav Item - Charts -->
 <li class="nav-item">
-    <a class="nav-link" href="pesan siswa.php">
+    <a class="nav-link" href="pesan.php">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M22 24H2C0.897 24 0 22.6545 0 21V3C0 1.3455 0.897 0 2 0H22C23.103 0 24 1.3455 24 3V21C24 22.6545 23.103 24 22 24ZM2 1.5C1.4485 1.5 1 2.17275 1 3V21C1 21.8272 1.4485 22.5 2 22.5H22C22.5515 22.5 23 21.8272 23 21V3C23 2.17275 22.5515 1.5 22 1.5H2Z" fill="black"/>
             <path d="M12.0002 15.8932L3.22871 7.37998C2.99671 7.15423 2.93021 6.69073 3.08021 6.34273C3.23021 5.99473 3.53971 5.89573 3.77171 6.11998L12.0002 14.1067L20.2287 6.11998C20.4607 5.89573 20.7702 5.99473 20.9202 6.34273C21.0702 6.69073 21.0037 7.15423 20.7717 7.37998L12.0002 15.8932Z" fill="black"/>
@@ -363,7 +371,7 @@
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="text">Kantor atau Industri <span>Monitoring</span></h1> 
-                        <a href="#" class="btn btn-primary btn-icon-split">
+                        <a href="3-inputIndustri.php" class="btn btn-primary btn-icon-split">
                             <span class="icon text-white-50">
                                 <i>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 32 32" fill="none">
@@ -390,7 +398,7 @@
                             <h6 class="m-0 font-weight-bold text-primary"></h6>
                         </div>
                         <div class="card-body">
-                            <div class="table-responsive">
+                        <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
@@ -398,57 +406,97 @@
                                             <th style="text-align: center;">Nama Industri</th>
                                             <th style="text-align: center;">Daerah</th>
                                             <th style="text-align: center;">Bergerak di bidang</th>
-                                            <th style="text-align: center;">status</th>
+                                            <th style="text-align: center;">Status</th>
                                             <th style="text-align: center;">Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    
+                                        <?php
+                                        while($result = mysqli_fetch_assoc($sql)){
+                                        ?>
                                         <tr>
-                                            <td style="text-align: center;">1</td>
-                                            <td style="text-align: center;">Indigo hub</td>
-                                            <td style="text-align: center;">Makassar</td>
-                                            <td style="text-align: center;">Software House</td>
-                                            <td style="text-align: center;">Tidak Menerima</td>
                                             <td style="text-align: center;">
-                                                  <a class="nav-link1" href="Dashboard.html" aria-label="Dashboard">
+                                                <?php
+                                                echo ++$no;
+                                                ?>.
+                                            </td>
+                                            <td style="text-align: center;">
+                                            <?php
+                                                echo $result['nama_industri'];
+                                                ?>
+                                            </td>
+                                            <td style="text-align: center;">
+                                            <?php
+                                                echo $result['kabupaten'];
+                                                ?>
+                                            </td>
+                                            <td style="text-align: center;">
+                                            <?php
+                                                echo $result['bidang_industri'];
+                                                ?>   
+                                            </td>
+                                            <td style="text-align: center;">
+                                            <?php
+                                            $status = $result['status'];
+                                            // Tentukan kelas berdasarkan status
+                                            $statusClass = ($status == 'Menerima') ? 'status-success' : (($status == 'Tidak menerima') ? 'status-danger' : 'status-default');
+                                            ?>
+                                            <span class="status-label <?php echo $statusClass; ?>">
+                                                <?php echo $status; ?>
+                                            </span>
+                                        </td>
+                                        <style>
+                                            .status-label {
+                                                padding: 5px 10px;
+                                                border-radius: 4px;
+                                                color: #fff;
+                                            }
+
+                                            .status-success {
+                                                border-radius: 30px;
+                                                background: #62F61D;/* Warna hijau untuk status 'Menerima' */
+                                            }
+
+                                            .status-danger {
+                                                border-radius: 30px;
+                                                background: #FF3131; /* Warna merah untuk status 'Tidak menerima' */
+                                            }
+
+                                            .status-default {
+                                                background-color: gray; /* Warna default untuk status lainnya */
+                                            }
+
+                                        </style>
+                                            </span>   
+                                              </td>
+                                            <td style="text-align: center;">
+                                                <a class="nav-link1" href="proses.php?hapus=<?php echo $result['id']; ?>" aria-label="Dashboard" onclick="return confirm('Apakah anda yakin ingin menghapus?')">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 44 44" fill="none">
                                                         <rect width="43.7588" height="44" rx="10" fill="#FF0000"/>
                                                         <path d="M19.6313 10C17.7123 10 16.1422 11.35 16.1422 13H12.6531C10.7341 13 9.16406 14.35 9.16406 16H33.5876C33.5876 14.35 32.0175 13 30.0985 13H26.6094C26.6094 11.35 25.0394 10 23.1204 10H19.6313ZM12.6531 19V33.43C12.6531 33.76 12.9323 34 13.3161 34H29.4705C29.8543 34 30.1334 33.76 30.1334 33.43V19H26.6443V29.5C26.6443 30.34 25.8767 31 24.8998 31C23.9229 31 23.1553 30.34 23.1553 29.5V19H19.6662V29.5C19.6662 30.34 18.8986 31 17.9216 31C16.9447 31 16.1771 30.34 16.1771 29.5V19H12.688H12.6531Z" fill="white"/>
                                                         </svg>                                                                
                                                         <!-- <span>hapus</span> -->
                                                 </a>
-                                                <a class="nav-link1" href="Dashboard.html" aria-label="Dashboard">
+                                                <a class="nav-link1" href="3-inputIndustri.php?ubah=<?php echo $result['id']; ?>" aria-label="Dashboard">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 44 44" fill="none">
                                                         <rect x="0.113281" width="43.7588" height="44" rx="10" fill="#008000"/>
                                                         <path d="M28.098 10L24.7907 13.11L31.4054 19.3299L34.7127 16.2199L28.098 10ZM21.4833 16.2199L8.25391 28.6597V34.8796H14.8686L28.098 22.4398L21.4833 16.2199Z" fill="white"/>
-                                                        </svg>                                                              
-                                            
+                                                    </svg>
                                                 </a>
-                                        </tr>
-                                        <tr>
-                                            <td style="text-align: center;" style="text-align: center;">2</td>
-                                            <td style="text-align: center;">Afila Media Karya</td>
-                                            <td style="text-align: center;">Makassar,Gowa</td>
-                                            <td style="text-align: center;">Software House</td>
-                                            <td style=" text-align: center;">Menerima</td>
-                                            <td style="text-align: center;">
-                                                <a class="nav-link1" href="Dashboard.html" aria-label="Dashboard">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 44 44" fill="none">
-                                                        <rect width="43.7588" height="44" rx="10" fill="#FF0000"/>
-                                                        <path d="M19.6313 10C17.7123 10 16.1422 11.35 16.1422 13H12.6531C10.7341 13 9.16406 14.35 9.16406 16H33.5876C33.5876 14.35 32.0175 13 30.0985 13H26.6094C26.6094 11.35 25.0394 10 23.1204 10H19.6313ZM12.6531 19V33.43C12.6531 33.76 12.9323 34 13.3161 34H29.4705C29.8543 34 30.1334 33.76 30.1334 33.43V19H26.6443V29.5C26.6443 30.34 25.8767 31 24.8998 31C23.9229 31 23.1553 30.34 23.1553 29.5V19H19.6662V29.5C19.6662 30.34 18.8986 31 17.9216 31C16.9447 31 16.1771 30.34 16.1771 29.5V19H12.688H12.6531Z" fill="white"/>
-                                                        </svg>                                                                
-                                                        <!-- <span>hapus</span> -->
-                                                </a>
-                                                <a class="nav-link1" href="Dashboard.html" aria-label="Dashboard">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 44 44" fill="none">
-                                                        <rect x="0.113281" width="43.7588" height="44" rx="10" fill="#008000"/>
-                                                        <path d="M28.098 10L24.7907 13.11L31.4054 19.3299L34.7127 16.2199L28.098 10ZM21.4833 16.2199L8.25391 28.6597V34.8796H14.8686L28.098 22.4398L21.4833 16.2199Z" fill="white"/>
-                                                        </svg>                                                              
-                                            
-                                                </a>
+                                                
+                                                    <a class="nav-link1" href="3-inputIndustri.php?detail=<?php echo $result['id']; ?>" aria-label="Dashboard">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 45 44" fill="none">
+                                                            <rect width="44.2588" height="44" rx="10" fill="#295BDB"/>
+                                                            <path d="M33.9438 22.0125C31.1125 18.75 27.2 15 22 15C19.9 15 17.975 15.5938 15.9438 16.8625C14.2313 17.9375 12.475 19.45 10.0625 21.9375L10 22L10.4187 22.4312C13.8625 25.9562 16.8375 29 22 29C24.2812 29 26.4938 28.2563 28.7625 26.725C30.6938 25.4188 32.3375 23.7625 33.6562 22.425L34 22.0812L33.9438 22.0125ZM22 16C24.0688 16 26.0563 16.5938 28.075 17.9125C29.5688 18.8875 31.0375 20.2063 32.6812 22.0438C30.2875 24.4625 26.6938 28 22 28C19.8625 28 17.9875 27.475 16.1125 26.2375C14.3938 25.1062 12.8438 23.5312 11.35 22C15.0437 18.2687 18.125 16 22 16Z" fill="white"/>
+                                                            <path d="M22 27C24.7562 27 27 24.7562 27 22C27 19.2438 24.7562 17 22 17C19.2438 17 17 19.2438 17 22C17 24.7562 19.2438 27 22 27ZM22 18.0188C24.2 18.0188 26 19.8063 26 22C26 24.1937 24.2 25.9813 22 25.9813C19.8 25.9813 18.0063 24.1937 18.0063 22C18.0063 19.8063 19.8 18.0188 22 18.0188Z" fill="white"/>
+                                                            <path d="M23.9996 22C23.9996 23.0938 23.0996 24 22.0121 24C20.9246 24 19.9996 23.05 19.9996 21.9563C19.9996 20.8625 20.9871 20 21.9996 20V19C20.3434 19 19.0059 20.35 19.0059 22.0125C19.0059 23.675 20.3496 25.0187 21.9996 25.0187C23.6496 25.0187 24.9996 23.6688 24.9996 22.0125V22H23.9996Z" fill="white"/>
+                                                        </svg>
+                                                    </a>
                                             </td>
                                         </tr>
+                                        <?php 
+                                        }
+                                        ?>
                                     </tbody>
                                 </table>
                             </div>

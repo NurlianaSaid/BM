@@ -140,7 +140,7 @@
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="pesan siswa.php">
+                <a class="nav-link" href="pesan.php">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M22 24H2C0.897 24 0 22.6545 0 21V3C0 1.3455 0.897 0 2 0H22C23.103 0 24 1.3455 24 3V21C24 22.6545 23.103 24 22 24ZM2 1.5C1.4485 1.5 1 2.17275 1 3V21C1 21.8272 1.4485 22.5 2 22.5H22C22.5515 22.5 23 21.8272 23 21V3C23 2.17275 22.5515 1.5 22 1.5H2Z" fill="black"/>
                         <path d="M12.0002 15.8932L3.22871 7.37998C2.99671 7.15423 2.93021 6.69073 3.08021 6.34273C3.23021 5.99473 3.53971 5.89573 3.77171 6.11998L12.0002 14.1067L20.2287 6.11998C20.4607 5.89573 20.7702 5.99473 20.9202 6.34273C21.0702 6.69073 21.0037 7.15423 20.7717 7.37998L12.0002 15.8932Z" fill="black"/>
@@ -274,11 +274,11 @@
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="text">Pengajuan <span>Industri</span></h1>
-                        <a href="3-inputIndustri.php" class="btn btn-primary btn-icon-split">
+                        <!-- <a href="3-inputIndustri.php" class="btn btn-primary btn-icon-split">
                             <span class="icon text-white-50">
                                 <i>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 32 32" fill="none">
-                                        <g clip-path="url(#clip0_1162_269)">
+                                         <g clip-path="url(#clip0_1162_269)">
                                         <path d="M16.0006 30C12.2606 30 8.7456 28.544 6.1016 25.899C1.7796 21.578 0.753603 15.025 3.5476 9.595C3.8006 9.104 4.4026 8.911 4.8946 9.163C5.3856 9.415 5.5796 10.018 5.3266 10.51C2.9316 15.165 3.8106 20.781 7.5156 24.485C9.7816 26.752 12.7946 28 16.0006 28C19.2056 28 22.2196 26.752 24.4856 24.485C26.7516 22.218 28.0006 19.205 28.0006 16C28.0006 12.794 26.7526 9.781 24.4856 7.515C22.2186 5.249 19.2066 4 16.0006 4C12.7946 4 9.7816 5.249 7.5156 7.515C7.1246 7.906 6.4926 7.906 6.1016 7.515C5.7106 7.124 5.7106 6.492 6.1016 6.101C8.7456 3.457 12.2606 2 16.0006 2C19.7406 2 23.2566 3.457 25.8996 6.101C28.5446 8.745 30.0006 12.26 30.0006 16C30.0006 19.739 28.5446 23.255 25.8996 25.899C23.2566 28.544 19.7406 30 16.0006 30Z" fill="white"/>
                                         <path d="M16 22C15.448 22 15 21.553 15 21V11C15 10.448 15.448 10 16 10C16.552 10 17 10.448 17 11V21C17 21.553 16.552 22 16 22Z" fill="white"/>
                                         <path d="M21 17H11C10.448 17 10 16.552 10 16C10 15.448 10.448 15 11 15H21C21.553 15 22 15.448 22 16C22 16.552 21.553 17 21 17Z" fill="white"/>
@@ -292,7 +292,7 @@
                                 </i>
                             </span>
                             <span class="text">INPUT DATA</span>
-                        </a> 
+                        </a>  -->
                     </div>
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
@@ -308,7 +308,7 @@
                                             <th style="text-align: center;">Nama Industri</th>
                                             <th style="text-align: center;">Daerah</th>
                                             <th style="text-align: center;">Bergerak di bidang</th>
-                                            <th style="text-align: center;">status</th>
+                                            <th style="text-align: center;">Status</th>
                                             <th style="text-align: center;">Aksi</th>
                                         </tr>
                                     </thead>
@@ -378,14 +378,7 @@
                                                         <path d="M19.6313 10C17.7123 10 16.1422 11.35 16.1422 13H12.6531C10.7341 13 9.16406 14.35 9.16406 16H33.5876C33.5876 14.35 32.0175 13 30.0985 13H26.6094C26.6094 11.35 25.0394 10 23.1204 10H19.6313ZM12.6531 19V33.43C12.6531 33.76 12.9323 34 13.3161 34H29.4705C29.8543 34 30.1334 33.76 30.1334 33.43V19H26.6443V29.5C26.6443 30.34 25.8767 31 24.8998 31C23.9229 31 23.1553 30.34 23.1553 29.5V19H19.6662V29.5C19.6662 30.34 18.8986 31 17.9216 31C16.9447 31 16.1771 30.34 16.1771 29.5V19H12.688H12.6531Z" fill="white"/>
                                                         </svg>                                                                
                                                         <!-- <span>hapus</span> -->
-                                                </a>
-                                                <a class="nav-link1" href="3-inputIndustri.php?ubah=<?php echo $result['id']; ?>" aria-label="Dashboard">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 44 44" fill="none">
-                                                        <rect x="0.113281" width="43.7588" height="44" rx="10" fill="#008000"/>
-                                                        <path d="M28.098 10L24.7907 13.11L31.4054 19.3299L34.7127 16.2199L28.098 10ZM21.4833 16.2199L8.25391 28.6597V34.8796H14.8686L28.098 22.4398L21.4833 16.2199Z" fill="white"/>
-                                                    </svg>
-                                                </a>
-                                                
+                                                </a> 
                                                     <a class="nav-link1" href="detailpengajuan.php?detail=<?php echo $result['id']; ?>" aria-label="Dashboard">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 45 44" fill="none">
                                                             <rect width="44.2588" height="44" rx="10" fill="#295BDB"/>
