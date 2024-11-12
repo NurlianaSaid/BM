@@ -7,6 +7,7 @@ use Dompdf\Dompdf;
 $dompdf = new Dompdf();
 $html = file_get_contents('format.php');
 
+
 $dompdf->loadHtml($html);
 
 // (Optional) Setup the paper size and orientation

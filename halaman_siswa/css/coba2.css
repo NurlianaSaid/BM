@@ -118,6 +118,26 @@ header {
     /* padding: 10px; */
 }
 
+
+/* Efek hober table */
+.nested-table .tr_hover:hover {
+  background-color: #D9D9D9; /* Ubah warna latar belakang saat di-hover */
+      cursor: pointer; /* Ubah kursor jadi pointer saat di-hover */
+  }
+  
+  /* Efek hover pada tombol */
+  .nested-table .btn:hover,
+  .nested-table .daftar-btn:hover {
+      background-color: #007bff; /* Ubah warna latar belakang tombol saat di-hover */
+      color: #fff; /* Ubah warna teks tombol saat di-hover */
+      transition: background-color 0.3s, color 0.3s; /* Tambahkan transisi halus */
+  }
+  
+  /* Efek hover pada ikon info */
+  .nested-table .info-circle:hover svg {
+      fill: #007bff; /* Ubah warna ikon saat di-hover */
+      transition: fill 0.3s; /* Tambahkan transisi halus */
+  }
 /* Styling for Nested Table */
 .nested-table {
     width: 100%;
@@ -128,7 +148,7 @@ header {
 
 .nested-table td {
     padding: 8px;
-    border: 1px solid #ddd;
+    border: 1px solid rgba(0, 0, 0, 0.80);
 }
 
 /* Button Styling */
@@ -268,7 +288,7 @@ input[type="text"] {
 }
 .breadcrumb-text{
   width: 130%;
-  margin-left: 20px;
+  margin-left: 10px;
     margin-top: 10px;
   display: flex;
   flex-wrap: wrap;

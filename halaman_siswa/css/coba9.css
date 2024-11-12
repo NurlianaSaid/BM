@@ -6,10 +6,10 @@
     height: 100vh; /* Agar container memenuhi tinggi layar */
 }
 .form9 {
-    background-color: #fff;
-    padding:50px;
-    border: 1px solid #d3cece;
-    border-radius: 10px;
+    border-radius: 20px;
+border: 1px solid rgba(0, 0, 0, 0.50);
+background: #FFF;
+    padding:70px;
     width: 100%; /* Mengatur lebar 100% dari parent */
     max-width: 1000px; /* Lebar maksimal form */
     margin: 0 auto; /* Agar form berada di tengah */
@@ -26,9 +26,14 @@
     margin-bottom: 10px;
     border: 1px solid #3b3737;
     border-radius: 5px;
+    border-radius: 10px;
+border: 1px solid rgba(0, 0, 0, 0.50);
+background: #FFF;
 }
 .form9 input[readonly] {
-    background-color: #918f8f;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.50);
+    background: rgba(67, 64, 64, 0.50);
 }
 .buttons1{
     position: absolute;
@@ -36,10 +41,8 @@
     gap: 10px;
     justify-content: center; /* Untuk memposisikan tombol di tengah */
 }
-
 .save{
-    position: absolute;
-    margin-left: 600px;
+    margin-left: 1px;
     padding: 10px 20px;
     border: none;
     border-radius: 10px;
@@ -47,19 +50,27 @@
 }
 
 .cancel{
-    margin-left: 820px;
+    position: absolute;
+    margin-left: 311px;
     padding: 10px 20px;
     border: none;
     border-radius: 10px;
     cursor: pointer;
 }
 
+
 button.save {
-    background-color: #007bff;
+    height: 44px; 
+    border-radius: 10px;
+    background: #295BDB;
     color: white;
+    width: 148px;
 }
 
 button.cancel {
-    background-color: #ff5c5c;
+    height: 44px;
+    width: 148px;
+    border-radius: 10px;
+    background-color: #FD7777;
     color: white;
 }

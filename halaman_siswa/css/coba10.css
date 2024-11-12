@@ -1,0 +1,141 @@
+  
+   
+  .container1 {
+    margin-bottom: 30px;
+    margin-left: 63px;
+    width: 100%;
+    max-width: 1000px;
+    background-color: white;
+    padding: 31px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .attendance-box {
+    text-align: center;
+  }
+  
+  h1 {
+    font-size: 32px;
+    margin-bottom: 10px;
+  }
+  
+  .time-limit {
+    margin-bottom: 20px;
+    color: gray;
+    font-size: 15px;
+  }
+  
+  .info-section {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 30px;
+  }
+  
+  .info-item {
+    display: flex;
+    align-items: center;
+  }
+  
+  .icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 5px;
+  }
+  
+  .photo-section {
+    margin-top: 200px;
+  }
+  
+  .photo-button {
+    background-color: #007bff;
+    color: white;
+    padding: 15px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+  }
+  
+  .photo-button .camera-icon {
+    width: 20px;
+    margin-right: 10px;
+  }
+  
+  .status-section {
+    margin-top: 20px;
+  }
+  
+   
+  .status {
+    width: 80%;
+    padding: 10px;
+    margin-left: 0px;
+    padding-right: 620px;
+    text-align: right;
+    font-size: 16px;
+    color: rgb(131, 127, 127);
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin: 0 auto;
+  }
+  
+
+  .submit-button {
+    width: 80%;
+    padding: 10px;
+    background-color: #ccc;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    justify-content: flex-start;
+    cursor: not-allowed;
+    margin-top: 10px;
+  }
+  
+  .submit-button.active {
+    background-color: #28a745;
+    cursor: pointer;
+  }
+  
+  .submit-button.active:hover {
+    background-color: #218838;
+  }
+  
+
+   .photo-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px; /* Ketinggian kotak foto */
+    width: 150px;  /* Lebar kotak foto */
+    background-color: #3E92CC; /* Warna latar biru */
+    border-radius: 10px; /* Membuat sudut sedikit membulat */
+    margin: 20px auto;
+    position: relative;
+  }
+
+  .photo-section svg {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    fill: white; /* Warna ikon kamera */
+  }
+
+  .photo-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    position: relative;
+  }
+  .status-section img{
+    position: absolute;
+    align-items: center;
+    display: flex;
+    margin-top: 1rem;
+    margin-left: 7rem;
+  }

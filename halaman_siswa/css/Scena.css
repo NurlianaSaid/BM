@@ -11559,8 +11559,6 @@ letter-spacing: 1.6px;
 margin-top: -55px;
   margin-left: 858px;
 }
-
-
 .text-center{
   color: #000;
 text-align: center;
@@ -11583,34 +11581,4 @@ color: blue;
 
 .status-success {
   background-color: #6FFF2C;
-}
-
-.dropdown-containertabel {
-  /* display: flex; */
-  display: inline-block;
-}
-
-.month-dropdown {
-  margin-top: 7px;
-  margin-left: 600px;
-
-  padding: 5px;
-  font-size: 16px;
-  border-radius: 3px;
-border: 1px solid #ccc;
-background: #FFF;
-box-shadow: #ccc;
-  outline: none;
-  cursor: pointer;
-  /* appearance: none; Menghapus ikon dropdown default */
-  /* -webkit-appearance: none; Untuk Safari */
-  /* -moz-appearance: none; Untuk Firefox */
-  width: 178px;
-  height: 33px;
-
-}
-
-.month-dropdown:focus {
-  border-color: #ccc;
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }

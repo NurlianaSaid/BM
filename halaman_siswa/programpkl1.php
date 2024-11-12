@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -19,9 +17,8 @@
 
     <!-- Custom styles for this template -->
     <link href="css/Dashoboard.css" rel="stylesheet">
-   <link rel="stylesheet" href="css/coba7.css">
-   <link rel="stylesheet" href="css/coba8.css">
-   <link rel="stylesheet" href="css/laporan.css">
+    <link rel="stylesheet" href="css/coba1.css">
+    <!-- <link rel="stylesheet" href="css/coba5.css"> -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
 
     <!-- Custom styles for this page -->
@@ -39,17 +36,17 @@
 
             <!-- Sidebar - Brand -->
        
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="beranda.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="beranda.php">
                 <div class="sidebar-brand-icon rotate-n-" style="color: #000;">
-                    <i href="beranda.html"> <img src="img/Screenshot (7).png" alt=""></i>
+                    <i href="beranda.php"> <img src="img/Screenshot (7).png" alt=""></i>
                 </div>
-                <div class="sidebar-brand-text mx-1 mt-1" href="beranda.html">HALAMAN SISWA</div>  
+                <div class="sidebar-brand-text mx-1 mt-1" href="beranda.php">HALAMAN SISWA</div>  
             </a>
 
           
 
             <li class="nav-item">
-                <a class="nav-link" href="infosiswa.html" aria-label="Dashboard">
+                <a class="nav-link" href="infosiswa.php" aria-label="Dashboard">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M11.7891 9C12.3068 9 12.7266 8.58027 12.7266 8.0625C12.7266 7.54473 12.3068 7.125 11.7891 7.125C11.2713 7.125 10.8516 7.54473 10.8516 8.0625C10.8516 8.58027 11.2713 9 11.7891 9Z" fill="black"/>
                         <path d="M12.75 16.125V10.125H10.5V10.5H11.25V16.125H10.5V16.5H13.5V16.125H12.75Z" fill="black"/>
@@ -68,7 +65,7 @@
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="permohonanpkl.html">
+                <a class="nav-link collapsed" href="permohonanpkl.php">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g clip-path="url(#clip0_1882_1043)">
                         <path d="M19.5619 12.0977L21.0929 14.7507C22.0599 16.4247 21.4859 18.5657 19.8129 19.5317C19.2799 19.8387 18.6769 20.0007 18.0629 20.0007H15.9999V22.5007L10.9999 19.0007L15.9999 15.5007V18.0007H18.0619C18.3249 18.0007 18.5839 17.9307 18.8119 17.7997C19.5299 17.3857 19.7749 16.4677 19.3619 15.7507L17.8299 13.0977L19.5619 12.0977ZM7.30395 9.13474L7.83395 15.2147L5.66995 13.9647L4.63895 15.7507C4.50695 15.9787 4.43795 16.2377 4.43795 16.5007C4.43795 17.3287 5.10895 18.0007 5.93795 18.0007H8.99995V20.0007H5.93795C4.00495 20.0007 2.43795 18.4337 2.43795 16.5007C2.43795 15.8867 2.59995 15.2827 2.90695 14.7507L3.93695 12.9637L1.77295 11.7147L7.30295 9.13474H7.30395ZM13.7499 2.96974C14.2819 3.27674 14.7239 3.71874 15.0309 4.25074L16.061 6.03574L18.2269 4.78574L17.6969 10.8667L12.1649 8.28674L14.3299 7.03674L13.2989 5.25074C13.1669 5.02274 12.9779 4.83374 12.7499 4.70174C12.0329 4.28774 11.1149 4.53374 10.7009 5.25074L9.16895 7.90374L7.43695 6.90374L8.96995 4.25074C9.93595 2.57674 12.077 2.00274 13.7509 2.96974H13.7499Z" fill="black"/>
@@ -85,19 +82,20 @@
 
                 <!-- Nav Item - Pages Collapse Menu -->
                 <li class="nav-item">
-                    <a class="nav-link collapsed" href="alamatpkl.html">
+                    <a class="nav-link collapsed" href="alamatpkl.php">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M12.0469 21.1017C11.9267 21.1017 11.8086 21.0709 11.7038 21.0122C9.64688 19.865 7.93375 18.1893 6.74146 16.1582C5.54917 14.1272 4.92099 11.8145 4.92188 9.45938C4.92188 9.36313 4.92281 9.26719 4.92469 9.17156C4.97156 7.03969 5.76516 5.24438 7.22156 3.98016C8.50969 2.86453 10.223 2.25 12.0469 2.25C13.8708 2.25 15.5836 2.86453 16.8703 3.98016C18.3281 5.24578 19.1231 7.03969 19.1672 9.17156C19.1672 9.26531 19.1705 9.36328 19.1705 9.45938C19.1717 11.851 18.5237 14.198 17.2955 16.2502C16.1033 18.2379 14.4122 19.8795 12.39 21.0122C12.2852 21.0709 12.167 21.1017 12.0469 21.1017ZM12.0469 3.65625C10.5614 3.65625 9.17531 4.14844 8.14453 5.04281C6.99469 6.03938 6.3675 7.4775 6.33094 9.20156C6.33094 9.28688 6.32813 9.37313 6.32813 9.45938C6.32743 11.4969 6.85365 13.5 7.85569 15.2741C8.85773 17.0482 10.3015 18.533 12.0469 19.5844C13.7057 18.5815 15.0941 17.1882 16.0913 15.5259C17.1881 13.6925 17.7668 11.5958 17.7656 9.45938C17.7656 9.37313 17.7656 9.28688 17.7628 9.20156C17.7258 7.4775 17.0986 6.03938 15.9492 5.04281C14.918 4.14844 13.5323 3.65625 12.0469 3.65625Z" fill="black"/>
                             <path d="M12.0651 13.903C11.1906 13.903 10.3358 13.6437 9.60874 13.1579C8.88166 12.6721 8.31498 11.9816 7.98035 11.1737C7.64571 10.3659 7.55816 9.47689 7.72875 8.61926C7.89935 7.76162 8.32043 6.97383 8.93876 6.3555C9.55708 5.73718 10.3449 5.3161 11.2025 5.1455C12.0601 4.97491 12.9491 5.06246 13.757 5.3971C14.5649 5.73173 15.2554 6.29841 15.7412 7.02548C16.227 7.75255 16.4863 8.60736 16.4863 9.4818C16.4851 10.654 16.0189 11.7778 15.19 12.6067C14.3611 13.4356 13.2373 13.9018 12.0651 13.903ZM12.0651 6.46727C11.4687 6.46727 10.8858 6.64411 10.39 6.97542C9.89413 7.30673 9.50769 7.77764 9.27951 8.32859C9.05132 8.87953 8.99164 9.48577 9.10802 10.0706C9.22439 10.6555 9.51159 11.1927 9.93329 11.6144C10.355 12.036 10.8923 12.3231 11.4771 12.4394C12.062 12.5557 12.6683 12.4959 13.2192 12.2676C13.7701 12.0394 14.2409 11.6528 14.5722 11.157C14.9034 10.6611 15.0801 10.0781 15.0801 9.4818C15.0787 8.68276 14.7605 7.91687 14.1954 7.35204C13.6302 6.78721 12.8641 6.46954 12.0651 6.46867V6.46727Z" fill="black"/>
                             </svg>                     
-                        <span>Permohonan PKL</span>
+                        <span>Alamat PKL</span>
                     </a> 
                    
                 </li>
 
              <!-- Nav Item - Utilities Collapse Menu -->
+
              <li class="nav-item">
-                <a class="nav-link active  collapsed" href="#" id="dropdown_toggle" data-toggle="collapse" data-target="#collapseTwo"
+                <a class="nav-link  active" href="#" id="dropdown_toggle" data-toggle="collapse" data-target="#collapseTwo"
                 aria-expanded="true" aria-controls="collapseTwo">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M15.5 9H8.5V4H15.5V9ZM9.5 8H14.5V5H9.5V8Z" fill="black"/>
@@ -121,14 +119,11 @@
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="Jurnal.html">Jurnal</a>
-                        <a class="collapse-item active" href="Laporan.html">Laporan</a>
+                        <a class="collapse-item" href="Jurnal.php">Jurnal</a>
+                        <a class="collapse-item active" href="Laporan.php">Laporan</a>
                     </div>
                 </div>
             </li>
-
-        </ul>
-
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
@@ -159,7 +154,7 @@
                     <!-- Topbar Search -->
                     <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                         <div class="input-group">
-                            <a class="nav-link1 active" href="Laporan.html" aria-label="Dashboard">
+                            <a class="nav-link1 active" href="programpkl1.php" aria-label="Dashboard">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M15.5 9H8.5V4H15.5V9ZM9.5 8H14.5V5H9.5V8Z" fill="black"/>
                                     <path d="M20.5 24H2.5V0H20.5V24ZM3.5 23H19.5V1H3.5V23Z" fill="black"/>
@@ -173,92 +168,21 @@
                                     <path d="M4.5 13H1.5V14H4.5V13Z" fill="black"/>
                                     <path d="M4.5 16H1.5V17H4.5V16Z" fill="black"/>
                                     <path d="M4.5 19H1.5V20H4.5V19Z" fill="black"/>
-                                </svg>
+                                    </svg>
                                 <span>Program PKL</span>
                             </a>
-
                         </div>
                     </form>
                    
                     <!-- Topbar Navbar -->
                     <div class="position">
-                        <nav class="breadcrumb">
-                            <section class="content">
-                            <span class="textd">Siswa</span>
-                            <span>/ Program PKL </span>
-                        </nav> 
+                    <nav class="breadcrumb1">
+                    <section class="content">
+                    <span class="textd">Siswa</span>
+                     <span>/ Laporan</span>
+                    </nav>
                     </div>
-                    <div class="container1">
-                        <!-- Main Content -->
-                      
-    <main class="main-content">
-        <section class="upload-section">
-            <h3>Unggah Laporan</h3>
-            <div class="upload-box">
-                <p>Letakkan berkas di sini</p>
-                <span>atau</span>
-                <button class="file-btn" onclick="document.getElementById('fileInput').click()">Pilih File</button>
-                <!-- Hidden file input -->
-                <input type="file" id="fileInput" style="display: none;" onchange="displayFileName()">
-            </div>
-        </section>
-        
-<!-- Bilah Status -->
-<div class="status-bar" id="statusBar">
-    <span>File berhasil dihapus.</span>
-    <button class="close-btn" onclick="closeStatusBar()">&times;</button>
-</div>
-
-<section class="file-section">
-    <div class="file-item">
-        <div class="file-card" id="fileDisplayArea">
-            <i class="fas fa-file-alt"></i> Contoh Laporan
-        </div>
-    </div>
-    <div class="action-buttons">
-        <button class="upload-btn">Unggah</button>
-        <button class="delete-btn" onclick="showModal()">Hapus</button>
-    </div>
-</section>
-
-<!-- Modal Konfirmasi -->
-<div class="modal-overlay" id="modal">
-    <div class="modal-box">
-        <p>Apakah Anda yakin ingin menghapus file ini?</p>
-        <button class="modal-btn confirm-btn" onclick="hapusFile()">Ya, Hapus</button>
-        <button class="modal-btn cancel-btn" onclick="closeModal()">Batal</button>
-    </div>
-</div>
-
-<script>
-function showModal() {
-    document.getElementById("modal").style.display = "flex";
-}
-
-function closeModal() {
-    document.getElementById("modal").style.display = "none";
-}
-
-function hapusFile() {
-    // Menghapus tampilan file di area fileDisplayArea
-    document.getElementById("fileDisplayArea").textContent = "File telah dihapus.";
-    
-    // Tampilkan bilah status
-    document.getElementById("statusBar").style.display = "flex";
-    
-    closeModal();
-}
-
-function closeStatusBar() {
-    // Sembunyikan bilah status
-    document.getElementById("statusBar").style.display = "none";
-}
-</script>
-
-    </main>
-    <script src="css/coba8.js"></script>
-                    </div> 
-                    
+                   
                     <ul class="navbar-nav ml-auto">
                          
                         <!-- Nav Item - Search Dropdown (Visible Only XS) -->
@@ -409,7 +333,7 @@ function closeStatusBar() {
                 </div>
                 
                 <div class="modal-footer">
-                    <a class="btn btn-primary" style="width: 125.184px;" href="login.html">Yes,Logout</a>
+                    <a class="btn btn-primary" style="width: 125.184px;" href="login.php">Yes,Logout</a>
                     <button class="btn btn-white" type="button" data-dismiss="modal" style="border: 1px solid #D9D9D9; width: 89px;">Cancel</button>
                    
                 </div>
@@ -447,12 +371,12 @@ function closeStatusBar() {
     const menuItem = document.querySelectorAll('li.nav-item a'); // Mendapatkan semua elemen 'a' di dalam 'li.nav-item'
     
     menuItem.forEach(item => {
-      if(item.href.includes("Pengajuan siswa.html")){ 
+      if(item.href.includes("Pengajuan siswa.php")){ 
         item.classList.add('active'); // Tambahkan class 'active' jika URL mengandung "industri.html"
       }
     });
   </script>
-
+   <script src="programpkl.js"></script>
 </body>
 
 </html>
