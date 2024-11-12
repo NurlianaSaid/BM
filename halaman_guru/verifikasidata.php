@@ -14,13 +14,14 @@ if (isset($_POST['id_jurnal']) && isset($_POST['status'])) {
     }
 }
 
+
 // Query SQL
 $sql = "SELECT 
             tb_jurnal.id_jurnal,
             tb_jurnal.tanggal,
             tb_jurnal.kegiatan,
-            tb_jurnal.uraian,
             tb_jurnal.status,
+            tb_jurnal.uraian,
             tb_siswa.Nama_siswa,
             tb_siswa.Kelas_siswa,
             tb_perusahaan.nama_perusahaan
@@ -63,7 +64,6 @@ $result = $conn->query($sql);
             .nav-item a.active {
             background-color: #A1CCCF; /* Biru muda */
             color: #fff; /* Warna teks saat hover */
-            /* opacity: 0.5; */
             height: 54px;
             border-left: 4px solid blue;
         }
@@ -84,6 +84,7 @@ $result = $conn->query($sql);
 
     <!-- Custom styles for this template -->
     <link href="css/sb-admin-2.css?v1" rel="stylesheet">
+        <link rel="stylesheet" href="css/jadwal.css?v2">
 
     <!-- Custom styles for this page -->
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
@@ -268,46 +269,19 @@ $result = $conn->query($sql);
                                             <th>Keterangan</th>
                                             <th>Aksi</th> 
                                         </tr>
-                                    </thead>
-                                    <!-- <tfoot>
-                                        <tr>
-                                            <th>No</th>
-                                            <th>Nama Industri</th>
-                                            <th>Nama Siswa</th>
-                                            <th>Tanggal</th>
-                                            <th>Keterangan</th>
-                                            <th>Aksi</th> 
-                                        </tr>
-                                    </tfoot> -->
-                                    <!-- <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Afila Media Karya</td>
-                                            <td>Anty</td>
-                                            <td>06/10/2024</td>
-                                            <td>Belum Terbaca</td>
-                                            <td>
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 44 44" fill="none">
-                                                    <rect width="44.2588" height="44" rx="10" fill="#295BDB"/>
-                                                    <g transform="translate(5, 5)"> 
-                                                     <path d="M27.9438 16.0125C25.1125 12.75 21.2 9 16 9C13.9 9 11.975 9.59375 9.94375 10.8625C8.23125 11.9375 6.475 13.45 4.0625 15.9375L4 16L4.41875 16.4312C7.8625 19.9562 10.8375 23 16 23C18.2812 23 20.4938 22.2563 22.7625 20.725C24.6938 19.4188 26.3375 17.7625 27.6562 16.425L28 16.0812L27.9438 16.0125ZM16 10C18.0688 10 20.0563 10.5938 22.075 11.9125C23.5688 12.8875 25.0375 14.2063 26.6812 16.0438C24.2875 18.4625 20.6938 22 16 22C13.8625 22 11.9875 21.475 10.1125 20.2375C8.39375 19.1062 6.84375 17.5312 5.35 16C9.04375 12.2687 12.125 10 16 10Z" fill="white"/>
-                                                     <path d="M16 21C18.7562 21 21 18.7562 21 16C21 13.2438 18.7562 11 16 11C13.2438 11 11 13.2438 11 16C11 18.7562 13.2438 21 16 21ZM16 12.0188C18.2 12.0188 20 13.8063 20 16C20 18.1937 18.2 19.9813 16 19.9813C13.8 19.9813 12.0063 18.1937 12.0063 16C12.0063 13.8063 13.8 12.0188 16 12.0188Z" fill="white"/>
-                                                     <path d="M18.0016 16C18.0016 17.0938 17.1016 18 16.0141 18C14.9266 18 14.0016 17.05 14.0016 15.9563C14.0016 14.8625 14.9891 14 16.0016 14V13C14.3453 13 13.0078 14.35 13.0078 16.0125C13.0078 17.675 14.3516 19.0187 16.0016 19.0187C17.6516 19.0187 19.0016 17.6688 19.0016 16.0125V16H18.0016Z" fill="white"/>
-                                                 </g>
-                                             </svg>
-                                              </td>
-                                        </tr>
-                                    </tbody> -->
+                                 </thead>                                
                                     <?php
 if ($result->num_rows > 0) {
     $no = 1;
     while ($row = $result->fetch_assoc()) {
-        // Translasi hari dalam bahasa Indonesia
+
            // Menampilkan status di halaman
-           $statusButton = $row["status"] == "Terbaca" ? 
+           $statusButton = $row["status"] == "terbaca" ? 
            "<span class='kett'>Terbaca</span>" : 
-           "<span class='sel' onclick='confirmAndComplete(this, " . $row['id_jurnal'] . ")'>Belum Terbaca</span>";
-           
+           "<span class='sel' >Belum Terbaca</span>";
+       
+
+
                 echo "<tr>
                         <td>" . $no . "</td>
                         <td>" . $row["nama_perusahaan"] . "</td>
@@ -315,22 +289,73 @@ if ($result->num_rows > 0) {
                         <td>" . $row["Kelas_siswa"] . "</td>
                         <td>" . $row["tanggal"] . "</td>
                          <td class='aksi'>" . $statusButton . "</td>
-                        <td> <button class='btn' data-toggle='modal' data-target='#detailModal$id'>
-                                                <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 44 44' fill='none'>
-                                                    <rect width='44.2588' height='44' rx='10' fill='#295BDB' />
-                                                    <g transform='translate(5, 5)'>
-                                                        <path d='M27.9438 16.0125C25.1125 12.75 21.2 9 16 9C13.9 9 11.975 9.59375 9.94375 10.8625C8.23125 11.9375 6.475 13.45 4.0625 15.9375L4 16L4.41875 16.4312C7.8625 19.9562 10.8375 23 16 23C18.2812 23 20.4938 22.2563 22.7625 20.725C24.6938 19.4188 26.3375 17.7625 27.6562 16.425L28 16.0812L27.9438 16.0125ZM16 10C18.0688 10 20.0563 10.5938 22.075 11.9125C23.5688 12.8875 25.0375 14.2063 26.6812 16.0438C24.2875 18.4625 20.6938 22 16 22C13.8625 22 11.9875 21.475 10.1125 20.2375C8.39375 19.1062 6.84375 17.5312 5.35 16C9.04375 12.2687 12.125 10 16 10Z' fill='white' />
-                                                        <path d='M16 21C18.7562 21 21 18.7562 21 16C21 13.2438 18.7562 11 16 11C13.2438 11 11 13.2438 11 16C11 18.7562 13.2438 21 16 21ZM16 12.0188C18.2 12.0188 20 13.8063 20 16C20 18.1937 18.2 19.9813 16 19.9813C13.8 19.9813 12.0063 18.1937 12.0063 16C12.0063 13.8063 13.8 12.0188 16 12.0188Z' fill='white' />
-                                                        <path d='M18.0016 16C18.0016 17.0938 17.1016 18 16.0141 18C14.9266 18 14.0016 17.05 14.0016 15.9563C14.0016 14.8625 14.9891 14 16.0016 14V13C14.3453 13 13.0078 14.35 13.0078 16.0125C13.0078 17.675 14.3516 19.0187 16.0016 19.0187C17.6516 19.0187 19.0016 17.6688 19.0016 16.0125V16H18.0016Z' fill='white' />
-                                                    </g>
-                                                </svg>
-                                                   </button></td>
+                         <td>
+  <button class='btn' data-toggle='modal' data-target='#detailModal" . $row['id_jurnal'] . "' >                        
+    <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 44 44' fill='none'>
+        <rect width='44.2588' height='44' rx='10' fill='#295BDB' />
+        <g transform='translate(5, 5)'>
+            <path d='M27.9438 16.0125C25.1125 12.75 21.2 9 16 9C13.9 9 11.975 9.59375 9.94375 10.8625C8.23125 11.9375 6.475 13.45 4.0625 15.9375L4 16L4.41875 16.4312C7.8625 19.9562 10.8375 23 16 23C18.2812 23 20.4938 22.2563 22.7625 20.725C24.6938 19.4188 26.3375 17.7625 27.6562 16.425L28 16.0812L27.9438 16.0125ZM16 10C18.0688 10 20.0563 10.5938 22.075 11.9125C23.5688 12.8875 25.0375 14.2063 26.6812 16.0438C24.2875 18.4625 20.6938 22 16 22C13.8625 22 11.9875 21.475 10.1125 20.2375C8.39375 19.1062 6.84375 17.5312 5.35 16C9.04375 12.2687 12.125 10 16 10Z' fill='white' />
+            <path d='M16 21C18.7562 21 21 18.7562 21 16C21 13.2438 18.7562 11 16 11C13.2438 11 11 13.2438 11 16C11 18.7562 13.2438 21 16 21ZM16 12.0188C18.2 12.0188 20 13.8063 20 16C20 18.1937 18.2 19.9813 16 19.9813C13.8 19.9813 12.0063 18.1937 12.0063 16C12.0063 13.8063 13.8 12.0188 16 12.0188Z' fill='white' />
+            <path d='M18.0016 16C18.0016 17.0938 17.1016 18 16.0141 18C14.9266 18 14.0016 17.05 14.0016 15.9563C14.0016 14.8625 14.9891 14 16.0016 14V13C14.3453 13 13.0078 14.35 13.0078 16.0125C13.0078 17.675 14.3516 19.0187 16.0016 19.0187C17.6516 19.0187 19.0016 17.6688 19.0016 16.0125V16H18.0016Z' fill='white' />
+        </g>
+    </svg>
+</button>
+
+                    </td>
+                </td>
                       </tr>";
+
+                      echo "
+                      <div class='modal fade' id='detailModal" . $row['id_jurnal'] . "' tabindex='-1' aria-labelledby='detailModalLabel" . $row['id_jurnal'] . "' aria-hidden='true'>
+                  <div class='modal-dialog modal-lg modal-dialog-centered'>
+                      <div class='modal-content'>
+                          <div class='modal-header'>
+                              <h5 class='modal-title'>Detail Jurnal - " . htmlspecialchars($row['Nama_siswa']) . "</h5>
+                              <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                                  <span aria-hidden='true'>&times;</span>
+                              </button>
+                          </div>
+                          <div class='modal-body'>
+                              <div class='form-group'>
+                                  <label>Nama DU/DI:</label>
+                                  <input type='text' class='form-control' value='" . htmlspecialchars($row['nama_perusahaan']) . "' readonly>
+                              </div>
+                              <div class='form-group'>
+                                  <label>Nama Siswa:</label>
+                                  <input type='text' class='form-control' value='" . htmlspecialchars($row['Nama_siswa']) . "' readonly>
+                              </div>
+                              <div class='form-group'>
+                                  <label>Kelas:</label>
+                                  <input type='text' class='form-control' value='" . htmlspecialchars($row['Kelas_siswa']) . "' readonly>
+                              </div>
+                              <div class='form-group'>
+                                  <label>Tanggal:</label>
+                                  <input type='text' class='form-control' value='" . htmlspecialchars($row['tanggal']) . "' readonly>
+                              </div>
+                              <div class='form-group'>
+                                  <label>Alamat:</label>
+                                  <input type='text' class='form-control' value='" . htmlspecialchars($row['kegiatan']) . "' readonly>
+                              </div>
+                              <div class='form-group'>
+                                  <label>Jumlah Siswa:</label>
+                                  <input type='text' class='form-control' value='" . htmlspecialchars($row['uraian']) . "' readonly>
+                              </div>
+                          <div class='modal-footer'>
+                              <button type='button' class='btn btn-primary' data-dismiss='modal' onclick='updateStatus(" . $row['id_jurnal'] . ")'>Selesai</button>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              ";
+
+
                 $no++;
             }
         } else {
             echo "<tr><td colspan='5'>No results found.</td></tr>";
         }
+
+
         ?>
                                 </table>
                             </div>
@@ -354,6 +379,36 @@ if ($result->num_rows > 0) {
                     item.classList.add('active'); // Tambahkan class 'active' jika URL mengandung "industri.html"
                   }
                 });
+
+                 // Cek apakah status sudah diperbarui
+    <?php if (isset($_SESSION['status_updated']) && $_SESSION['status_updated'] === true) { ?>
+        alert("Terimakasih!");
+        <?php 
+            unset($_SESSION['status_updated']); // Reset session setelah alert ditampilkan
+        ?>
+    <?php } ?>
+    
+    function updateStatus(idJurnal) {
+        $.ajax({
+            url: '', // URL ke file PHP saat ini
+            method: 'POST',
+            data: {
+                id_jurnal: idJurnal,
+                status: 'terbaca'
+            },
+            success: function(response) {
+                // Status berhasil diperbarui, jadi jangan tampilkan alert saat reload
+                location.reload();
+            },
+            error: function(xhr, status, error) {
+                console.error("Gagal memperbarui status: " + error);
+            }
+        });
+    }
               </script>
+                          <?php
+// Tutup koneksi
+$conn->close();
+?>
             
             <?php require 'footer.php' ?>
