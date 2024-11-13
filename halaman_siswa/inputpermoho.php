@@ -117,7 +117,7 @@
                         <path d="M6 9L12 15L18 9H6Z" fill="black"/>
                     </svg>
                 </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="Jurnal.php">Jurnal</a>
                         <a class="collapse-item" href="Laporan.php">Laporan</a>
