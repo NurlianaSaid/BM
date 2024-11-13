@@ -182,27 +182,27 @@
                             <div class="form-wrapper">
                                 <div class="form-group">
                                     <label for="Nama">Nama :</label>
-                                    <input type="text" id="Nama" value="Zaskia">
+                                    <input type="text" id="Nama" value="Zaskia" readonly>
                                 </div>
                                 <div class="form-group">
                                     <label for="jurusan">Jurusan :</label>
-                                    <input type="text" id="jurusan" value="RPL">
+                                    <input type="text" id="jurusan" value="RPL"readonly>
                                 </div>
                                 <div class="form-group">
                                     <label for="Username">Username :</label>
-                                    <input type="text" id="Username" value="Kya">
+                                    <input type="text" id="Username" value="Kya"readonly>
                                 </div>
                                 <div class="form-group">
                                     <label for="tempat">Tempat :</label>
-                                    <input type="text" id="Tempat" value="Afila media karya">
+                                    <input type="text" id="Tempat" value="Afila media karya"readonly>
                                 </div>
                                 <div class="form-group">
                                     <label for="Nis">NIS :</label>
-                                    <input type="text" id="Nis" value="22112006">
+                                    <input type="text" id="Nis" value="22112006"readonly>
                                 </div>
                                 <div class="form-group">
                                     <label for="Alamat">Alamat :</label>
-                                    <input type="text" id="Alamat" value="Gowa">
+                                    <input type="text" id="Alamat" value="Gowa"readonly>
                                 </div>
                             </div>
                         </div>

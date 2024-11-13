@@ -299,7 +299,7 @@
                 <nav class="breadcrumb">
                     <section class="content">
                     <span class="textd">Siswa</span>
-                    <span>/ Jurnal Siswa</span>
+                    <span>/ Program PKL</span>
                 </nav>
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
