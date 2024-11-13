@@ -1,3 +1,6 @@
+<?php include 'koneksi.php' ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,7 +22,7 @@
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.css" rel="stylesheet">
-   <link rel="stylesheet" href="css/coba2.css">
+   <link rel="stylesheet" href="css/coba2.css?v2">
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
 
@@ -356,9 +359,9 @@
                                                             <tr class="tr_hover">
                                                                 <td>Software House</td>
                                                                 <td>Atilla Media Karya</td>
-                                                                <td><button class="btn btn-circle "></button>
-                                                                    <div class="info-circle">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                                                                <!-- <td><button class="btn btn-circle "></button> -->
+                                                                 <td>
+                                                                <a href="inputpermoho.php"><button class="daftar-btn"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
                                                                             <g clip-path="url(#clip0_1112_2)">
                                                                               <path d="M7.00008 12.8327C10.2217 12.8327 12.8334 10.221 12.8334 6.99935C12.8334 3.77769 10.2217 1.16602 7.00008 1.16602C3.77842 1.16602 1.16675 3.77769 1.16675 6.99935C1.16675 10.221 3.77842 12.8327 7.00008 12.8327Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                                                                               <path d="M7 9.33333V7" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -369,9 +372,12 @@
                                                                                 <rect width="14" height="14" fill="white"/>
                                                                               </clipPath>
                                                                             </defs>
-                                                                          </svg>
-                                                                    </div>
-                                                                <a href="inputpermoho.php"><button class="daftar-btn"> Daftar</button></a>
+                                                                          </svg>    Daftar</button></a>
+                                                                          </td>
+                                                                    <!-- <div class="info-circle"> -->
+                                                                        
+                                                                    <!-- </div> -->
+                                                              
                                                             </tr>
                                                         </table>
                                                         

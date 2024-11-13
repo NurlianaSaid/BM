@@ -128,11 +128,16 @@ header {
   /* Efek hover pada tombol */
   .nested-table .btn:hover,
   .nested-table .daftar-btn:hover {
-      background-color: #007bff; /* Ubah warna latar belakang tombol saat di-hover */
-      color: #fff; /* Ubah warna teks tombol saat di-hover */
-      transition: background-color 0.3s, color 0.3s; /* Tambahkan transisi halus */
+      background-color: #007bff; 
+      color: #fff;
+      transition: background-color 0.3s, color 0.3s, stroke 0.3s; /* Tambahkan stroke ke dalam daftar transition */
   }
   
+  .daftar-btn:hover svg path {
+      stroke: #fff; 
+  }
+  
+
   /* Efek hover pada ikon info */
   .nested-table .info-circle:hover svg {
       fill: #007bff; /* Ubah warna ikon saat di-hover */

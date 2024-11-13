@@ -362,7 +362,7 @@ if ($result->num_rows > 0) {
                 });
 
 
-                function confirmAndComplete(element, idJadwal) {
+     function confirmAndComplete(element, idJadwal) {
 
                       // Jika status sudah selesai, tidak ada aksi yang dilakukan
     if (element.className === 'kett') {
