@@ -1,6 +1,47 @@
 <?php
-// Koneksi ke database
+
+include 'komas.php';
 include 'laporanmonir/koneksi.php';
+
+
+$perusahaan_options = [];
+$alamat_perusahaan = [];
+
+if ($kode_guru == '0001') {
+    $perusahaan_options = [
+        "Afila Media Karya",
+        "Indigo Hub",
+        "Percetakan",
+        "Bengkel",
+        "Telkom",
+        "Yamaha",
+        "Suzuki"
+    ];
+    $alamat_perusahaan = [
+        "Afila Media Karya" => "Gowa",
+        "Indigo Hub" => "Pettarani",
+        "Percetakan" => "Alamat Percetakan",
+        "Bengkel" => "Alamat Bengkel",
+        "Telkom" => "Alamat Telkom",
+        "Yamaha" => "Alamat Yamaha",
+        "Suzuki" => "Alamat Suzuki"
+    ];
+} elseif ($kode_guru == '0003') {
+    $perusahaan_options = [
+        "Pengadilan Agama",
+        "Pengadilan Negeri",
+        "Komimfo Majene"
+    ];
+    $alamat_perusahaan = [
+        "Pengadilan Agama" => "Alamat Pengadilan Agama",
+        "Pengadilan Negeri" => "Alamat Pengadilan Negeri",
+        "Komimfo Majene" => "Alamat Komimfo Majene"
+    ];
+} else {
+    $perusahaan_options = ["Default Perusahaan"];
+    $alamat_perusahaan = ["Default Perusahaan" => "Alamat Default"];
+}
+
 
 // Proses tambah data
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['action'] == 'add') {
@@ -74,7 +115,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action']) && $_POST['a
     $id = $_POST['id'];
 
     // Dapatkan nama file dari database untuk dihapus
-    $stmt = $conn->prepare("SELECT Gambar FROM tb_laporanmonir WHERE Id_laporanmonir = ?");
+    $stmt = $conn->prepare("SELECT Gambar FROM tb_laporanmonir WHERE id_laporanmonir = ?");
     $stmt->bind_param("i", $id);
     $stmt->execute();
     $stmt->bind_result($fileName);
@@ -89,7 +130,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action']) && $_POST['a
     }
 
     // Siapkan statement untuk menghapus data
-    $stmt = $conn->prepare("DELETE FROM tb_laporanmonir WHERE Id_laporanmonir = ?");
+    $stmt = $conn->prepare("DELETE FROM tb_laporanmonir WHERE id_laporanmonir = ?");
     $stmt->bind_param("i", $id);
 
     // Eksekusi statement
@@ -102,6 +143,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['action']) && $_POST['a
     // Tutup statement
     $stmt->close();
 }
+
 
 
 // Proses edit data
@@ -162,11 +204,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['a
     // Siapkan query untuk update data
     if ($uploadOk == 1 && !empty($target_file)) {
         // Jika ada gambar baru, masukkan juga kolom Gambar
-        $stmt = $conn->prepare("UPDATE tb_laporanmonir SET Nama_perusahaan=?, Tanggal=?, Kelas=?, Kabupaten=?, Jumlah_siswa=?, Nama_siswa=?, Cttn_perkembangan=?, Cttn_pelanggaran=?, Gambar=? WHERE Id_laporanmonir=?");
+        $stmt = $conn->prepare("UPDATE tb_laporanmonir SET Nama_perusahaan=?, Tanggal=?, Kelas=?, Kabupaten=?, Jumlah_siswa=?, Nama_siswa=?, Cttn_perkembangan=?, Cttn_pelanggaran=?, Gambar=? WHERE id_laporanmonir=?");
         $stmt->bind_param("sssssssssi", $perusahaan, $tanggal, $kelas, $alamat, $jumlah, $namaSiswaString, $perkembanganString, $pelanggaranString, $target_file, $id);
     } else {
         // Jika tidak ada gambar baru, update tanpa kolom Gambar
-        $stmt = $conn->prepare("UPDATE tb_laporanmonir SET Nama_perusahaan=?, Tanggal=?, Kelas=?, Kabupaten=?, Jumlah_siswa=?, Nama_siswa=?, Cttn_perkembangan=?, Cttn_pelanggaran=? WHERE Id_laporanmonir=?");
+        $stmt = $conn->prepare("UPDATE tb_laporanmonir SET Nama_perusahaan=?, Tanggal=?, Kelas=?, Kabupaten=?, Jumlah_siswa=?, Nama_siswa=?, Cttn_perkembangan=?, Cttn_pelanggaran=? WHERE id_laporanmonir=?");
         $stmt->bind_param("ssssssssi", $perusahaan, $tanggal, $kelas, $alamat, $jumlah, $namaSiswaString, $perkembanganString, $pelanggaranString, $id);
     }
 
@@ -183,8 +225,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['a
 
 
 
-// Query untuk mengambil semua data
-$sql = "SELECT Id_laporanmonir, Nama_perusahaan, Tanggal, Kelas, Kabupaten, Jumlah_siswa, Nama_siswa, Cttn_perkembangan, Cttn_pelanggaran, Gambar FROM tb_laporanmonir"; 
+// Query untuk menampilkan data hanya untuk guru yang sesuai
+$sql = "SELECT * FROM tb_laporanmonir WHERE kode_guru = '$kode_guru'";
 $result = $conn->query($sql);
 ?>
 
@@ -209,7 +251,7 @@ $result = $conn->query($sql);
                 $counter = 1;
                 while ($row = $result->fetch_assoc()) {
                     // Ensure $id is defined here
-                    $id = htmlspecialchars($row['Id_laporanmonir']);
+                    $id = htmlspecialchars($row['id_laporanmonir']);
             
                 echo "<tr>
                     <td>" . htmlspecialchars($counter) . "</td>
@@ -225,7 +267,7 @@ $result = $conn->query($sql);
                     <td>
                         <form action='' method='POST' onsubmit='return confirmDelete();' style='display: inline;'>
                         <input type='hidden' name='action' value='delete'>
-                        <input type='hidden' name='id' value='" . htmlspecialchars($row['Id_laporanmonir']) . "'>
+                        <input type='hidden' name='id' value='" . htmlspecialchars($row['id_laporanmonir']) . "'>
                         <button type='submit' style='border: none; background: none; cursor: pointer;'>
                             <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 44 44' fill='none'>
                                 <rect width='43.7588' height='44' rx='10' fill='#FF0000' />
@@ -303,9 +345,9 @@ $result = $conn->query($sql);
                                   <img src='" . htmlspecialchars($row['Gambar']) . "' alt='Gambar' style='max-width: 100%; height: auto;'>
                               </div>
                           </div>
-                          <div class='modal-footer'>
-                              <button type='button' class='btn btn-secondary' data-dismiss='modal'>Tutup</button>
-                          </div>
+                         <div class='modal-footer d-flex justify-content-end'>
+                       <button type='button' class='btn btn-secondary' data-dismiss='modal'>Tutup</button>
+                    </div>
                       </div>
                   </div>
               </div>";
@@ -336,20 +378,22 @@ echo "
                     <input type='hidden' name='id' value='" . htmlspecialchars($id) . "'>
                     
                     <!-- Pilih Nama Perusahaan -->
-                  <div class='form-group'>
-    <label for='perusahaan_$id'>Nama DU/DI:</label>
-    <select class='form-control perusahaan' name='perusahaan' id='perusahaan_$id' required>
-        <option value=''>Pilih Perusahaan</option>
-       <option value='Afila Media Karya' data-alamat='Gowa' " . ($row['Nama_perusahaan'] == 'Afila Media Karya' ? 'selected' : '') . ">Afila Media Karya</option>
-<option value='Indigo Hub' data-alamat='Pettarani' " . ($row['Nama_perusahaan'] == 'Indigo Hub' ? 'selected' : '') . ">Indigo Hub</option>
-<option value='Percetakan' data-alamat='Alamat Percetakan' " . ($row['Nama_perusahaan'] == 'Percetakan' ? 'selected' : '') . ">Percetakan</option>
-<option value='Bengkel' data-alamat='Alamat Bengkel' " . ($row['Nama_perusahaan'] == 'Bengkel' ? 'selected' : '') . ">Bengkel</option>
-<option value='Telkom' data-alamat='Alamat Telkom' " . ($row['Nama_perusahaan'] == 'Telkom' ? 'selected' : '') . ">Telkom</option>
-<option value='Yamaha' data-alamat='Alamat Yamaha' " . ($row['Nama_perusahaan'] == 'Yamaha' ? 'selected' : '') . ">Yamaha</option>
-<option value='Suzuki' data-alamat='Alamat Suzuki' " . ($row['Nama_perusahaan'] == 'Suzuki' ? 'selected' : '') . ">Suzuki</option>
+<div class='form-group'>
+                        <label for='perusahaan_" . htmlspecialchars($id) . "'>Nama DU/DI:</label>
+                        <select class='form-control perusahaan' name='perusahaan' id='perusahaan_" . htmlspecialchars($id) . "' required>
+                            <option value=''>Pilih Perusahaan</option>";
 
-    </select>
-</div>
+                            // Loop untuk opsi perusahaan
+                            foreach ($perusahaan_options as $perusahaan) {
+                                echo "<option value='" . htmlspecialchars($perusahaan) . "' 
+                                      " . (($row['Nama_perusahaan'] == $perusahaan) ? 'selected' : '') . ">";
+                                echo htmlspecialchars($perusahaan);
+                                echo "</option>";
+                            }
+
+echo "
+                        </select>
+                    </div>
           
                     <!-- Tanggal -->
                     <div class='form-group'>
@@ -362,11 +406,17 @@ echo "
                         <label for='kelas_$id'>Kelas:</label>
                         <input type='text' class='form-control' name='kelas' value='" . htmlspecialchars($row['Kelas']) . "' required>
                     </div>
-          
-<div class='form-group'>
-    <label for='alamat_$id'>Alamat:</label>
-    <input type='text' class='form-control' name='alamat' id='alamat_$id' value='" . htmlspecialchars($row['Kabupaten']) . "' readonly>
+
+
+                       <!-- Alamat -->
+                
+
+                    <div class='form-group'>
+    <label for='alamat_" . htmlspecialchars($id) . "'>Alamat:</label>
+    <input type='text' class='form-control' name='alamat' id='alamat_<?php echo htmlspecialchars($id); ?>' 
+           value='" . htmlspecialchars($alamat_perusahaan[$row['Nama_perusahaan']] ?? '') .  "' readonly>
 </div>
+
                     <!-- Jumlah Siswa dengan Event Listener -->
                     <div class='form-group'>
                         <label for='jumlah_$id'>Jumlah Siswa:</label>
@@ -436,6 +486,7 @@ function confirmDelete() {
 }
 </script>
 <!-- Tambahkan jQuery dan Bootstrap JS -->
+
 
 <?php
 // Tutup koneksi

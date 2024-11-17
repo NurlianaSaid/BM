@@ -1,11 +1,10 @@
 <?php
-session_start();
-if (!isset($_SESSION['password'])) {
-    // header("Location: login2.php");
-    // exit();
-}
-?>
+include 'laporanmonir/koneksi.php';
 
+include 'komas.php';
+
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -28,7 +27,7 @@ if (!isset($_SESSION['password'])) {
 
     <!-- Custom styles for this template-->
   
-    <link href="css/sb-admin-2.css?v3" rel="stylesheet">
+    <link href="css/sb-admin-2.css?v1" rel="stylesheet">
     <link rel="stylesheet" href="css/dashbroad.css">
     <link rel="stylesheet" href="css/cards.css">
 
@@ -52,10 +51,7 @@ if (!isset($_SESSION['password'])) {
         .nav-item .nav-link.active:not(:hover) svg path {
             fill: white; /* Icon color */
         }
-        .img_profile{
-            margin-right: 0px;
-            width: 50px;
-        }
+
 
      </style>
 </head>
@@ -70,11 +66,12 @@ if (!isset($_SESSION['password'])) {
 
             <!-- Sidebar - Brand -->
             <!-- <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html"> -->
-                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
                     <div class="sidebar-brand-icon rotate-n-0">
                         <div class="sidebar-brand-icon rotate-n-" style="color:#000;">
-                            <i href="index.html"><img src="logo.svg"class="img_logo" alt=""></i>
+                            <i href="index.php"><img src="logo.svg" class="img_logo" alt=""></i>
                         </div>
+                        
                     </div>
                     <div class="sidebar-brand-text mx-3">Halaman Guru</div>
                 </a>
@@ -156,28 +153,20 @@ if (!isset($_SESSION['password'])) {
 
                         <div class="topbar-divider d-none d-sm-block"></div> 
 
-                        <li class="nav-ite1 dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                        <li class="dropdown no-arrow">
+                            <a class="nav-link1 dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                                <img class="img_profile rounded-circle" src="img/undraw_profile.svg">
+                                                                
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small d-flex align-items-center">
+                               <?= "Hai, " . $_SESSION['username']; ?>
+                                </span>
+
+                                <img class="img-profile"
+                                    src="img/profil.svg">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Profile
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Settings
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Activity Log
-                                </a>
-                                <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
@@ -193,12 +182,6 @@ if (!isset($_SESSION['password'])) {
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
-                    <!-- Page Heading -->
-                    <!-- <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
-                    </div> -->
 
                       <div id="layoutSidenav">
                         <div id="layoutSidenav_content">

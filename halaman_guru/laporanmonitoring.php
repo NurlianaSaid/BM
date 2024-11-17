@@ -1,6 +1,48 @@
-<?php include 'laporanmonir/koneksi.php' ?>
+<?php 
+include 'komas.php';
+// $kode_guru = $_SESSION['kode_guru'];
+
+include 'laporanmonir/koneksi.php' ;
 
 
+$perusahaan_options = [];
+$alamat_perusahaan = [];
+if ($kode_guru == '0001') {
+    $perusahaan_options = [
+        "Afila Media Karya",
+        "Indigo Hub",
+        "Percetakan",
+        "Bengkel",
+        "Telkom",
+        "Yamaha",
+        "Suzuki"
+    ];
+    $alamat_perusahaan = [
+        "Afila Media Karya" => "Gowa",
+        "Indigo Hub" => "Pettarani",
+        "Percetakan" => "Alamat Percetakan",
+        "Bengkel" => "Alamat Bengkel",
+        "Telkom" => "Alamat Telkom",
+        "Yamaha" => "Alamat Yamaha",
+        "Suzuki" => "Alamat Suzuki"
+    ];
+} elseif ($kode_guru == '0003') {
+    $perusahaan_options = [
+        "Pengadilan Agama",
+        "Pengadilan Negeri",
+        "Komimfo Majene"
+    ];
+    $alamat_perusahaan = [
+        "Pengadilan Agama" => "Alamat Pengadilan Agama",
+        "Pengadilan Negeri" => "Alamat Pengadilan Negeri",
+        "Komimfo Majene" => "Alamat Komimfo Majene"
+    ];
+} else {
+    $perusahaan_options = ["Default Perusahaan"];
+    $alamat_perusahaan = ["Default Perusahaan" => "Alamat Default"];
+}
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -46,7 +88,7 @@
 
     <!-- Custom styles for this template -->
      <!-- ?v2 artinya saya buat css yang kedua dengan nama ini -->
-     <link href="css/sb-admin-2.css?v3" rel="stylesheet">
+     <link href="css/sb-admin-2.css?v4" rel="stylesheet">
 
     <!-- Custom styles for this page -->
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
@@ -142,41 +184,29 @@
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
+<div class="topbar-divider d-none d-sm-block"></div> 
 
+<li class="dropdown no-arrow">
+    <a class="nav-link1 dropdown-toggle" href="#" id="userDropdown" role="button"
+        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        
+        <span class="mr-2 d-none d-lg-inline text-gray-600 small d-flex align-items-center">
+       <?= "Hai, " . $_SESSION['username']; ?>
+        </span>
 
-                        <div class="topbar-divider d-none d-sm-block"></div>
-
-                        <!-- Nav Item - User Information -->
-                        <li class="nav-ite1 dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                                <img class="img_profile rounded-circle" src="img/undraw_profile.svg">
-                            </a>
-                            <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Profile
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Settings
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Activity Log
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Logout
-                                </a>
-                            </div>
-                        </li>
-
-                    </ul>
+        <img class="img-profile"
+            src="img/profil.svg">
+    </a>
+    <!-- Dropdown - User Information -->
+    <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+        aria-labelledby="userDropdown">
+        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+            Logout
+        </a>
+    </div>
+</li> 
+</ul>
 
                 </nav>
                 <!-- End of Topbar -->
@@ -236,14 +266,13 @@
                     <div class="form-group">
                         <label for="nama">Nama DU/DI :</label>
                         <select class="form-control" id="perusahaan" name="perusahaan" required>
-                        <option value="">Pilih Perusahaan</option>
-                                            <option value="Afila Media Karya">Afila Media Karya</option>
-                                            <option value="Indigo Hub">Indigo Hub</option>
-                                            <option value="Percetakan">Percetakan</option>
-                                            <option value="Bengkel">Bengkel</option>
-                                            <option value="Telkom">Telkom</option>
-                                            <option value="Yamaha">Yamaha</option>
-                                            <option value="Suzuki">Suzuki</option>
+                                            <option value="">Pilih Perusahaan</option>
+        <?php
+        // Loop untuk menampilkan perusahaan yang sesuai berdasarkan kode_guru
+        foreach ($perusahaan_options as $perusahaan) {
+            echo "<option value=\"$perusahaan\">$perusahaan</option>";
+        }
+        ?>
                         </select>
                     </div>
                     <div class="form-group">
@@ -254,10 +283,14 @@
                         <label for="kelas">Kelas :</label>
                         <input type="text" class="form-control" id="kelas" name="kelas" required>
                     </div>
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <label for="alamat">Alamat :</label>
                         <input type="text" class="form-control" id="alamat" name="alamat">
-                    </div>
+                    </div> -->
+                    <div class="form-group">
+    <label for="alamat">Alamat :</label>
+    <input type="text" class="form-control" id="alamat" name="alamat">
+</div>
                     <div class="form-group">
                         <label for="jumlah">Jumlah Siswa :</label>
                         <input type="text" class="form-control" id="jumlah" name="jumlah" required>
@@ -284,18 +317,18 @@
                                     <div class="col-md-3 drop-perusahaan">
                                         <select id="companyFilter" class="form-control">
                                             <option value="">Semua Perusahaan</option>
-                                            <option value="Afila Media Karya">Afila Media Karya</option>
-                                            <option value="Indigo Hub">Indigo Hub</option>
-                                            <option value="Percetakan">Percetakan</option>
-                                            <option value="Bengkel">Bengkel</option>
-                                            <option value="Telkom">Telkom</option>
-                                            <option value="Yamaha">Yamaha</option>
-                                            <option value="Suzuki">Suzuki</option>
+                                            <?php
+        // Loop untuk menampilkan perusahaan yang sesuai berdasarkan kode_guru
+        foreach ($perusahaan_options as $perusahaan) {
+            echo "<option value=\"$perusahaan\">$perusahaan</option>";
+        }
+        ?>
                                         </select>
                                     </div>
                                 </div>
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                    <?php require 'tampildata.php' ?>
+
                                 </table>
                             </div>
                         </div>
@@ -314,39 +347,7 @@
 
 <script>
     $(document).ready(function() {
-        $('#perusahaan').change(function() {
-            const selectedValue = $(this).val();
-            let alamat = '';
-
-            switch (selectedValue) {
-                case 'Afila Media Karya':
-                    alamat = 'Gowa';
-                    break;
-                case 'Indigo Hub':
-                    alamat = 'Pettarani';
-                    break;
-                case 'Percetakan':
-                    alamat = 'Alamat Percetakan';
-                    break;
-                case 'Bengkel':
-                    alamat = 'Alamat Bengkel';
-                    break;
-                case 'Telkom':
-                    alamat = 'Alamat Telkom';
-                    break;
-                case 'Yamaha':
-                    alamat = 'Alamat Yamaha';
-                    break;
-                case 'Suzuki':
-                    alamat = 'Alamat Suzuki';
-                    break;
-                default:
-                    alamat = '';
-            }
-
-            $('#alamat').val(alamat);
-        });
-
+        
         // Inisialisasi DataTables
         $('#dataTable').DataTable();
 
@@ -398,58 +399,60 @@
             }
         });
     });
+
+
+  
 </script>
 
 <script>
 $(document).ready(function() {
-    // Fungsi untuk mengatur alamat berdasarkan perusahaan
-    $('.modal').on('shown.bs.modal', function() {
-        const modal = $(this);
+    var alamatPerusahaan = <?php echo json_encode($alamat_perusahaan); ?>;
+
+    // Event listener untuk perubahan pada dropdown perusahaan
+    $('#perusahaan').change(function() {
+        var selectedPerusahaan = $(this).val();  // Ambil nilai perusahaan yang dipilih
+        
+        // Cek apakah perusahaan yang dipilih ada dalam data alamatPerusahaan
+        if (alamatPerusahaan[selectedPerusahaan]) {
+            // Jika ada, isi alamat sesuai dengan perusahaan yang dipilih
+            $('#alamat').val(alamatPerusahaan[selectedPerusahaan]);
+        } else {
+            // Jika tidak ada, kosongkan alamat
+            $('#alamat').val('');
+        }
+    });
+});
+</script>
+
+
+<!-- <script>
+    const perusahaanOptions = <?php echo json_encode($perusahaan_options); ?>;
+    const alamatPerusahaan = <?php echo json_encode($alamat_perusahaan); ?>;
+    const selectedPerusahaan = "<?php echo htmlspecialchars($row['Nama_perusahaan'] ?? ''); ?>";
+const selectedAlamat = "<?php echo htmlspecialchars($alamat_perusahaan[$row['Nama_perusahaan']] ?? ''); ?>";
+
+</script> -->
+
+<script>
+$(document).ready(function () {
+    const alamatPerusahaan = <?php echo json_encode($alamat_perusahaan); ?>;
+
+    // Saat modal ditampilkan
+    $('.modal').on('show.bs.modal', function (event) {
+        const modal = $(this); // Modal yang aktif
         const perusahaanSelect = modal.find('.perusahaan');
         const alamatInput = modal.find('input[name="alamat"]');
 
-        // Memilih dropdown perusahaan di dalam modal
-        // perusahaanSelect.change(function() {
-        //     const selectedValue = $(this).val();
-        //     let alamat = '';
-            perusahaanSelect.change(function() {
-            const selectedValue = $(this).val();
-            let alamat = $(this).find('option:selected').data('alamat'); // Mengambil alamat dari data atribut
+        // Set alamat sesuai perusahaan yang sudah terpilih
+        perusahaanSelect.trigger('change');
 
-            // Set alamat berdasarkan perusahaan yang dipilih
-            switch (selectedValue) {
-                case 'Afila Media Karya':
-                    alamat = 'Gowa'; // Sesuaikan dengan alamat yang seharusnya
-                    break;
-                case 'Indigo Hub':
-                    alamat = 'Pettarani'; // Sesuaikan dengan alamat yang seharusnya
-                    break;
-                case 'Percetakan':
-                    alamat = 'Alamat Percetakan'; // Sesuaikan dengan alamat yang seharusnya
-                    break;
-                case 'Bengkel':
-                    alamat = 'Alamat Bengkel'; // Sesuaikan dengan alamat yang seharusnya
-                    break;
-                case 'Telkom':
-                    alamat = 'Alamat Telkom'; // Sesuaikan dengan alamat yang seharusnya
-                    break;
-                case 'Yamaha':
-                    alamat = 'Alamat Yamaha'; // Sesuaikan dengan alamat yang seharusnya
-                    break;
-                case 'Suzuki':
-                    alamat = 'Alamat Suzuki'; // Sesuaikan dengan alamat yang seharusnya
-                    break;
-                default:
-                    alamat = ''; // Tidak ada alamat jika tidak ada yang dipilih
-            }
-
-            // Update alamat pada input yang ada di dalam modal yang aktif
-            alamatInput.val(alamat);
+        // Update alamat ketika perusahaan diubah
+        perusahaanSelect.off('change').on('change', function () {
+            const selectedValue = $(this).val(); // Perusahaan yang dipilih
+            const alamat = alamatPerusahaan[selectedValue] || ''; // Ambil alamat yang sesuai
+            alamatInput.val(alamat); // Set input alamat
         });
-
-        // Memicu perubahan perusahaan saat modal dibuka untuk set awal alamat
-        perusahaanSelect.trigger('change'); // Memicu perubahan untuk set alamat awal
-
+    });
 
         // Fungsi untuk menambah input siswa berdasarkan jumlah siswa
         jumlahInput.on('input', function() {
@@ -477,7 +480,6 @@ $(document).ready(function() {
         // Jalankan fungsi input saat modal dibuka untuk memuat data siswa yang ada
         jumlahInput.trigger('input');
     });
-});
 
 //agar menyesuaikan dengan jumlah siswa
 function adjustSiswaInputs(id) {
@@ -515,7 +517,10 @@ function adjustSiswaInputs(id) {
     }
 }
 
+
 </script>
+
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 

@@ -1,3 +1,17 @@
+
+<?php
+include 'koneksi.php';
+session_start();
+
+// Periksa apakah pengguna sudah login dan memiliki role "guru"
+if (!isset($_SESSION['username']) || $_SESSION['role'] != "siswa") {
+    // Jika belum login atau bukan guru, arahkan ke halaman login
+    header("location:../index.php");
+    exit();
+}
+// echo "Selamat datang User, " . $_SESSION['username'];
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -299,12 +313,17 @@
                         </li>
 
                         
+                        <div class="topbar-divider d-none d-sm-block"></div> 
 
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link1 dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                
+                                                                
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">
+                              <?= "Hai, " . $_SESSION['username']; ?>
+                               </span>
+
                                 <img class="img-profile"
                                     src="img/profil.svg">
                             </a>

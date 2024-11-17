@@ -1,4 +1,10 @@
-<?php include 'laporanmonir/koneksi.php' ;
+<?php 
+include 'komas.php';
+$kode_guru = $_SESSION['kode_guru'];
+
+
+include 'laporanmonir/koneksi.php' ;
+
 
 if (isset($_POST['id_jurnal']) && isset($_POST['status'])) {
     // Ambil data dari AJAX untuk memperbarui status
@@ -16,29 +22,33 @@ if (isset($_POST['id_jurnal']) && isset($_POST['status'])) {
 
 
 // Query SQL
-$sql = "SELECT 
-            tb_jurnal.id_jurnal,
-            tb_jurnal.tanggal,
-            tb_jurnal.kegiatan,
-            tb_jurnal.status,
-            tb_jurnal.uraian,
-            tb_siswa.Nama_siswa,
-            tb_siswa.Kelas_siswa,
-            tb_perusahaan.nama_perusahaan
+$query = "SELECT 
+            j.id_jurnal,
+            j.tanggal,
+            j.kegiatan,
+            j.status,
+            j.uraian,
+            s.Nama_siswa,
+            s.Kelas_siswa,
+            p.nama_perusahaan
         FROM 
-            tb_jurnal
+            tb_jurnal j
         JOIN 
-            tb_perusahaan ON tb_jurnal.id_perusahaan = tb_perusahaan.id_perusahaan
+            tb_perusahaan p ON j.id_perusahaan = p.id_perusahaan
         JOIN 
-            tb_siswa ON tb_jurnal.Id_siswaa = tb_siswa.Id_siswaa
-        ORDER BY 
-            tb_jurnal.tanggal DESC";
+            tb_siswa s ON j.Id_siswaa = s.Id_siswaa
+        WHERE 
+        j.kode_guru = ?";
 
-// Eksekusi query
-$result = $conn->query($sql);
-
+$stmt = $conn->prepare($query);
 
 
+$stmt->bind_param("s", $kode_guru); 
+
+$stmt->execute();
+$result = $stmt->get_result();
+
+$stmt->close();
 
 ?>
 <!DOCTYPE html>
@@ -120,15 +130,6 @@ $result = $conn->query($sql);
                     <span>Dashboard</span></a>
             </li>
 
-            <!-- Divider -->
-            <!-- <hr class="sidebar-divider"> -->
-
-            <!-- Heading -->
-            <!-- <div class="sidebar-heading">
-                Interface
-            </div> -->
-
-            <!-- Nav Item - Pages Collapse Menu -->
 
             <li class="nav-item">
                 <a class="nav-link" href="dataanakmagang.php">
@@ -194,38 +195,28 @@ $result = $conn->query($sql);
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
 
+                        <div class="topbar-divider d-none d-sm-block"></div> 
 
-                        <div class="topbar-divider d-none d-sm-block"></div>
-
-                        <!-- Nav Item - User Information -->
-                        <li class="nav-ite1 dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                        <li class="dropdown no-arrow">
+                            <a class="nav-link1 dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                                <img class="img_profile rounded-circle" src="img/undraw_profile.svg">
+                                                                
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small d-flex align-items-center">
+                               <?= "Hai, " . $_SESSION['username']; ?>
+                                </span>
+
+                                <img class="img-profile"
+                                    src="img/profil.svg">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Profile
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Settings
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Activity Log
-                                </a>
-                                <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
                                 </a>
                             </div>
-                        </li>
+                        </li> 
 
                     </ul>
 

@@ -1,5 +1,48 @@
-<?php include 'laporanmonir/koneksi.php' ;
+<?php 
+include 'komas.php';
+$kode_guru = $_SESSION['kode_guru'];
 
+
+include 'laporanmonir/koneksi.php' ;
+
+
+
+$perusahaan_options = [];
+$alamat_perusahaan = [];
+if ($kode_guru == '0001') {
+    $perusahaan_options = [
+        "Afila Media Karya",
+        "Indigo Hub",
+        "Percetakan",
+        "Bengkel",
+        "Telkom",
+        "Yamaha",
+        "Suzuki"
+    ];
+    $alamat_perusahaan = [
+        "Afila Media Karya" => "Gowa",
+        "Indigo Hub" => "Pettarani",
+        "Percetakan" => "Alamat Percetakan",
+        "Bengkel" => "Alamat Bengkel",
+        "Telkom" => "Alamat Telkom",
+        "Yamaha" => "Alamat Yamaha",
+        "Suzuki" => "Alamat Suzuki"
+    ];
+} elseif ($kode_guru == '0003') {
+    $perusahaan_options = [
+        "Pengadilan Agama",
+        "Pengadilan Negeri",
+        "Komimfo Majene"
+    ];
+    $alamat_perusahaan = [
+        "Pengadilan Agama" => "Alamat Pengadilan Agama",
+        "Pengadilan Negeri" => "Alamat Pengadilan Negeri",
+        "Komimfo Majene" => "Alamat Komimfo Majene"
+    ];
+} else {
+    $perusahaan_options = ["Default Perusahaan"];
+    $alamat_perusahaan = ["Default Perusahaan" => "Alamat Default"];
+}
 if (isset($_POST['id_jadwal']) && isset($_POST['status'])) {
     // Ambil data dari AJAX untuk memperbarui status
     $id_jadwal = $_POST['id_jadwal'];
@@ -15,38 +58,31 @@ if (isset($_POST['id_jadwal']) && isset($_POST['status'])) {
 }
 
 // Query SQL
-$sql = "SELECT 
-            tb_jadwal.id_jadwal,
-            tb_guru.kode_guru,
-            tb_perusahaan.nama_perusahaan,
-            tb_jadwal.tanggal_monitoring,
-            tb_jadwal.kegiatan,
-            tb_jadwal.status
+$query = "SELECT 
+            jw.id_jadwal,
+            g.kode_guru,
+            p.nama_perusahaan,
+            jw.tanggal_monitoring,
+            jw.kegiatan,
+            jw.status
         FROM 
-            tb_jadwal
+            tb_jadwal jw
         JOIN 
-            tb_perusahaan ON tb_jadwal.id_perusahaan = tb_perusahaan.id_perusahaan
+            tb_perusahaan p ON jw.id_perusahaan = p.id_perusahaan
         JOIN 
-            tb_guru ON tb_jadwal.kode_guru = tb_guru.kode_guru
-        ORDER BY 
-            tb_jadwal.tanggal_monitoring DESC";
+            tb_guru g ON jw.kode_guru = g.kode_guru
+        WHERE 
+        jw.kode_guru = ?";
 
-// Eksekusi query
-$result = $conn->query($sql);
-
-// Tampilkan hasil
-// if ($result->num_rows > 0) {
-//     while($row = $result->fetch_assoc()) {
-//         echo "ID Jadwal: " . $row["id_jadwal"] . " - Guru: " . $row["kode_guru"] . " - Perusahaan: " . $row["nama_perusahaan"] . " - Tanggal: " . $row["tanggal_monitoring"] . " - Kegiatan: " . $row["kegiatan"] . "<br>";
-//     }
-// } else {
-//     echo "No results found.";
-// }
-
-// // Tutup koneksi
-// $conn->close();
+$stmt = $conn->prepare($query);
 
 
+$stmt->bind_param("s", $kode_guru); 
+
+$stmt->execute();
+$result = $stmt->get_result();
+
+$stmt->close();
 
 ?>
 
@@ -161,21 +197,6 @@ $result = $conn->query($sql);
                     </div>
                 </div>
             </li>
-            <!-- <li class="nav-item active">
-                <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
-                    aria-controls="collapseTwo">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span>Components</span>
-                </a>
-                <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Custom Components:</h6>
-                        <a class="collapse-item active" href="jadwalmonitoing.html">Buttons</a>
-                        <a class="collapse-item " href="laporanmonitoring.html">Laporan</a>
-                    </div>
-                </div>
-            </li> -->
 
             <!-- Divider -->
             <hr class="sidebar-divider">
@@ -205,42 +226,32 @@ $result = $conn->query($sql);
                     <!-- Topbar Search -->
 
                     <!-- Topbar Navbar -->
-                    <ul class="navbar-nav ml-auto">
+<ul class="navbar-nav ml-auto">
 
+<div class="topbar-divider d-none d-sm-block"></div> 
 
-                        <div class="topbar-divider d-none d-sm-block"></div>
+<li class="dropdown no-arrow">
+    <a class="nav-link1 dropdown-toggle" href="#" id="userDropdown" role="button"
+        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        
+        <span class="mr-2 d-none d-lg-inline text-gray-600 small d-flex align-items-center">
+       <?= "Hai, " . $_SESSION['username']; ?>
+        </span>
 
-                        <!-- Nav Item - User Information -->
-                        <li class="nav-ite1 dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                                <img class="img_profile rounded-circle" src="img/undraw_profile.svg">
-                            </a>
-                            <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Profile
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Settings
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Activity Log
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Logout
-                                </a>
-                            </div>
-                        </li>
+        <img class="img-profile"
+            src="img/profil.svg">
+    </a>
+    <!-- Dropdown - User Information -->
+    <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+        aria-labelledby="userDropdown">
+        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+            Logout
+        </a>
+    </div>
+</li> 
 
-                    </ul>
+</ul>
 
                 </nav>
                 <!-- End of Topbar -->
@@ -261,13 +272,12 @@ $result = $conn->query($sql);
                                     <div class="col-md-3 drop-perusahaan">
                                         <select id="companyFilter" class="form-control">
                                             <option value="">Semua Perusahaan</option>
-                                            <option value="Afila Media Karya">Afila Media Karya</option>
-                                            <option value="Indigo Hub">Indigo Hub</option>
-                                            <option value="Percetakan">Percetakan</option>
-                                            <option value="Bengkel">Bengkel</option>
-                                            <option value="Telkom">Telkom</option>
-                                            <option value="Yamaha">Yamaha</option>
-                                            <option value="Suzuki">Suzuki</option>
+                                            <?php
+        // Loop untuk menampilkan perusahaan yang sesuai berdasarkan kode_guru
+        foreach ($perusahaan_options as $perusahaan) {
+            echo "<option value=\"$perusahaan\">$perusahaan</option>";
+        }
+        ?>
                                         </select>
                                     </div>
                                     
