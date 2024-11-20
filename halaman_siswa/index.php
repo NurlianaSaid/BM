@@ -9,25 +9,26 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-   
     <title>Project Absensi Magang</title>
- 
-    <!-- Custom fonts for this template -->
+
+    <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 
-    <!-- Custom styles for this template -->
-    <link href="css/pengajuan.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/coba9.css">
+    <!-- Custom styles for this template-->
+    <link href="css/beranda.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
 
-    <!-- Custom styles for this page -->
-    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
+    <!-- link teks luxioromasns-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Luxurious+Roman&display=swap" rel="stylesheet">
 </head>
-<body id="page-top">
+
+<body id="page-top">     
 
     <!-- Page Wrapper -->
     <div id="wrapper">
@@ -41,9 +42,13 @@
                 <div class="sidebar-brand-icon rotate-n-" style="color: #000;">
                     <i href="beranda.php"> <img src="img/Screenshot (7).png" alt=""></i>
                 </div>
-                <div class="sidebar-brand-text mx-1 mt-1" href="beranda.php">HALAMAN ADMIN</div>  
+                <div class="sidebar-brand-text mx-1 mt-1" href="beranda.php">HALAMAN SISWA</div>  
             </a>
+
+          
+           
             <!-- Nav Item - Dashboard -->
+                
             <li class="nav-item active">
                 <a class="nav-link" href="infosiswa.php" aria-label="Dashboard">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -54,8 +59,7 @@
                     <span>Info Siswa</span>
                 </a>
             </li>
-            <!-- Divider -->
-            <!-- Heading -->
+
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="permohonanpkl.php">
@@ -70,8 +74,10 @@
                         </defs>
                         </svg>                      
                     <span>Permohonan Siswa</span>
-                </a>  
+                </a> 
+               
             </li>
+
                 <!-- Nav Item - Pages Collapse Menu -->
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="alamatpkl.php">
@@ -80,11 +86,13 @@
                             <path d="M12.0651 13.903C11.1906 13.903 10.3358 13.6437 9.60874 13.1579C8.88166 12.6721 8.31498 11.9816 7.98035 11.1737C7.64571 10.3659 7.55816 9.47689 7.72875 8.61926C7.89935 7.76162 8.32043 6.97383 8.93876 6.3555C9.55708 5.73718 10.3449 5.3161 11.2025 5.1455C12.0601 4.97491 12.9491 5.06246 13.757 5.3971C14.5649 5.73173 15.2554 6.29841 15.7412 7.02548C16.227 7.75255 16.4863 8.60736 16.4863 9.4818C16.4851 10.654 16.0189 11.7778 15.19 12.6067C14.3611 13.4356 13.2373 13.9018 12.0651 13.903ZM12.0651 6.46727C11.4687 6.46727 10.8858 6.64411 10.39 6.97542C9.89413 7.30673 9.50769 7.77764 9.27951 8.32859C9.05132 8.87953 8.99164 9.48577 9.10802 10.0706C9.22439 10.6555 9.51159 11.1927 9.93329 11.6144C10.355 12.036 10.8923 12.3231 11.4771 12.4394C12.062 12.5557 12.6683 12.4959 13.2192 12.2676C13.7701 12.0394 14.2409 11.6528 14.5722 11.157C14.9034 10.6611 15.0801 10.0781 15.0801 9.4818C15.0787 8.68276 14.7605 7.91687 14.1954 7.35204C13.6302 6.78721 12.8641 6.46954 12.0651 6.46867V6.46727Z" fill="black"/>
                             </svg>                     
                         <span>Alamat PKL</span>
-                    </a>   
+                    </a> 
+                   
                 </li>
+
             <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link active" href="#" id="dropdown_toggle" data-toggle="collapse" data-target="#collapseTwo"
+                <a class="nav-link  collapsed" href="#" id="dropdown_toggle" data-toggle="collapse" data-target="#collapseTwo"
                 aria-expanded="true" aria-controls="collapseTwo">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M15.5 9H8.5V4H15.5V9ZM9.5 8H14.5V5H9.5V8Z" fill="black"/>
@@ -106,57 +114,65 @@
                         <path d="M6 9L12 15L18 9H6Z" fill="black"/>
                     </svg>
                 </a>
-                <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item active" href="Jurnal.php">Jurnal</a>
+                        <a class="collapse-item" href="Jurnal.php">Jurnal</a>
                         <a class="collapse-item" href="Laporan.php">Laporan</a>
                     </div>
                 </div>
             </li>
-            <!-- Divider -->
-            <!-- Heading -->
-            <!-- Divider -->
-            <hr class="sidebar-divider d-none d-md-block">
+
+
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+                
             </div>
+
+            <!-- Sidebar Message -->
+         
+
         </ul>
         <!-- End of Sidebar -->
+
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
+
             <!-- Main Content -->
             <div id="content">
+
                 <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
                     <!-- Sidebar Toggle (Topbar) -->
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                         <i class="fa fa-bars"></i>
                     </button>
+
                     <!-- Topbar Search -->
                     <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                         <div class="input-group">
-                            <a class="nav-link1" href="programpkl.php" aria-label="Dashboard">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M15.5 9H8.5V4H15.5V9ZM9.5 8H14.5V5H9.5V8Z" fill="black"/>
-                                    <path d="M20.5 24H2.5V0H20.5V24ZM3.5 23H19.5V1H3.5V23Z" fill="black"/>
-                                    <path d="M22.5 6.5H20V7.5H22.5V6.5Z" fill="black"/>
-                                    <path d="M22.5 10.5H20V11.5H22.5V10.5Z" fill="black"/>
-                                    <path d="M22.5 14.5H20V15.5H22.5V14.5Z" fill="black"/>
-                                    <path d="M21 19.5H20V18.5H21C21.5515 18.5 22 18.0515 22 17.5V4.5C22 3.9485 21.5515 3.5 21 3.5H20V2.5H21C22.103 2.5 23 3.397 23 4.5V17.5C23 18.603 22.103 19.5 21 19.5Z" fill="black"/>
-                                    <path d="M4.5 4H1.5V5H4.5V4Z" fill="black"/>
-                                    <path d="M4.5 7H1.5V8H4.5V7Z" fill="black"/>
-                                    <path d="M4.5 10H1.5V11H4.5V10Z" fill="black"/>
-                                    <path d="M4.5 13H1.5V14H4.5V13Z" fill="black"/>
-                                    <path d="M4.5 16H1.5V17H4.5V16Z" fill="black"/>
-                                    <path d="M4.5 19H1.5V20H4.5V19Z" fill="black"/>
-                                    </svg>                                                                     
-                                <span>Program PKL</span>
-                            </a>       
+                            <a class="nav-link1" href="index.php" aria-label="Dashboard">
+                                <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <g clip-path="url(#clip0_1505_2679)">
+                                    <path d="M21.0002 25.636H14.0001V18.7613H10.0001V25.636H3V14.5308C3 14.2389 3.2235 14.002 3.50001 14.002C3.77651 14.002 4.00001 14.2389 4.00001 14.5308V24.5784H9.00006V17.7037H15.0001V24.5784H20.0002V15.0596C20.0002 14.7677 20.2237 14.5308 20.5002 14.5308C20.7767 14.5308 21.0002 14.7677 21.0002 15.0596V25.636Z" fill="black"/>
+                                    <path d="M23.5004 14.5295C23.3759 14.5295 23.2519 14.4809 23.1549 14.383L12.0002 3.09854L0.845636 14.383C0.646134 14.5845 0.329631 14.5777 0.138629 14.3667C-0.0523734 14.1557 -0.0448733 13.8209 0.154129 13.6189L12.0002 1.63477L23.8459 13.6184C24.0449 13.8204 24.0524 14.1551 23.8614 14.3661C23.7634 14.4745 23.6324 14.5295 23.5004 14.5295Z" fill="black"/>
+                                    <path d="M19.5 8.18517C19.2235 8.18517 19 7.94826 19 7.65635V4.48342H16C15.7235 4.48342 15.5 4.24651 15.5 3.9546C15.5 3.66269 15.7235 3.42578 16 3.42578H20V7.65635C20 7.94826 19.7765 8.18517 19.5 8.18517Z" fill="black"/>
+                                    </g>
+                                    <defs>
+                                    <clipPath id="clip0_1505_2679">
+                                    <rect width="30" height="30" fill="white"/>
+                                    </clipPath>
+                                    </defs>
+                                    </svg>                                    
+                                <span>Beranda</span>
+                            </a>
+                           
                         </div>
                     </form>
+
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
+
                         <!-- Nav Item - Search Dropdown (Visible Only XS) -->
                         <li class="nav-item dropdown no-arrow d-sm-none">
                         <!-- Dropdown - Messages -->
@@ -168,13 +184,15 @@
                                             placeholder="Search for..." aria-label="Search"
                                             aria-describedby="basic-addon2">
                                         <div class="input-group-append">
-                                            <button class="btn btn-primary" type="button">                          
+                                            <button class="btn btn-primary" type="button">
+                                               
                                             </button>
                                         </div>
                                     </div>
                                 </form>
                             </div>
                         </li>
+
                         <!-- Nav Item - Alerts -->
                         <li class="nav-item dropdown no-arrow mx-1">
                             <!-- Dropdown - Alerts -->
@@ -219,6 +237,7 @@
                                 <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
                             </div>
                         </li>
+
                         <!-- Nav Item - Messages -->
                         <li class="nav-item dropdown no-arrow mx-1">
                             <!-- Dropdown - Messages -->
@@ -278,12 +297,16 @@
                                 <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
                             </div>
                         </li>
+
+                        
+
                         <!-- Nav Item - User Information -->
-                        <li class="nav-item1 dropdown no-arrow">
+                        <li class="nav-item dropdown no-arrow">
                             <a class="nav-link1 dropdown-toggle" href="#" id="userDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">      
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                
                                 <img class="img-profile"
-                                    src="img/profil.svg"> 
+                                    src="img/profil.svg">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -294,38 +317,46 @@
                                 </a>
                             </div>
                         </li>
+
                     </ul>
+
                 </nav>
                 <!-- End of Topbar -->
-                <nav class="breadcrumb">
-                    <section class="content">
-                    <span class="textd">Siswa</span>
-                    <span>/ Program PKL</span>
-                </nav>
+
                 <!-- Begin Page Content -->
-              
-                    <div class="container1">
-                        <form class="form9">
-                            <label for="tanggal">Tanggal :</label>
-                            <input type="text" id="tanggal" value="11/09/2024" readonly>
-                            <label for="kegiatan">Kegiatan :</label>
-                            <input type="text" id="kegiatan" value="Menginput data di Aplikasi E-Office">
-                            <label for="uraian">Uraian :</label>
-                            <input type="text" id="uraian" value="Learning Bahasa Inggris dan menginput data di Aplikasi E-Office">
-                            <div class="buttons1">
-                                <button type="submit" class="save">Simpan</button>  
-                                <button type="button" class="cancel">Cancel</button>
-                            </div>
-                        </form>
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-black-500" style="color: #000; font-weight: 500px;">WELCOME TO HALAMAN SISWA</h1>
+                        </div>
+                    <!-- Content Row -->
+                    <div class="container">
+                        <img src="img/sekollah.png" class="belakang" alt="...">
+                        <img src="img/smk.png" class="depan" alt="...">
+                      
+                      <div class="text-container">
+                        <p class="text">SELAMAT DATANG DI APLIKASI 
+                            ABSENSI MAGANG SMK LABUANG.</p>
+                        <p class="text-bawah">MUDAH,PRAKTIS DAN FLEKSIBEL
+                        </p>
+                      </div>
                     </div>
-            
-                
+
+                </div>
                 <!-- /.container-fluid -->
 
             </div>
             <!-- End of Main Content -->
 
             <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span> @smkn_labuang</span>
+                    </div>
+                </div>
+            </footer>
             <!-- End of Footer -->
 
         </div>
@@ -360,7 +391,6 @@
         </div>
     </div>
 
-
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -377,25 +407,7 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
-  <!-- Page level plugins -->
-  <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-  <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
-  <!-- Page level custom scripts -->
-  <script src="js/demo/datatables-demo.js"></script>
-
-
-  <script>
-    const currentLocation = location.href; // Mendapatkan URL halaman saat ini
-    const menuItem = document.querySelectorAll('li.nav-item a'); // Mendapatkan semua elemen 'a' di dalam 'li.nav-item'
-    
-    menuItem.forEach(item => {
-      if(item.href.includes("jurnal.php")){ 
-        item.classList.add('active'); // Tambahkan class 'active' jika URL mengandung "industri.html"
-      }
-    });
-  </script>
-<?php include 'footer.php' ?>
 </body>
 
 </html>

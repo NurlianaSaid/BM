@@ -38,10 +38,11 @@
 }
 
 .main-content {
+    width:1040px;
     margin-bottom: 20px;
-    margin-right: -350px;
-    margin-top: 700px;
-    margin-left: -670px;
+    margin-right: 10px;
+    margin-top: 120px;
+    margin-left: 40px;
     flex-grow: 1;
     background-color: white;
     padding: 30px;
@@ -49,16 +50,16 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 .breadcrumb {
-    width: 90%;
-  margin-left: -660px;
-    margin-top: 70px;
+    width: 80%;
+    margin-left: 20px;
+    margin-top: 20px;
     position: absolute;
-     display: flex;
-     flex-wrap: wrap;
-     padding: 0.75rem 1rem;
-     list-style: none;
-     background-color: #eaecf4;
-     border-radius: 0.35rem;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0.75rem 1rem;
+    list-style: none;
+    background-color: #eaecf4;
+    border-radius: 0.35rem;
    }
 
 h1 {
@@ -106,7 +107,7 @@ form input[type="file"] {
      color: white;
      border: none;
      cursor: pointer;
-     padding: 15px 30px;
+     padding: 5px 10px;
      font-size: 16px;
  }
 

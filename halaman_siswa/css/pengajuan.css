@@ -11592,14 +11592,15 @@ color: blue;
 
 .month-dropdown {
   margin-top: 7px;
+  position:absolute;
+  margin-bottom: -200px;
   margin-left: 600px;
-
   padding: 5px;
   font-size: 16px;
   border-radius: 3px;
-border: 1px solid #ccc;
-background: #FFF;
-box-shadow: #ccc;
+  border: 1px solid #ccc;
+  background: #FFF;
+  box-shadow: #ccc;
   outline: none;
   cursor: pointer;
   /* appearance: none; Menghapus ikon dropdown default */
@@ -11607,7 +11608,7 @@ box-shadow: #ccc;
   /* -moz-appearance: none; Untuk Firefox */
   width: 178px;
   height: 33px;
-
+  z-index: 100000;
 }
 
 .month-dropdown:focus {

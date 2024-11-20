@@ -41,7 +41,7 @@
     margin-bottom: 20px;
     margin-right: -350px;
     margin-top: 950px;
-    margin-left: -670px;
+    margin-left: -560px;
     flex-grow: 1;
     background-color: white;
     padding: 30px;
@@ -50,7 +50,7 @@
 }
 .breadcrumb {
     width: 96%;
-    margin-left: -670px;
+    margin-left: -560px;
     margin-top: 70px;
     position: absolute;
      display: flex;

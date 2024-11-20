@@ -1,3 +1,7 @@
+<?php
+include 'session.php';
+include 'koneksi.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,7 +23,7 @@
         rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="css/pengajuan.css?v1" rel="stylesheet">
+    <link href="css/pengajuan.css?v2" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
 
     <!-- Custom styles for this page -->
@@ -279,8 +283,13 @@
                         </li>
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link1 dropdown-toggle" href="#" id="userDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">      
+                        <a class="nav-link1 dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">
+                              <?= "Hai, " . $_SESSION['username']; ?>
+                               </span>
+
                                 <img class="img-profile"
                                     src="img/profil.svg">
                             </a>
@@ -437,13 +446,6 @@
             <!-- End of Main Content -->
 
             <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span> @smkn_labuang</span>
-                    </div>
-                </div>
-            </footer -->
             <!-- End of Footer -->
 
         </div>
@@ -477,6 +479,9 @@
             </div>
         </div>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 
 
     <!-- Bootstrap core JavaScript-->
@@ -513,7 +518,7 @@
       }
     });
   </script>
-
+<?php include 'footer.php' ?>
 </body>
 
 </html>

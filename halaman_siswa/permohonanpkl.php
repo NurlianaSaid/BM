@@ -1,11 +1,69 @@
-<?php include 'koneksi.php' ;
+<?php
+session_start();
+
+if (!isset($_SESSION['username']) || $_SESSION['role'] != "siswa") {
+    header("location:../index.php");
+    exit();
+}
+
+include 'koneksi.php';
+
+// Ambil ID siswa dari session
+$id_siswaa = $_SESSION['Id_siswaa'];
+
+// Periksa apakah siswa sudah mendaftar
+$check_query = "SELECT * FROM permohonan_pkl WHERE id_siswaa = ? LIMIT 1";
+$stmt = $conn->prepare($check_query);
+$stmt->bind_param("i", $id_siswaa);
+$stmt->execute();
+$check_result = $stmt->get_result();
+
+$sudah_daftar = false;
+$id_perusahaan_didaftarkan = null;
+
+if ($check_result && $check_result->num_rows > 0) {
+    $sudah_daftar = true;
+    $daftar_info = $check_result->fetch_assoc();
+    $id_perusahaan_didaftarkan = $daftar_info['id_perusahaan'];
+}
+$stmt->close();
+
+// Ambil detail perusahaan jika sudah mendaftar
+$detail = null;
+if ($id_perusahaan_didaftarkan !== null) {
+    $query = "SELECT 
+                p.pendiri, 
+                p.nama_perusahaan AS perusahaan,
+                p.bidang_industri, 
+                p.lokasi, 
+                p.jalan, 
+                p.tahun_didirikan AS tahun_berdiri,
+                pp.status 
+              FROM 
+                permohonan_pkl pp
+              JOIN 
+                tb_perusahaan p ON pp.id_perusahaan = p.id_perusahaan
+              WHERE
+                pp.id_perusahaan = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i", $id_perusahaan_didaftarkan);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $detail = $result->fetch_assoc();
+        $status = $detail['status']; // Ambil status dari query
+    }
+    $stmt->close();
+    
+}
+
+$query = "SELECT * FROM tb_perusahaan";
+$result = $conn->query($query);
 
 
-$sql = "SELECT id_perusahaan, pendiri, nama_perusahaan, bidang_industri, lokasi, jalan, tahun_didirikan FROM tb_perusahaan"; 
-$result = $conn->query($sql);
+
 ?>
-
-
 
 
 <!DOCTYPE html>
@@ -29,7 +87,7 @@ $result = $conn->query($sql);
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.css" rel="stylesheet">
-   <link rel="stylesheet" href="css/coba2.css?v2">
+   <link rel="stylesheet" href="css/coba2.css?v3">
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
 
@@ -133,14 +191,11 @@ $result = $conn->query($sql);
             </li>
 
         </ul>
+        <hr class="sidebar-divider d-none d-md-block">
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
                 
             </div>
-
-            <!-- Sidebar Message -->
-         
-
         </ul>
         <!-- End of Sidebar -->
         <!-- Content Wrapper -->
@@ -306,13 +361,18 @@ $result = $conn->query($sql);
                             </div>
                         </li>
 
-                        
+                        <div class="topbar-divider d-none d-sm-block"></div> 
+
 
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link1 dropdown-toggle" href="#" id="userDropdown" role="button"
+                        <a class="nav-link1 dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                
+                                                                
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">
+                              <?= "Hai, " . $_SESSION['username']; ?>
+                               </span>
+
                                 <img class="img-profile"
                                     src="img/profil.svg">
                             </a>
@@ -357,48 +417,57 @@ $result = $conn->query($sql);
                                                 <tr>
                                                     <td>
                                                        
-                                                        <table class="nested-table">
-                                                            <tr>
-                                                                <td><strong>No</strong></td>
-                                                                <td><strong>Bidang</strong></td>
-                                                                <td><strong>Nama Industri</strong></td>
-                                                                <td><strong>Aksi</strong></td>
-                                                            </tr>
-                                                            <tr class="tr_hover">
-                                                                <?php
-                                                            if ($result->num_rows > 0) {
-    $no = 1;
-    while ($row = $result->fetch_assoc()) {  
-        
-        
-        
-        echo "<tr>
-        <td>" . $no . "</td>
-        <td>" . $row["bidang_industri"] . "</td>
-        <td>" . $row["nama_perusahaan"] . "</td>
-        <td>
-                                                                <a href='inputpermoho.php'><button class='daftar-btn'><svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14' fill='none'>
-                                                                            <g clip-path='url(#clip0_1112_2)'>
-                                                                              <path d='M7.00008 12.8327C10.2217 12.8327 12.8334 10.221 12.8334 6.99935C12.8334 3.77769 10.2217 1.16602 7.00008 1.16602C3.77842 1.16602 1.16675 3.77769 1.16675 6.99935C1.16675 10.221 3.77842 12.8327 7.00008 12.8327Z' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/>
-                                                                              <path d='M7 9.33333V7' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/>
-                                                                              <path d='M7 4.66602H7.00583' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/>
-                                                                            </g>
-                                                                            <defs>
-                                                                              <clipPath id='clip0_1112_2'>
-                                                                                <rect width='14' height='14' fill='white'/>
-                                                                              </clipPath>
-                                                                            </defs>
-                                                                          </svg>    Daftar</button></a>
-                                                                          </td>
-      </tr>";
-$no++;
-}
-} else {
-echo "<tr><td colspan='5'>No results found.</td></tr>";
-}
-?>
-                                                             
-                                                        </table>
+                                                    <table class="nested-table">
+    <thead>
+        <tr>
+            <td><strong>No</strong></td>
+            <td><strong>Bidang</strong></td>
+            <td><strong>Nama Industri</strong></td>
+            <td><strong>Aksi</strong></td>
+        </tr>
+    </thead>
+    <tbody>
+        <?php
+        if ($result->num_rows > 0) {
+            $no = 1;
+            while ($row = $result->fetch_assoc()) {
+                echo "<tr>";
+                echo "<td>" . $no . "</td>";
+                echo "<td>" . $row['bidang_industri'] . "</td>";
+                echo "<td>" . $row['nama_perusahaan'] . "</td>";
+
+                if ($sudah_daftar) {
+                    if ($row['id_perusahaan'] == $id_perusahaan_didaftarkan) {
+                        echo "<td>
+                        <a href='#'>
+                            <button class='daftar-btn-yes'>Selesai Daftar</button>
+                        </a>
+                      </td>";
+                    //   include 'detailindustri.php';
+                    } else {
+                        echo "<td>
+                        <a href='#'>
+                            <button class='daftar-btn-no'>Daftar</button>
+                        </a>
+                      </td>";
+                    }
+                } else {
+                    echo "<td>
+                        <a href='inputpermoho.php?id_perusahaan=" . $row['id_perusahaan'] . "'>
+                            <button class='daftar-btn'>Daftar</button>
+                        </a>
+                      </td>";
+                }
+                echo "</tr>";
+                $no++;
+            }
+        } else {
+            echo "<tr><td colspan='4'>Tidak ada perusahaan yang tersedia.</td></tr>";
+        }
+        ?>
+    </tbody>
+</table>
+
                                                         
                                                         </div>
                                                     </div>
@@ -407,8 +476,10 @@ echo "<tr><td colspan='5'>No results found.</td></tr>";
                                                     
                                                     
                                                 </tr>
+                                              
                                             </tbody>
                                         </table>
+
                                     </section>
                                 </div>
                                 
@@ -417,51 +488,73 @@ echo "<tr><td colspan='5'>No results found.</td></tr>";
                         
     
                     </div>
+                                                        <td>
+                                        <?php if ($sudah_daftar && $detail): ?>
+<div class="container1">
+    <h2>Rincian Informasi
+        <span class="dropdown-icon" onclick="toggleForm()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="22" viewBox="0 0 15 22" fill="none">
+                <path d="M0.5 1.77312L2.00937 0.5L14.5 11L2.00937 21.5L0.5 20.2334L11.474 11L0.5 1.77312Z" fill="white"/>
+            </svg>
+        </span>
+    </h2>
+
+    <form class="form1">
+        <table>
+            <tr>
+                <div class="status-permohonan <?php echo strtolower($status); ?>">
+                    <span class="tebal">Status Permohonan: </span>
+                    <span class="tebal1">
+                        <?php 
+                        if (isset($status)) {
+                            if ($status == 'menunggu') {
+                                echo "Permohonan PKL sedang menunggu konfirmasi.";
+                            } elseif ($status == 'diterima') {
+                                echo "Permohonan PKL diterima. Silakan berkonsultasi dengan guru pembimbing.";
+                            } else {
+                                echo "Permohonan PKL ditolak.";
+                            }
+                        }
+                        ?>
+                    </span>
+                </div>
+            </tr>
+            <tr>
+                <td><label for="ceo">CEO</label></td>
+                <td><input type="text" id="ceo" name="ceo" value="<?php echo $detail['pendiri']; ?>" readonly/></td>
+            </tr>
+            <tr>
+                <td><label for="kabupaten">Kabupaten / Kecamatan</label></td>
+                <td><input type="text" id="kabupaten" name="kabupaten" value="<?php echo $detail['lokasi']; ?>" readonly/></td>
+            </tr>
+            <tr>
+                <td><label for="nama-industri">Nama Industri</label></td>
+                <td><input type="text" id="nama-industri" name="nama-industri" value="<?php echo $detail['perusahaan']; ?>" readonly/></td>
+            </tr>
+            <tr>
+                <td><label for="bidang-industri">Bidang Industri</label></td>
+                <td><input type="text" id="bidang-industri" name="bidang-industri" value="<?php echo $detail['bidang_industri']; ?>" readonly/></td>
+            </tr>
+            <tr>
+                <td><label for="jalan">Jalan</label></td>
+                <td><input type="text" id="jalan" name="jalan" value="<?php echo $detail['jalan']; ?>" readonly/></td>
+            </tr>
+            <tr>
+                <td><label for="tahun-berdiri">Tahun Berdiri Industri</label></td>
+                <td><input type="text" id="tahun-berdiri" name="tahun-berdiri" value="<?php echo $detail['tahun_berdiri']; ?>" readonly/></td>
+            </tr>
+        </table>
+    </form>
+</div>
+<?php endif; ?>
+   
+                                     </td>
 
                 </div>
-                <div class="container1">
-                    <h2>Rincian Informasi
-                        <span class="dropdown-icon" onclick="toggleForm()"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="22" viewBox="0 0 15 22" fill="none">
-                            <path d="M0.5 1.77312L2.00937 0.5L14.5 11L2.00937 21.5L0.5 20.2334L11.474 11L0.5 1.77312Z" fill="white"/>
-                          </svg></span>
-                    </h2>
-                    <form class="form1">
-                        <table>
-                            <tr><td>
-                                <nav class="breadcrumb-text">
-                                    <secti on class="content">
-                                    <span class="tebal">Diterima :</span>
-                                    <span class="tebal1">Permohonan PKL diterima silahkan berkonsultasi dengan guru pembimbing</span>
-                                </nav>
-                            </td>
-                            </tr>
-                            <tr>
-                                <td><label for="ceo">CEO</label></td>
-                                <td><input type="text" id="ceo" name="ceo" placeholder=": Alfian" /></td>
-                            </tr>
-                            <tr>
-                                <td><label for="kabupaten">Kabupaten / Kecamatan</label></td>
-                                <td><input type="text" id="kabupaten" name="kabupaten" placeholder=": Gowa" /></td>
-                            </tr>
-                            <tr>
-                                <td><label for="nama-industri">Nama Industri</label></td>
-                                <td><input type="text" id="nama-industri" name="nama-industri" placeholder=": Afila Media Karya" /></td>
-                            </tr>
-                            <tr>
-                                <td><label for="bidang-industri">Bidang Industri</label></td>
-                                <td><input type="text" id="bidang-industri" name="bidang-industri" placeholder=": Website" /></td>
-                            </tr>
-                            <tr>
-                                <td><label for="jalan">Jalan</label></td>
-                                <td><input type="text" id="jalan" name="jalan" placeholder=": Samata" /></td>
-                            </tr>
-                            <tr>
-                                <td><label for="tahun-berdiri">Tahun Berdiri Industri</label></td>
-                                <td><input type="text" id="tahun-berdiri" name="tahun-berdiri" placeholder=": 4 Tahun" /></td>
-                            </tr>
-                        </table>
-                    </form>
-                </div>
+              
+                
+
+                           
                 <!-- /.container-fluid -->
 
             </div>
@@ -481,7 +574,7 @@ echo "<tr><td colspan='5'>No results found.</td></tr>";
         
         menuItem.forEach(item => {
           if(item.href.includes("Pengajuan siswa.php")){ 
-            item.classList.add('active'); // Tambahkan class 'active' jika URL mengandung "industri.php"
+            b item.classList.add('active'); // Tambahkan class 'active' jika URL mengandung "industri.php"
           }
         });
       </script>

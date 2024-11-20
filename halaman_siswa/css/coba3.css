@@ -35,6 +35,7 @@ h2 span {
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.5s ease, visibility 0s 0.5s; 
+  /* margin-left: 60px; */
 }
 
 .form1.show {
@@ -108,5 +109,102 @@ input[type="text"] {
 .content .textd{
   color: blue;
   }
+
+  .status-permohonan.menunggu {
+    color: orange;
+    font-weight: bold;
+}
+
+.status-permohonan.diterima {
+    color: green;
+    font-weight: bold;
+}
+
+.status-permohonan.tidak-ada {
+    background-color: #ffe5e5; 
+    border: 1px solid #ff9a9a; 
+    padding: 20px;
+    border-radius: 8px; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: inline-block;
+    text-align: center;
+    width: auto;
+    max-width: 80%; 
+    margin: auto 340px; 
+    height: 200px;
+}
+
+.status-permohonan.tidak-ada p {
+    font-size: 18px;
+    font-weight: bold;
+    color: #d9534f; /* Warna teks merah lembut */
+    margin: 10px 0;
+}
+
+
+.status-permohonan.tidak-ada .icon {
+    font-size: 50px;
+    color: #d9534f;
+    margin-bottom: 15px;
+}
+
+.container1 {
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.container1 h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.status-permohonan.ditolak {
+  background-color: #fff5f5; /* Warna latar belakang merah muda lembut */
+  border: 1px solid #f5c6cb; /* Garis tepi merah lembut */
+  border-radius: 10px; /* Membuat sudut melengkung */
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Menambahkan bayangan */
+  width: 80%; /* Atur lebar */
+  margin: 40px auto; /* Pusatkan di layar */
+}
+
+.icon-sad {
+  text-align: center;
+  margin: 8px 0;
+}
+
+.icon-sad i {
+  font-size: 40px; /* Membesarkan ikon */
+  color: #d9534f; /* Warna merah lembut */
+  margin-bottom: 10px;
+  animation: pulse 1.5s infinite; /* Menambahkan efek lembut */
+}
+
+.icon-sad p {
+  font-size: 16px;
+  font-weight: bold;
+  color: #d9534f;
+  margin-top: 10px;
+}
+
+/* Animasi lembut */
+@keyframes pulse {
+  0% {
+      transform: scale(1);
+      opacity: 1;
+  }
+  50% {
+      transform: scale(1.1);
+      opacity: 0.8;
+  }
+  100% {
+      transform: scale(1);
+      opacity: 1;
+  }
+}
+
+
+
 
 

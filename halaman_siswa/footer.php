@@ -27,14 +27,16 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Apakah Anda Yakin Ingin Logout</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
+                
                 <div class="modal-footer">
-                    <a class="btn btn-primary" style="width: 125.184px;" href="login.php">Yes,Logout</a>
+                    <a class="btn btn-primary" style="width: 125.184px;" href="logout.php">Yes,Logout</a>
                     <button class="btn btn-white" type="button" data-dismiss="modal" style="border: 1px solid #D9D9D9; width: 89px;">Cancel</button>
+                   
                 </div>
             </div>
         </div>

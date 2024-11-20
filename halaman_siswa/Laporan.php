@@ -1,3 +1,80 @@
+<?php
+include 'session.php';
+include 'koneksi.php';
+
+if (isset($_SESSION['Id_siswaa'])) {
+    $Id_siswaa = $_SESSION['Id_siswaa'];
+} else {
+    header("location: ../index.php");
+    exit();
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {  
+    // Cek apakah siswa sudah mengirim laporan sebelumnya
+    $query_check = "SELECT * FROM tb_laporan WHERE Id_siswaa = '$Id_siswaa' LIMIT 1";
+    $result_check = $conn->query($query_check);
+
+    if ($result_check->num_rows > 0) {
+        // Jika sudah ada laporan sebelumnya
+        echo "<script>
+                Swal.fire({
+                    title: 'Oops!',
+                    text: 'Anda sudah mengirim laporan. Tidak bisa mengirim lagi.',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+              </script>";
+    } else {
+        // Proses unggah laporan jika belum ada laporan
+        $file = $_FILES['file'];
+        $file_name = $file['name'];
+        $file_tmp = $file['tmp_name'];
+        $file_error = $file['error'];
+
+        if ($file_error === 0) {
+            $file_extension = pathinfo($file_name, PATHINFO_EXTENSION);
+            $allowed_extensions = ['pdf'];
+
+            if (in_array(strtolower($file_extension), $allowed_extensions)) {
+                $file_new_name = uniqid() . "." . $file_extension;
+                $file_upload_path = "uploads/laporan/" . $file_new_name;
+
+                // Pindahkan file ke folder uploads
+                if (move_uploaded_file($file_tmp, $file_upload_path)) {
+                    // Simpan data ke database
+                    $tanggal_kumpul = date('Y-m-d'); // Tanggal saat ini
+                    $query = "INSERT INTO tb_laporan (Id_siswaa, tanggal_kumpul, file)
+                              VALUES ('$Id_siswaa', '$tanggal_kumpul', '$file_new_name')";
+
+                    if ($conn->query($query)) {
+                        // Tampilkan SweetAlert setelah berhasil
+                        echo "<script>
+                                Swal.fire({
+                                    title: 'Good job!',
+                                    text: 'Laporan berhasil diunggah.',
+                                    icon: 'success',
+                                    confirmButtonText: 'OK'
+                                }).then(function() {
+                                    window.location = 'halaman_siswa.php'; // Ganti dengan halaman yang diinginkan
+                                });
+                              </script>";
+                    } else {
+                        echo "Gagal menyimpan laporan ke database: " . $conn->error;
+                    }
+                } else {
+                    die("Gagal mengunggah file. Silakan coba lagi.");
+                }
+            } else {
+                die("Format file tidak diizinkan. Hanya PDF yang diperbolehkan.");
+            }
+        } else {
+            die("Tidak ada file yang diunggah atau terjadi kesalahan.");
+        }
+    }
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,6 +87,9 @@
     <meta name="author" content="">
 
     <title>Project Absensi Magang</title>
+   
+    <!-- SweetAlert2 CDN -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
 
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -19,9 +99,9 @@
 
     <!-- Custom styles for this template -->
     <link href="css/Dashoboard.css" rel="stylesheet">
-   <link rel="stylesheet" href="css/coba7.css">
+   <link rel="stylesheet" href="css/coba7.css?v6">
    <link rel="stylesheet" href="css/coba8.css">
-   <link rel="stylesheet" href="css/laporan.css">
+   <link rel="stylesheet" href="css/laporan.css?v3">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
 
     <!-- Custom styles for this page -->
@@ -58,15 +138,7 @@
                     <span>Info Siswa</span>
                 </a>
             </li>
-            
 
-            <!-- Divider -->
-            
-
-            <!-- Heading -->
-
-
-            <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="permohonanpkl.php">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -90,7 +162,7 @@
                             <path d="M12.0469 21.1017C11.9267 21.1017 11.8086 21.0709 11.7038 21.0122C9.64688 19.865 7.93375 18.1893 6.74146 16.1582C5.54917 14.1272 4.92099 11.8145 4.92188 9.45938C4.92188 9.36313 4.92281 9.26719 4.92469 9.17156C4.97156 7.03969 5.76516 5.24438 7.22156 3.98016C8.50969 2.86453 10.223 2.25 12.0469 2.25C13.8708 2.25 15.5836 2.86453 16.8703 3.98016C18.3281 5.24578 19.1231 7.03969 19.1672 9.17156C19.1672 9.26531 19.1705 9.36328 19.1705 9.45938C19.1717 11.851 18.5237 14.198 17.2955 16.2502C16.1033 18.2379 14.4122 19.8795 12.39 21.0122C12.2852 21.0709 12.167 21.1017 12.0469 21.1017ZM12.0469 3.65625C10.5614 3.65625 9.17531 4.14844 8.14453 5.04281C6.99469 6.03938 6.3675 7.4775 6.33094 9.20156C6.33094 9.28688 6.32813 9.37313 6.32813 9.45938C6.32743 11.4969 6.85365 13.5 7.85569 15.2741C8.85773 17.0482 10.3015 18.533 12.0469 19.5844C13.7057 18.5815 15.0941 17.1882 16.0913 15.5259C17.1881 13.6925 17.7668 11.5958 17.7656 9.45938C17.7656 9.37313 17.7656 9.28688 17.7628 9.20156C17.7258 7.4775 17.0986 6.03938 15.9492 5.04281C14.918 4.14844 13.5323 3.65625 12.0469 3.65625Z" fill="black"/>
                             <path d="M12.0651 13.903C11.1906 13.903 10.3358 13.6437 9.60874 13.1579C8.88166 12.6721 8.31498 11.9816 7.98035 11.1737C7.64571 10.3659 7.55816 9.47689 7.72875 8.61926C7.89935 7.76162 8.32043 6.97383 8.93876 6.3555C9.55708 5.73718 10.3449 5.3161 11.2025 5.1455C12.0601 4.97491 12.9491 5.06246 13.757 5.3971C14.5649 5.73173 15.2554 6.29841 15.7412 7.02548C16.227 7.75255 16.4863 8.60736 16.4863 9.4818C16.4851 10.654 16.0189 11.7778 15.19 12.6067C14.3611 13.4356 13.2373 13.9018 12.0651 13.903ZM12.0651 6.46727C11.4687 6.46727 10.8858 6.64411 10.39 6.97542C9.89413 7.30673 9.50769 7.77764 9.27951 8.32859C9.05132 8.87953 8.99164 9.48577 9.10802 10.0706C9.22439 10.6555 9.51159 11.1927 9.93329 11.6144C10.355 12.036 10.8923 12.3231 11.4771 12.4394C12.062 12.5557 12.6683 12.4959 13.2192 12.2676C13.7701 12.0394 14.2409 11.6528 14.5722 11.157C14.9034 10.6611 15.0801 10.0781 15.0801 9.4818C15.0787 8.68276 14.7605 7.91687 14.1954 7.35204C13.6302 6.78721 12.8641 6.46954 12.0651 6.46867V6.46727Z" fill="black"/>
                             </svg>                     
-                        <span>Permohonan PKL</span>
+                        <span>Laporan PKL</span>
                     </a> 
                    
                 </li>
@@ -135,7 +207,7 @@
 
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+           
             </div>
 
         </ul>
@@ -179,7 +251,161 @@
 
                         </div>
                     </form>
-                   
+                    <ul class="navbar-nav ml-auto">
+
+<!-- Nav Item - Search Dropdown (Visible Only XS) -->
+<li class="nav-item dropdown no-arrow d-sm-none">
+<!-- Dropdown - Messages -->
+    <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+        aria-labelledby="searchDropdown">
+        <form class="form-inline mr-auto w-100 navbar-search">
+            <div class="input-group">
+                <input type="text" class="form-control bg-light border-0 small"
+                    placeholder="Search for..." aria-label="Search"
+                    aria-describedby="basic-addon2">
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="button">
+                       
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</li>
+
+<!-- Nav Item - Alerts -->
+<li class="nav-item dropdown no-arrow mx-1">
+    <!-- Dropdown - Alerts -->
+    <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+        aria-labelledby="alertsDropdown">
+        <h6 class="dropdown-header">
+            Alerts Center
+        </h6>
+        <a class="dropdown-item d-flex align-items-center" href="#">
+            <div class="mr-3">
+                <div class="icon-circle bg-primary">
+                    <i class="fas fa-file-alt text-white"></i>
+                </div>
+            </div>
+            <div>
+                <div class="small text-gray-500">December 12, 2019</div>
+                <span class="font-weight-bold">A new monthly report is ready to download!</span>
+            </div>
+        </a>
+        <a class="dropdown-item d-flex align-items-center" href="#">
+            <div class="mr-3">
+                <div class="icon-circle bg-success">
+                    <i class="fas fa-donate text-white"></i>
+                </div>
+            </div>
+            <div>
+                <div class="small text-gray-500">December 7, 2019</div>
+                $290.29 has been deposited into your account!
+            </div>
+        </a>
+        <a class="dropdown-item d-flex align-items-center" href="#">
+            <div class="mr-3">
+                <div class="icon-circle bg-warning">
+                    <i class="fas fa-exclamation-triangle text-white"></i>
+                </div>
+            </div>
+            <div>
+                <div class="small text-gray-500">December 2, 2019</div>
+                Spending Alert: We've noticed unusually high spending for your account.
+            </div>
+        </a>
+        <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+    </div>
+</li>
+
+<!-- Nav Item - Messages -->
+<li class="nav-item dropdown no-arrow mx-1">
+    <!-- Dropdown - Messages -->
+    <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+        aria-labelledby="messagesDropdown">
+        <h6 class="dropdown-header">
+            Message Center
+        </h6>
+        <a class="dropdown-item d-flex align-items-center" href="#">
+            <div class="dropdown-list-image mr-3">
+                <img class="rounded-circle" src="img/undraw_profile_1.svg"
+                    alt="...">
+                <div class="status-indicator bg-success"></div>
+            </div>
+            <div class="font-weight-bold">
+                <div class="text-truncate">Hi there! I am wondering if you can help me with a
+                    problem I've been having.</div>
+                <div class="small text-gray-500">Emily Fowler · 58m</div>
+            </div>
+        </a>
+        <a class="dropdown-item d-flex align-items-center" href="#">
+            <div class="dropdown-list-image mr-3">
+                <img class="rounded-circle" src="img/undraw_profile_2.svg"
+                    alt="...">
+                <div class="status-indicator"></div>
+            </div>
+            <div>
+                <div class="text-truncate">I have the photos that you ordered last month, how
+                    would you like them sent to you?</div>
+                <div class="small text-gray-500">Jae Chun · 1d</div>
+            </div>
+        </a>
+        <a class="dropdown-item d-flex align-items-center" href="#">
+            <div class="dropdown-list-image mr-3">
+                <img class="rounded-circle" src="img/undraw_profile_3.svg"
+                    alt="...">
+                <div class="status-indicator bg-warning"></div>
+            </div>
+            <div>
+                <div class="text-truncate">Last month's report looks great, I am very happy with
+                    the progress so far, keep up the good work!</div>
+                <div class="small text-gray-500">Morgan Alvarez · 2d</div>
+            </div>
+        </a>
+        <a class="dropdown-item d-flex align-items-center" href="#">
+            <div class="dropdown-list-image mr-3">
+                <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60"
+                    alt="...">
+                <div class="status-indicator bg-success"></div>
+            </div>
+            <div>
+                <div class="text-truncate">Am I a good boy? The reason I ask is because someone
+                    told me that people say this to all dogs, even if they aren't good...</div>
+                <div class="small text-gray-500">Chicken the Dog · 2w</div>
+            </div>
+        </a>
+        <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
+    </div>
+</li>
+
+<div class="topbar-divider d-none d-sm-block"></div> 
+
+
+<!-- Nav Item - User Information -->
+<li class="nav-item dropdown no-arrow">
+<a class="nav-link1 dropdown-toggle" href="#" id="userDropdown" role="button"
+        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        
+        <span class="mr-2 d-none d-lg-inline text-gray-600 small">
+      <?= "Hai, " . $_SESSION['username']; ?>
+       </span>
+
+        <img class="img-profile"
+            src="img/profil.svg">
+    </a>
+    <!-- Dropdown - User Information -->
+    <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+        aria-labelledby="userDropdown">
+        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+            Logout
+        </a>
+    </div>
+</li>
+
+</ul>
+
+</nav>
                     <!-- Topbar Navbar -->
                     <div class="position">
                         <nav class="breadcrumb">
@@ -189,195 +415,92 @@
                         </nav> 
                     </div>
                     <div class="container1">
-                        <!-- Main Content -->
-                      
-    <main class="main-content">
-        <section class="upload-section">
-            <h3>Unggah Laporan</h3>
-            <div class="upload-box">
-                <p>Letakkan berkas di sini</p>
-                <span>atau</span>
-                <button class="file-btn" onclick="document.getElementById('fileInput').click()">Pilih File</button>
-                <!-- Hidden file input -->
-                <input type="file" id="fileInput" style="display: none;" onchange="displayFileName()">
-            </div>
-        </section>
-        
-<!-- Bilah Status -->
-<div class="status-bar" id="statusBar">
-    <span>File berhasil dihapus.</span>
-    <button class="close-btn" onclick="closeStatusBar()">&times;</button>
-</div>
+    <form action="" method="POST" enctype="multipart/form-data">
+        <main class="main-content">
+            <section class="upload-section">
+                <h3>Unggah Laporan</h3>
+                <div class="upload-box">
+                    <p>Letakkan berkas di sini</p>
+                    <span>atau</span>
+                    <button class="file-btn" type="button" onclick="document.getElementById('fileInput').click()">Pilih File</button>
+                    <input type="file" name="file" id="fileInput" style="display: none;" onchange="displayFileName()">
+                </div>
+            </section>
 
-<section class="file-section">
-    <div class="file-item">
-        <div class="file-card" id="fileDisplayArea">
-            <i class="fas fa-file-alt"></i> Contoh Laporan
+
+
+            <section class="file-section">
+                <div class="file-item">
+                    <div class="file-card" id="fileDisplayArea">
+                        <i class="fas fa-file-alt"></i> Masukkan file
+                    </div>
+                </div>
+            </section>
+
+            <button type="submit" class="upload-btn">Kirim</button>
+            <button type="button" class="delete-btn" onclick="hapusFile()">Hapus</button>
+        </main>
+    </form>
+
+    <!-- Modal Konfirmasi Hapus -->
+    <div class="modal-overlay" id="hapus" style="display:none;">
+        <div class="modal-box">
+            <p class="p">Apakah Anda yakin ingin menghapus file ini?</p>
+            <button class="modal-btn confirm-btn" onclick="hapusFile()">Ya, Hapus</button>
+            <button class="modal-btn cancel-btn" onclick="closehapus()">Batal</button>
         </div>
-    </div>
-    <div class="action-buttons">
-        <button class="upload-btn">Unggah</button>
-        <button class="delete-btn" onclick="showModal()">Hapus</button>
-    </div>
-</section>
-
-<!-- Modal Konfirmasi -->
-<div class="modal-overlay" id="modal">
-    <div class="modal-box">
-        <p>Apakah Anda yakin ingin menghapus file ini?</p>
-        <button class="modal-btn confirm-btn" onclick="hapusFile()">Ya, Hapus</button>
-        <button class="modal-btn cancel-btn" onclick="closeModal()">Batal</button>
     </div>
 </div>
 
 <script>
-function showModal() {
-    document.getElementById("modal").style.display = "flex";
+function showhapus() {
+    document.getElementById("hapus").style.display = "flex";
 }
 
-function closeModal() {
-    document.getElementById("modal").style.display = "none";
+function closehapus() {
+    // Sembunyikan modal
+    document.getElementById("hapus").style.display = "none";
+
+    // Reset input file dan tampilan file
+    document.getElementById("fileInput").value = '';  // Mengosongkan input file
+    document.getElementById("fileDisplayArea").textContent = "Masukkan file";
 }
 
 function hapusFile() {
-    // Menghapus tampilan file di area fileDisplayArea
-    document.getElementById("fileDisplayArea").textContent = "File telah dihapus.";
+    // Menghapus file yang dipilih
+    document.getElementById("fileInput").value = '';  // Mengosongkan input file
+    document.getElementById("fileDisplayArea").textContent = "Masukkan file";  // Mengubah teks di area file display menjadi "Masukkan file"
     
     // Tampilkan bilah status
     document.getElementById("statusBar").style.display = "flex";
     
-    closeModal();
+    closehapus();
 }
 
 function closeStatusBar() {
     // Sembunyikan bilah status
     document.getElementById("statusBar").style.display = "none";
 }
+
+// Fungsi untuk menampilkan nama file yang dipilih
+function displayFileName() {
+    var fileInput = document.getElementById("fileInput");
+    var fileName = fileInput.files[0] ? fileInput.files[0].name : 'Tidak ada file yang dipilih';
+    document.getElementById("fileDisplayArea").textContent = fileName;
+}
 </script>
 
+
+
+
+              
+
     </main>
-    <script src="css/coba8.js"></script>
+
+    <!-- <script src="css/coba8.js"></script> -->
                     </div> 
                     
-                    <ul class="navbar-nav ml-auto">
-                         
-                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-                        <li class="nav-item dropdown no-arrow d-sm-none">
-                        <!-- Dropdown - Messages -->
-                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                                aria-labelledby="searchDropdown">
-                                <form class="form-inline mr-auto w-100 navbar-search">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control bg-light border-0 small"
-                                            placeholder="Search for..." aria-label="Search"
-                                            aria-describedby="basic-addon2">
-                                        <div class="input-group-append">
-                                            <button class="btn btn-primary" type="button">
-                                               
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </li>
-
-                        <!-- Nav Item - Alerts -->
-                        <li class="nav-item dropdown no-arrow mx-1">
-                            <!-- Dropdown - Alerts -->
-                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="alertsDropdown">
-                                <h6 class="dropdown-header">
-                                    Alerts Center
-                                </h6>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-primary">
-                                            <i class="fas fa-file-alt text-white"></i>
-                                        </div>
-                                    </div>
-
-                        <!-- Nav Item - Messages -->
-                        <li class="nav-item dropdown no-arrow mx-1">
-                            <!-- Dropdown - Messages -->
-                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="messagesDropdown">
-                                <h6 class="dropdown-header">
-                                    Message Center
-                                </h6>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_1.svg"
-                                            alt="...">
-                                        <div class="status-indicator bg-success"></div>
-                                    </div>
-                                    <div class="font-weight-bold">
-                                        <div class="text-truncate">Hi there! I am wondering if you can help me with a
-                                            problem I've been having.</div>
-                                        <div class="small text-gray-500">Emily Fowler · 58m</div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_2.svg"
-                                            alt="...">
-                                        <div class="status-indicator"></div>
-                                    </div>
-                                    <div>
-                                        <div class="text-truncate">I have the photos that you ordered last month, how
-                                            would you like them sent to you?</div>
-                                        <div class="small text-gray-500">Jae Chun · 1d</div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_3.svg"
-                                            alt="...">
-                                        <div class="status-indicator bg-warning"></div>
-                                    </div>
-                                    <div>
-                                        <div class="text-truncate">Last month's report looks great, I am very happy with
-                                            the progress so far, keep up the good work!</div>
-                                        <div class="small text-gray-500">Morgan Alvarez · 2d</div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60"
-                                            alt="...">
-                                        <div class="status-indicator bg-success"></div>
-                                    </div>
-                                    <div>
-                                        <div class="text-truncate">Am I a good boy? The reason I ask is because someone
-                                            told me that people say this to all dogs, even if they aren't good...</div>
-                                        <div class="small text-gray-500">Chicken the Dog · 2w</div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
-                            </div>
-                        </li>
-
-                        
-
-                        <!-- Nav Item - User Information -->
-                        <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link1 dropdown-toggle" href="#" id="userDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
-                                
-                                <img class="img-profile"
-                                    src="img/profil.svg">
-                            </a>
-                            <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Logout
-                                </a>
-                            </div>
-                        </li>
-                        
-                    </ul>
-                </nav>            
+                       
                             </div>
                         </div>
                     </div>
@@ -386,57 +509,7 @@ function closeStatusBar() {
                 <!-- /.container-fluid -->
                 
             <!-- End of Main Content -->
-
-            <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center">
-                        <span> @smkn_labuang</span>
-                    </div>
-                </div>
-            </footer -->
        
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Apakah Anda Yakin Ingin Logout</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                
-                <div class="modal-footer">
-                    <a class="btn btn-primary" style="width: 125.184px;" href="login.php">Yes,Logout</a>
-                    <button class="btn btn-white" type="button" data-dismiss="modal" style="border: 1px solid #D9D9D9; width: 89px;">Cancel</button>
-                   
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
-
-    <!-- Page level plugins -->
-    <script src="vendor/chart.js/Chart.min.js"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="js/demo/chart-area-demo.js"></script>
-    <script src="js/demo/chart-pie-demo.js"></script>
-  <!-- Page level plugins -->
-  <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-  <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
   <!-- Page level custom scripts -->
   <script src="js/demo/datatables-demo.js"></script>
@@ -453,6 +526,32 @@ function closeStatusBar() {
     });
   </script>
 
-</body>
+  <!-- SweetAlert2 CDN -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-</html>
+<script>
+// Cek apakah session sudah ada dan menampilkan SweetAlert sesuai dengan kondisi
+<?php
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {  
+    if ($result_check->num_rows > 0) {
+        // Jika sudah ada laporan sebelumnya
+        echo "Swal.fire({
+                title: 'Oops!',
+                text: 'Anda sudah mengirim laporan. Tidak bisa mengirim lagi.',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });";
+    } else {
+        // Jika laporan berhasil diunggah
+        echo "Swal.fire({
+                title: 'Good job!',
+                text: 'Laporan berhasil diunggah.',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            })";
+    }
+}
+?>
+</script>
+
+<?php include 'footer.php' ?>

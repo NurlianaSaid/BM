@@ -1,5 +1,28 @@
-<?php include 'laporanmonir/koneksi.php' ;
+<?php 
 include 'komas.php';
+$kode_guru = $_SESSION['kode_guru'];
+
+include 'laporanmonir/koneksi.php' ;
+
+$query = "SELECT
+          s.Nama_siswa,
+          s.Kelas_siswa,
+          lp.file
+          FROM 
+          siswa_pkl sp
+          JOIN 
+          tb_siswa s ON sp.Id_siswaa = s.Id_siswaa
+          JOIN
+          tb_laporan lp ON sp.Id_siswaa = lp.Id_siswaa
+          WHERE  
+          sp.kode_guru= ?";
+
+         $stmt = $conn->prepare($query);
+         $stmt->bind_param("s", $kode_guru);
+         $stmt->execute();
+         $result = $stmt->get_result();
+
+         $stmt->close();
 
 ?>
 
@@ -15,6 +38,8 @@ include 'komas.php';
     <meta name="author" content="">
 
     <title>Data Anak Magang </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
 
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -39,12 +64,12 @@ include 'komas.php';
         }
         .img_profile{
             margin-right: 0px;
-            width: 50px;
+            /* width: 50px; */
         }
 </style>
     <!-- Custom styles for this template -->
-    <link href="css/laporan.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/card.css?v2">
+    <link href="css/laporan.css?v3" rel="stylesheet">
+    <link rel="stylesheet" href="css/card.css?v7">
 
     <!-- Custom styles for this page -->
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
@@ -152,7 +177,7 @@ include 'komas.php';
        <?= "Hai, " . $_SESSION['username']; ?>
         </span>
 
-        <img class="img-profile"
+        <img class="img_profile"
             src="img/profil.svg">
     </a>
     <!-- Dropdown - User Information -->
@@ -178,130 +203,33 @@ include 'komas.php';
                         <div id="layoutSidenav_content">
                             <main>
                                 <div class="container-fluid px-4">
-                                    <div class="row g-4">
-                                        
-                                        <div class="col-xl-2 col-lg-3 col-md-6 col-sm-12 mb-4">
-                                            <div class="card bg-primary text-white mb-4">
-                                                <div class="card-body">
-                                                    <h4>DOC</h4>
-                                                    <img src="img/Microsoft_Word_2013-2019_logo 1.png" alt="">
-                                                </div>
-                                            </div>
-                                            <div class="isi">
-                                               <p>Nama  :</p>
-                                               <p>Kelas :</p>
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-2 col-lg-3 col-md-6 col-sm-12 mb-4">
-                                            <div class="card bg-primary text-white mb-4">
-                                                <div class="card-body">
-                                                    <h4>DOC</h4>
-                                                    <img src="img/Microsoft_Word_2013-2019_logo 1.png" alt="">
-                                                </div>
-                                            </div>
-                                            <div class="isi">
-                                               <p>Nama  :</p>
-                                               <p>Kelas :</p>
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-2 col-lg-3 col-md-6 col-sm-12 mb-4">
-                                            <div class="card bg-primary text-white mb-4">
-                                                <div class="card-body">
-                                                    <h4>DOC</h4>
-                                                    <img src="img/Microsoft_Word_2013-2019_logo 1.png" alt="">
-                                                </div>
-                                            </div>
-                                            <div class="isi">
-                                               <p>Nama  :</p>
-                                               <p>Kelas :</p>
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-2 col-lg-3 col-md-6 col-sm-12 mb-4">
-                                            <div class="card bg-primary text-white mb-4">
-                                                <div class="card-body">
-                                                    <h4>DOC</h4>
-                                                    <img src="img/Microsoft_Word_2013-2019_logo 1.png" alt="">
-                                                </div>
-                                            </div>
-                                            <div class="isi">
-                                               <p>Nama  :</p>
-                                               <p>Kelas :</p>
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-2 col-lg-3 col-md-6 col-sm-12 mb-4">
-                                            <div class="card bg-primary text-white mb-4">
-                                                <div class="card-body">
-                                                    <h4>DOC</h4>
-                                                    <img src="img/Microsoft_Word_2013-2019_logo 1.png" alt="">
-                                                </div>
-                                            </div>
-                                            <div class="isi">
-                                               <p>Nama  :</p>
-                                               <p>Kelas :</p>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-xl-2 col-lg-3 col-md-6 col-sm-12 mb-4">
-                                            <div class="card bg-primary text-white mb-4">
-                                                <div class="card-body">
-                                                    <h4>DOC</h4>
-                                                    <img src="img/Microsoft_Word_2013-2019_logo 1.png" alt="">
-                                                </div>
-                                            </div>
-                                            <div class="isi">
-                                               <p>Nama  :</p>
-                                               <p>Kelas :</p>
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-2 col-lg-3 col-md-6 col-sm-12 mb-4">
-                                            <div class="card bg-primary text-white mb-4">
-                                                <div class="card-body">
-                                                    <h4>DOC</h4>
-                                                    <img src="img/Microsoft_Word_2013-2019_logo 1.png" alt="">
-                                                </div>
-                                            </div>
-                                            <div class="isi">
-                                               <p>Nama  :</p>
-                                               <p>Kelas :</p>
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-2 col-lg-3 col-md-6 col-sm-12 mb-4">
-                                            <div class="card bg-primary text-white mb-4">
-                                                <div class="card-body">
-                                                    <h4>DOC</h4>
-                                                    <img src="img/Microsoft_Word_2013-2019_logo 1.png" alt="">
-                                                </div>
-                                            </div>
-                                            <div class="isi">
-                                               <p>Nama  :</p>
-                                               <p>Kelas :</p>
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-2 col-lg-3 col-md-6 col-sm-12 mb-4">
-                                            <div class="card bg-primary text-white mb-4">
-                                                <div class="card-body">
-                                                    <h4>DOC</h4>
-                                                    <img src="img/Microsoft_Word_2013-2019_logo 1.png" alt="">
-                                                </div>
-                                            </div>
-                                            <div class="isi">
-                                               <p>Nama  :</p>
-                                               <p>Kelas :</p>
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-2 col-lg-3 col-md-6 col-sm-12 mb-4">
-                                            <div class="card bg-primary text-white mb-4">
-                                                <div class="card-body">
-                                                    <h4>DOC</h4>
-                                                    <img src="img/Microsoft_Word_2013-2019_logo 1.png" alt="">
-                                                </div>
-                                            </div>
-                                            <div class="isi">
-                                               <p>Nama  :</p>
-                                               <p>Kelas :</p>
-                                            </div>
-                                        </div>
+                                <?php if ($result->num_rows === 0): ?>
+                                   <div class="alert alert-info text-center mt-4">
+                                     <p><strong>Tidak ada laporan yang tersedia untuk guru ini.</strong></p>
                                     </div>
+                                    <?php else: ?>
+                                    <div class="row g-4">    
+                                    <?php while ($row = $result->fetch_assoc()): ?>       
+                                        <div class="col-xl-2 col-lg-3 col-md-6 col-sm-12 mb-4">
+                                            <div class="card bg-white text-white mb-4">
+                                                <div class="card-body">
+                                                    <h4>PDF</h4>
+                                                    <img src="img/pdf.png" alt="">
+                                                </div>
+                                            </div>
+                                            <div class="isi">
+                                            <p>Nama  : <?= htmlspecialchars($row['Nama_siswa']); ?></p>
+                                            <p>Kelas : <?= htmlspecialchars($row['Kelas_siswa']); ?></p>
+                                            <a href="../halaman_siswa/uploads/laporan/<?= urlencode($row['file']); ?>" download>
+                                            <button class="btn btn-danger">
+                                            <i class="bi bi-download icon-right"></i>
+                                            </button>
+                                            </a>
+                                            </div>
+                                        </div>
+                                        <?php endwhile; ?>
+                                    </div>
+                                    <?php endif; ?>
                                 </div>
                             </main>
                         </div>

@@ -1,3 +1,36 @@
+<?php
+include 'session.php';
+$kode_siswa = $_SESSION['Id_siswaa'];
+
+include 'koneksi.php';
+
+$query = "SELECT
+          s.Nama_siswa AS nama,
+          s.Kelas_siswa AS kelas,
+          s.Nis,
+          u.username,
+          p.nama_perusahaan AS perusahaan,
+          p.lokasi
+          FROM 
+          siswa_pkl sp
+          JOIN  
+          tb_siswa s ON sp.Id_siswaa = s.Id_siswaa
+          JOIN
+          tb_perusahaan p ON sp.id_perusahaan = p.id_perusahaan
+          JOIN 
+          tb_users u ON s.Id_siswaa = u.Id_siswaa
+    WHERE 
+        sp.Id_siswaa = ?";
+        
+ 
+ $stmt = $conn->prepare($query);
+ $stmt->bind_param("s", $kode_siswa);
+ $stmt->execute();
+ $result = $stmt->get_result(); 
+ $row = $result->fetch_assoc();
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -182,27 +215,27 @@
                             <div class="form-wrapper">
                                 <div class="form-group">
                                     <label for="Nama">Nama :</label>
-                                    <input type="text" id="Nama" value="Zaskia">
+                                    <input type="text" id="Nama" value="<?php echo htmlspecialchars($row['nama']); ?>" readonly>
                                 </div>
                                 <div class="form-group">
                                     <label for="jurusan">Jurusan :</label>
-                                    <input type="text" id="jurusan" value="RPL">
+                                    <input type="text" id="jurusan" value="<?php echo htmlspecialchars($row['kelas']); ?>" readonly>
                                 </div>
                                 <div class="form-group">
                                     <label for="Username">Username :</label>
-                                    <input type="text" id="Username" value="Kya">
+                                    <input type="text" id="Username" value="<?php echo htmlspecialchars($row['username']); ?>" readonly>
                                 </div>
                                 <div class="form-group">
                                     <label for="tempat">Tempat :</label>
-                                    <input type="text" id="Tempat" value="Afila media karya">
+                                    <input type="text" id="Tempat" value="<?php echo htmlspecialchars($row['perusahaan']); ?>" readonly>
                                 </div>
                                 <div class="form-group">
                                     <label for="Nis">NIS :</label>
-                                    <input type="text" id="Nis" value="22112006">
+                                    <input type="text" id="Tempat" value="<?php echo htmlspecialchars($row['Nis']); ?>" readonly>
                                 </div>
                                 <div class="form-group">
                                     <label for="Alamat">Alamat :</label>
-                                    <input type="text" id="Alamat" value="Gowa">
+                                    <input type="text" id="lokasi" value="<?php echo htmlspecialchars($row['lokasi']); ?>" readonly>
                                 </div>
                             </div>
                         </div>
@@ -255,7 +288,7 @@
                                 </h6>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <!-- <img class="rounded-circle" src="img/undraw_profile_1.svg" -->
+                                        <img class="rounded-circle" src="img/undraw_profile_1.svg"
                                             alt="...">
                                         <div class="status-indicator bg-success"></div>
                                     </div>
@@ -305,13 +338,15 @@
                             </div>
                         </li>
 
-                        
 
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link1 dropdown-toggle" href="#" id="userDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
-
+                        <a class="nav-link1 dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">
+                              <?= "Hai, " . $_SESSION['username']; ?>
+                               </span>
 
                                 <img class="img-profile"
                                     src="img/profil.svg">

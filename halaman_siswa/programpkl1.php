@@ -310,15 +310,6 @@
                 <!-- /.container-fluid -->
                 
             <!-- End of Main Content -->
-
-            <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center">
-                        <span> @smkn_labuang</span>
-                    </div>
-                </div>
-            </footer -->
        
     <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"

@@ -1,3 +1,50 @@
+
+<?php
+// Mulai sesi dan sambungkan ke database
+session_start();
+include 'koneksi.php';
+
+if (!isset($_SESSION['Id_siswaa'])) {
+    header("location: ../index.php");
+    exit();
+}
+
+$id_siswaa = $_SESSION['Id_siswaa'];
+
+// Cek apakah siswa sudah mendaftar
+$check_query = "SELECT * FROM permohonan_pkl WHERE Id_siswaa = '$id_siswaa' LIMIT 1";
+$check_result = mysqli_query($conn, $check_query);
+$sudah_daftar = false;
+$detail = null;
+$status = null;
+
+if (mysqli_num_rows($check_result) > 0) {
+    $sudah_daftar = true;
+    $daftar_info = mysqli_fetch_assoc($check_result);
+    $status = $daftar_info['status']; // ambil status permohonan
+    $id_perusahaan_didaftarkan = $daftar_info['id_perusahaan'];
+    
+    // Ambil detail perusahaan jika sudah mendaftar
+    $query = "SELECT 
+                p.pendiri, 
+                p.nama_perusahaan AS perusahaan,
+                p.bidang_industri, 
+                p.lokasi, 
+                p.jalan, 
+                p.tahun_didirikan AS tahun_berdiri
+              FROM 
+                tb_perusahaan p
+              WHERE
+                p.id_perusahaan = '$id_perusahaan_didaftarkan'";
+
+    $result = mysqli_query($conn, $query);
+    if (mysqli_num_rows($result) > 0) {
+        $detail = mysqli_fetch_assoc($result);
+    }
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,8 +65,8 @@
         rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="css/input.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/coba3.css">
+    <link href="css/input.css?v1" rel="stylesheet">
+    <link rel="stylesheet" href="css/coba3.css?v1">
     <!-- <link rel="stylesheet" href="css/coba3.css"> -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
 
@@ -280,16 +327,20 @@
                                 </div>
                             </li>
     
-                            
+                             <div class="topbar-divider d-none d-sm-block"></div> 
     
                             <!-- Nav Item - User Information -->
                             <li class="nav-item dropdown no-arrow">
-                                <a class="nav-link1 dropdown-toggle" href="#" id="userDropdown" role="button"
-                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    
-                                    <img class="img-profile"
-                                        src="img/profil.svg">
-                                </a>
+                            <a class="nav-link1 dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">
+                              <?= "Hai, " . $_SESSION['username']; ?>
+                               </span>
+
+                                <img class="img-profile"
+                                    src="img/profil.svg">
+                            </a>
                                 <!-- Dropdown - User Information -->
                                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                     aria-labelledby="userDropdown">
@@ -303,68 +354,74 @@
                         </ul>
     
                     </nav>
-                 <div class="container">
-                <!-- End of Topbar -->
-                <!-- Begin Page Content -->
-                <div class="container-fluid">
-                    <div class="container1">
-                        <nav class="breadcrumb">
-                            <secti on class="content">
-                            <span class="textd">Siswa</span>
-                            <span>/ Alamat PKL</span>
-                        </nav>
-                        <h2>Rincian Informasi
-                            <span class="dropdown-icon" onclick="toggleForm()"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="22" viewBox="0 0 15 22" fill="none">
-                                <path d="M0.5 1.77312L2.00937 0.5L14.5 11L2.00937 21.5L0.5 20.2334L11.474 11L0.5 1.77312Z" fill="white"/>
-                              </svg></span>
-                        </h2>
-                        <form class="form1">
-                            <table>
-                                <tr>
-                                    <td><label for="ceo">CEO</label></td>
-                                    <td><input type="text" id="ceo" name="ceo" placeholder=": Alfian" /></td>
-                                </tr>
-                                <tr>
-                                    <td><label for="kabupaten">Kabupaten / Kecamatan</label></td>
-                                    <td><input type="text" id="kabupaten" name="kabupaten" placeholder=": Gowa" /></td>
-                                </tr>
-                                <tr>
-                                    <td><label for="nama-industri">Nama Industri</label></td>
-                                    <td><input type="text" id="nama-industri" name="nama-industri" placeholder=": Afila Media Karya" /></td>
-                                </tr>
-                                <tr>
-                                    <td><label for="bidang-industri">Bidang Industri</label></td>
-                                    <td><input type="text" id="bidang-industri" name="bidang-industri" placeholder=": Website" /></td>
-                                </tr>
-                                <tr>
-                                    <td><label for="jalan">Jalan</label></td>
-                                    <td><input type="text" id="jalan" name="jalan" placeholder=": Samata" /></td>
-                                </tr>
-                                <tr>
-                                    <td><label for="tahun-berdiri">Tahun Berdiri Industri</label></td>
-                                    <td><input type="text" id="tahun-berdiri" name="tahun-berdiri" placeholder=": 4 Tahun" /></td>
-                                </tr>
-                            </table>
-                        </form>
-                    </div>
-                
-                                <!-- Page Heading -->
-                  
-                    <!-- DataTales Example --
-                           
-                                                        <div class="form-group">
-                                                            <input type="submit" value="Simpan" class="btn-submit">
-                                                            <input type="submit" value="Batal" class="btn-cancel" onclick="document.getElementById('nama-industri').value=''; document.getElementById('bidang-industri').value=''; document.getElementById('ceo').value=''; document.getElementById('jalan').value=''; document.getElementById('kabupaten').value=''; document.getElementById('status').value='';"> -->
-                                                            <!-- <input type="button" value="Batal" class="btn-cancel" onclick="window.location.href='3Pengajuan siswa.php';">  -->
-                                                            <!-- <input type="submit" value="Batal" class="btn-cancel"onclick="window.location.href='Pengajuan siswa.php';"> -->
-                                                        </div>
-                                            </div> 
-                                </table>
-                            </div>
-                        </div>
-                    </div>
+                    <?php if ($sudah_daftar && $detail): ?>
+    <?php if ($status === 'diterima'): ?>
+        <!-- Tampilkan rincian perusahaan jika status diterima -->
+        <div class="container1">
+            <h2>Rincian Informasi
+                <span class="dropdown-icon" onclick="toggleForm()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="22" viewBox="0 0 15 22" fill="none">
+                        <path d="M0.5 1.77312L2.00937 0.5L14.5 11L2.00937 21.5L0.5 20.2334L11.474 11L0.5 1.77312Z" fill="white"/>
+                    </svg>
+                </span>
+            </h2>
 
-                </div>
+            <form class="form1">
+                <table>
+                    <tr>
+                        <td><label for="ceo">CEO</label></td>
+                        <td><input type="text" id="ceo" name="ceo" value="<?php echo $detail['pendiri']; ?>" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td><label for="kabupaten">Kabupaten / Kecamatan</label></td>
+                        <td><input type="text" id="kabupaten" name="kabupaten" value="<?php echo $detail['lokasi']; ?>" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td><label for="nama-industri">Nama Industri</label></td>
+                        <td><input type="text" id="nama-industri" name="nama-industri" value="<?php echo $detail['perusahaan']; ?>" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td><label for="bidang-industri">Bidang Industri</label></td>
+                        <td><input type="text" id="bidang-industri" name="bidang-industri" value="<?php echo $detail['bidang_industri']; ?>" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td><label for="jalan">Jalan</label></td>
+                        <td><input type="text" id="jalan" name="jalan" value="<?php echo $detail['jalan']; ?>" readonly/></td>
+                    </tr>
+                    <tr>
+                        <td><label for="tahun-berdiri">Tahun Berdiri Industri</label></td>
+                        <td><input type="text" id="tahun-berdiri" name="tahun-berdiri" value="<?php echo $detail['tahun_berdiri']; ?>" readonly/></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+        <?php elseif ($status === 'menunggu' || $status === 'ditolak'): ?>
+    <div class="status-permohonan" style="text-align: center; margin: 20px 0;">
+        <?php if ($status === 'menunggu'): ?>
+            <img src="img/animasiload.gif" alt="Menunggu konfirmasi" style="width: 110px; height: 110px; margin-top: 60px;"/>
+            <p>Permohonan PKL sedang menunggu konfirmasi. Silakan cek kembali nanti.</p>
+            <?php elseif ($status === 'ditolak'): ?>
+<div class="status-permohonan ditolak" >
+<div class="icon-sad">
+<i class="fas fa-frown"></i>
+    <h4 style="color: #d9534f;">Mohon Maaf</h4>
+    <p style="font-size: 16px; color: #555;">
+        Permohonan PKL Anda telah ditolak. Jangan berkecil hati, tetap semangat, 
+        dan hubungi pihak terkait untuk informasi lebih lanjut atau untuk mengajukan permohonan baru.
+    </p>
+</div>
+</div>
+<?php endif; ?>
+    </div>
+<?php endif; ?>
+
+    <?php else: ?>
+    <div class="status-permohonan tidak-ada">
+        <div class="icon">⚠️</div>
+        <p>Belum ada permohonan PKL yang diajukan.</p>
+    </div>
+    <?php endif; ?>
+
                 <!-- /.container-fluid -->
                 
             </div>
@@ -374,71 +431,7 @@
                  
             
             <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span> @smkn_labuang</span>
-                    </div>
-                </div>
-            </footer -->
-            <!-- End of Footer -->
-
-        </div>
-        <!-- End of Content Wrapper -->
-
-    </div>
-    <!-- End of Page Wrapper -->
-
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
-
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Apakah Anda Yakin Ingin Logout</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                
-                <div class="modal-footer">
-                    <a class="btn btn-primary" style="width: 125.184px;" href="login.php">Yes,Logout</a>
-                    <button class="btn btn-white" type="button" data-dismiss="modal" style="border: 1px solid #D9D9D9; width: 89px;">Cancel</button>
-                   
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
-
-    <!-- Page level plugins -->
-    <script src="vendor/chart.js/Chart.min.js"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="js/demo/chart-area-demo.js"></script>
-    <script src="js/demo/chart-pie-demo.js"></script>
-  <!-- Page level plugins -->
-  <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-  <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
-  <!-- Page level custom scripts -->
-  <script src="js/demo/datatables-demo.js"></script>
-
+           
 
   <script>
     function toggleForm() {
@@ -454,6 +447,4 @@
     });
 </script>
 
-</body>
-
-</html>
+<?php include 'footer.php' ?>

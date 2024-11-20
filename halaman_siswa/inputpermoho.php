@@ -1,3 +1,77 @@
+<?php 
+
+include 'session.php';
+include 'koneksi.php';
+
+if (isset($_SESSION['Id_siswaa'])) {
+    $Id_siswaa = $_SESSION['Id_siswaa'];
+} else {
+   header("location: ../index.php");
+   exit();
+}
+// Proses saat formulir disubmit
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $id_perusahaan = $_POST['id_perusahaan'];
+    $nama = $_POST['nama'];
+    $kelas = $_POST['kelas'];
+    $nisn = $_POST['nisn'];
+    $jenis_kelamin = $_POST['jenis_kelamin'];
+
+
+        // Periksa apakah siswa sudah mendaftar
+        $check_query = "SELECT * FROM permohonan_pkl WHERE Id_siswaa = '$Id_siswaa' LIMIT 1";
+        $check_result = mysqli_query($conn, $check_query);
+        if (mysqli_num_rows($check_result) > 0) {
+            // Siswa sudah mendaftar, tampilkan pesan kesalahan
+            echo "<script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal!',
+                text: 'Anda sudah mendaftar ke perusahaan lain. Anda hanya dapat mendaftar satu perusahaan.',
+            }).then(() => {
+                window.location.href = 'permohonanpkl.php';
+            });
+          </script>";    
+            exit;
+        }
+    // Proses unggah file CV
+    $cv = $_FILES['cv'];
+    $cv_name = $cv['name'];
+    $cv_tmp_name = $cv['tmp_name'];
+    $cv_error = $cv['error'];
+
+    if ($cv_error === 0) {
+        $cv_extension = pathinfo($cv_name, PATHINFO_EXTENSION);
+        $allowed_extensions = ['pdf'];
+        
+        if (in_array(strtolower($cv_extension), $allowed_extensions)) {
+            $cv_new_name = uniqid() . "." . $cv_extension;
+            $cv_upload_path = "uploads/" . $cv_new_name;
+
+            // Pindahkan file ke folder uploads 
+            if (move_uploaded_file($cv_tmp_name, $cv_upload_path)) {
+                // Simpan data ke database
+                $query = "INSERT INTO permohonan_pkl (id_perusahaan, Id_siswaa, nama, kelas, nisn, jenis_kelamin, cv, status) 
+                VALUES ('$id_perusahaan', '$Id_siswaa', '$nama', '$kelas', '$nisn', '$jenis_kelamin', '$cv_new_name', 'menunggu')";      
+
+                if (mysqli_query($conn, $query)) {
+                    // Redirect ke permohonanpkl.php dengan membawa id_perusahaan
+                    header("Location: permohonanpkl.php?id_perusahaan=$id_perusahaan");
+                    exit;
+                } else {
+                    echo "Gagal menyimpan data: " . mysqli_error($conn);
+                }
+            } else {
+                echo "Gagal mengunggah file CV.";
+            }
+        } else {
+            echo "Format file tidak diperbolehkan. Hanya PDF, DOCX, dan DOC.";
+        }
+    } else {
+        echo "Terjadi kesalahan saat mengunggah file.";
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,7 +93,7 @@
 
     <!-- Custom styles for this template -->
     <link href="css/Dashoboard.css" rel="stylesheet">
-   <link rel="stylesheet" href="css/coba4.css">
+   <link rel="stylesheet" href="css/coba4.css?v1">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
 
     <!-- Custom styles for this page -->
@@ -186,30 +260,32 @@
                         <!-- Main Content -->
                         <div class="main-content">
                             <div class="section-title">Input Data</div>
-                            <form>
+
+                            <form action="" method="POST" enctype="multipart/form-data">
+                                <input type="hidden" name="id_perusahaan" value="<?php echo $_GET['id_perusahaan']; ?>">
                                 <label for="nama">Nama Lengkap</label>
-                                <input type="text" id="nama" placeholder="Masukkan Nama Lengkap">
+                                <input type="text" id="nama" name="nama" placeholder="Masukkan Nama Lengkap" required>
                                 <label for="kelas">Kelas</label>
-                                <input type="text" id="kelas" placeholder="Masukkan Kelas">
+                                <input type="text" id="kelas" name="kelas" placeholder="Masukkan Kelas" required>
                                 <label for="nis">NIS</label>
-                                <input type="text" id="nis" placeholder="Masukkan NIS">
+                                <input type="text" id="nisn" name="nisn"  placeholder="Masukkan NISN" required>
                                 <div class="form-group">
                                 <div>
-                                <label for="jk">Jenis Kelamin</label>
-                                <select id="jk">
-                                <option value="laki-laki">Laki-Laki</option>
-                                <option value="perempuan">Perempuan</option>
-                                </select>
+                                <label for="jenis_kelamin">Jenis Kelamin</label>
+                               <select id="jenis_kelamin" name="jenis_kelamin" required>
+                               <option value="Laki-laki">Pilih</option>
+                               <option value="Laki-laki">Laki-Laki</option>
+                               <option value="Perempuan">Perempuan</option>
+                               </select>
                                 </div>
                                 <div>
                                 <label for="cv">Unggah CV</label>
-                                <input type="file" id="cv">
+                                <input type="file" id="cv" name="cv" required>
                                 <p class="info-text">Unggah CV dalam format PDF, DOCX, atau DOC.</p>
                                 </div>
                                 </div>
                                 <div class="button-container">
-                                    <button type="button" onclick="window.location.href='permohonanpkl.php'">Ajukan Permohonan</button>
-
+                                    <button type="submit" onclick="window.location.href='permohonanpkl.php'">Ajukan Permohonan</button>
                                 </div>
                             </form>
                         </div>
@@ -311,13 +387,17 @@
                             </div>
                         </li>
 
-                        
-
+                        <div class="topbar-divider d-none d-sm-block"></div> 
+                            
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link1 dropdown-toggle" href="#" id="userDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
-                                
+                        <a class="nav-link1 dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">
+                              <?= "Hai, " . $_SESSION['username']; ?>
+                               </span>
+
                                 <img class="img-profile"
                                     src="img/profil.svg">
                             </a>
@@ -336,20 +416,13 @@
                             </div>
                         </div>
                     </div>
-
+`` 
                 </div>
                 <!-- /.container-fluid -->
                 
             <!-- End of Main Content -->
 
             <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center">
-                        <span> @smkn_labuang</span>
-                    </div>
-                </div>
-            </footer -->
        
     <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -407,7 +480,7 @@
       }
     });
   </script>
-
+<?php include 'footer.php' ?>
 </body>
 
 </html>

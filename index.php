@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($data['role'] == "admin") {
             $_SESSION['username'] = $username;
             $_SESSION['role'] = "admin";
-            $loginMessage = "Admin"; // Set pesan login berhasil untuk admin
+            $loginMessage = "Admin"; 
         } 
         else if ($data['role'] == "guru") {
             $_SESSION['username'] = $username;
@@ -37,6 +37,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['role'] = "siswa";
             $_SESSION['Id_siswaa'] = $data['Id_siswaa']; 
             $loginMessage = "Siswa"; // Set pesan login berhasil untuk user
+
+            $stmt_perusahaan = $conn->prepare("SELECT id_perusahaan FROM siswa_pkl WHERE Id_siswaa = ?");
+            $stmt_perusahaan->bind_param("i", $data['Id_siswaa']); // Bind Id_siswaa
+            $stmt_perusahaan->execute();
+            $result_perusahaan = $stmt_perusahaan->get_result();
+        
+            if ($result_perusahaan->num_rows > 0) {
+                $perusahaan = $result_perusahaan->fetch_assoc();
+                $_SESSION['id_perusahaan'] = $perusahaan['id_perusahaan']; // Simpan id_perusahaan ke SESSION
+            } else {
+                $_SESSION['id_perusahaan'] = null; // Tidak ada perusahaan terkait
+            }
+            $stmt_perusahaan->close();
+        
+            $loginMessage = "Siswa"; 
         }
     } else {
         $loginMessage = "Gagal"; // Set pesan login gagal
