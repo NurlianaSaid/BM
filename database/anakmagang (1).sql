@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 17 Nov 2024 pada 08.13
+-- Waktu pembuatan: 21 Nov 2024 pada 16.52
 -- Versi server: 8.0.30
 -- Versi PHP: 8.1.10
 
@@ -29,12 +29,24 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `permohonan_pkl` (
   `id_permohonan` int NOT NULL,
+  `id_perusahaan` int DEFAULT NULL,
   `Id_siswaa` int NOT NULL,
-  `kode_guru` varchar(5) NOT NULL,
-  `id_perusahaan` int NOT NULL,
-  `status` enum('menunggu','diterima','ditolak') NOT NULL DEFAULT 'menunggu',
-  `tanggal_permohonan` date NOT NULL
+  `nama` varchar(50) NOT NULL,
+  `kelas` varchar(50) NOT NULL,
+  `nisn` varchar(10) NOT NULL,
+  `jenis_kelamin` varchar(10) NOT NULL,
+  `cv` varchar(50) NOT NULL,
+  `status` enum('menunggu','diterima','ditolak') NOT NULL DEFAULT 'menunggu'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data untuk tabel `permohonan_pkl`
+--
+
+INSERT INTO `permohonan_pkl` (`id_permohonan`, `id_perusahaan`, `Id_siswaa`, `nama`, `kelas`, `nisn`, `jenis_kelamin`, `cv`, `status`) VALUES
+(1, 2, 1, 'Nurliana', 'XII RPL', '0066480245', 'Perempuan', '673aa5639e412.pdf', 'diterima'),
+(4, 3, 6, 'Asliah', 'XII RPL', '0072385847', 'Perempuan', '673b6155bf8a4.pdf', 'menunggu'),
+(5, 5, 12, 'Nela Ayudia', 'XII RPL', '0062385434', 'Perempuan', '673c362d2b769.pdf', 'ditolak');
 
 -- --------------------------------------------------------
 
@@ -76,45 +88,20 @@ INSERT INTO `siswa_pkl` (`id`, `Id_siswaa`, `id_perusahaan`, `kode_guru`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tabel_industri`
---
-
-CREATE TABLE `tabel_industri` (
-  `id` int NOT NULL,
-  `nama_industri` varchar(120) COLLATE utf8mb4_general_ci NOT NULL,
-  `bidang_industri` varchar(120) COLLATE utf8mb4_general_ci NOT NULL,
-  `ceo` varchar(120) COLLATE utf8mb4_general_ci NOT NULL,
-  `jalan` varchar(120) COLLATE utf8mb4_general_ci NOT NULL,
-  `kabupaten` varchar(11) COLLATE utf8mb4_general_ci NOT NULL,
-  `status` varchar(18) COLLATE utf8mb4_general_ci NOT NULL,
-  `tahun` varchar(4) COLLATE utf8mb4_general_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data untuk tabel `tabel_industri`
---
-
-INSERT INTO `tabel_industri` (`id`, `nama_industri`, `bidang_industri`, `ceo`, `jalan`, `kabupaten`, `status`, `tahun`) VALUES
-(19, 'Afila media karya', 'Software House', 'ALFIAN S.,KOM.', 'Abdul razak', 'Gowa', 'Menerima', '2019'),
-(20, 'Indigo', 'Software House', 'Muh. Rifky Al-Fajri', 'Pettarani', 'Makassar', 'Menerima', '2018');
-
--- --------------------------------------------------------
-
---
 -- Struktur dari tabel `tb_admin`
 --
 
 CREATE TABLE `tb_admin` (
   `id_admin` int NOT NULL,
-  `nama_admin` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `password` varchar(10) COLLATE utf8mb4_general_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `username` varchar(50) NOT NULL,
+  `password` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data untuk tabel `tb_admin`
 --
 
-INSERT INTO `tb_admin` (`id_admin`, `nama_admin`, `password`) VALUES
+INSERT INTO `tb_admin` (`id_admin`, `username`, `password`) VALUES
 (1, 'adminmagang', 'password');
 
 -- --------------------------------------------------------
@@ -126,7 +113,9 @@ INSERT INTO `tb_admin` (`id_admin`, `nama_admin`, `password`) VALUES
 CREATE TABLE `tb_cv` (
   `id_cv` int NOT NULL,
   `Id_siswaa` int NOT NULL,
-  `cv_siswa` varchar(100) NOT NULL
+  `kode_guru` varchar(5) DEFAULT NULL,
+  `file` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `tanggal_upload` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -148,7 +137,9 @@ CREATE TABLE `tb_guru` (
 
 INSERT INTO `tb_guru` (`kode_guru`, `nama_guru`, `wilayah_mnr`, `kontak`) VALUES
 ('0001', 'Muhammad Yusuf Abduh S.kom', 'Makassar, Gowa', '085342891320'),
-('0003', 'Wahab ', 'Majene', '082339470298');
+('0002', 'Rahmatullah S.kom', 'Mamuju', '083137825133'),
+('0003', 'Wahab ', 'Majene', '082339470298'),
+('0004', 'Syarif S.pd', 'Pare-pare', '08218889585');
 
 -- --------------------------------------------------------
 
@@ -212,11 +203,17 @@ INSERT INTO `tb_jurnal` (`id_jurnal`, `Id_siswaa`, `id_perusahaan`, `kode_guru`,
 
 CREATE TABLE `tb_laporan` (
   `id_laporan` int NOT NULL,
-  `id_siswa` int NOT NULL,
-  `kode_guru` varchar(5) COLLATE utf8mb4_general_ci NOT NULL,
+  `Id_siswaa` int NOT NULL,
   `tanggal_kumpul` date NOT NULL,
   `file` varchar(100) COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `tb_laporan`
+--
+
+INSERT INTO `tb_laporan` (`id_laporan`, `Id_siswaa`, `tanggal_kumpul`, `file`) VALUES
+(13, 4, '2024-11-19', '673ca1c1b16c1.pdf');
 
 -- --------------------------------------------------------
 
@@ -263,7 +260,7 @@ CREATE TABLE `tb_perusahaan` (
   `lokasi` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
   `jalan` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
   `tahun_didirikan` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
-  `status` enum('menunggu','meterima','menolak') COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'menunggu'
+  `status` enum('menunggu','menerima','menolak') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'menunggu'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -271,10 +268,16 @@ CREATE TABLE `tb_perusahaan` (
 --
 
 INSERT INTO `tb_perusahaan` (`id_perusahaan`, `kode_guru`, `pendiri`, `nama_perusahaan`, `bidang_industri`, `lokasi`, `jalan`, `tahun_didirikan`, `status`) VALUES
-(2, '0001', 'Alfian Dirham S.kom', 'Afila Media Karya', 'Software House', 'Gowa', 'Samata', '2020', 'menunggu'),
-(3, '0001', 'Noer Ni\'mat Syamsul Kabir,S.Si', 'Indigo Hub', 'Software House', 'Makassar', 'Pettrani', '2020', 'menunggu'),
+(2, '0001', 'Alfian Dirham S.kom', 'Afila Media Karya', 'Software House', 'Gowa', 'Samata', '2020', 'menerima'),
+(3, '0001', 'Noer Ni\'mat Syamsul Kabir,S.Si', 'Indigo Hub', 'Software House', 'Makassar', 'Pettrani', '2020', 'menerima'),
 (4, '0003', 'Muhammad', 'Pengadilan Agama', 'Kenegaraan', 'Majene', 'Jln.Poros Majene', '2010', 'menunggu'),
-(5, '0003', 'Jokowi ', 'Pengadilan Negeri', 'Mengadili perkara pidana dan perdata ', 'Majene', 'Jl.majene', '1952', 'menunggu');
+(5, '0003', 'Jokowi ', 'Pengadilan Negeri', 'Mengadili perkara pidana dan perdata ', 'Majene', 'Jl.majene', '1952', 'menunggu'),
+(6, '0001', 'Liana Husain', 'Metro TV', 'Edukasi Data', 'Makassar', 'Pettarani', '2019', 'menolak'),
+(14, '0003', 'Nurliana', 'Anggii', 'Kenegaraan', 'Majene', 'Majene', '0003', 'menunggu'),
+(15, '0003', 'Nurliana', 'Anggii', 'Kenegaraan', 'Majene', 'Majene', '2020', 'menerima'),
+(16, '0003', 'Four', 'Pengadilan Agama ', 'Kenegaraan', 'Majene', 'Jln. Poros majena', '2020', 'menunggu'),
+(18, '0003', 'Nurliana', 'Anggiikiaa', 'Kenegaraan', 'Majene', 'Majene', '0003', 'menunggu'),
+(19, '0003', 'Nurliana', 'Anggiikiaa', 'Kenegaraan', 'Majene', 'Majene', '2020', 'menunggu');
 
 -- --------------------------------------------------------
 
@@ -340,7 +343,9 @@ INSERT INTO `tb_users` (`id_users`, `username`, `password`, `role`, `Id_siswaa`,
 (2, 'Yusuf', 'Yusuf', 'guru', NULL, '0001'),
 (3, 'Wahab', 'Wahab', 'guru', NULL, '0003'),
 (5, 'Nurliana', '0066480245', 'siswa', 1, NULL),
-(6, 'Asliah', '0072385847', 'siswa', 6, NULL);
+(6, 'Asliah', '0072385847', 'siswa', 6, NULL),
+(7, 'Saskia', '0065806776', 'siswa', 4, NULL),
+(10, 'Nela Ayudia', '0062385434', 'siswa', 12, NULL);
 
 --
 -- Indexes for dumped tables
@@ -351,9 +356,8 @@ INSERT INTO `tb_users` (`id_users`, `username`, `password`, `role`, `Id_siswaa`,
 --
 ALTER TABLE `permohonan_pkl`
   ADD PRIMARY KEY (`id_permohonan`),
-  ADD KEY `Id_siswaa` (`Id_siswaa`),
   ADD KEY `id_perusahaan` (`id_perusahaan`),
-  ADD KEY `kode_guru` (`kode_guru`);
+  ADD KEY `Id_siswaa` (`Id_siswaa`);
 
 --
 -- Indeks untuk tabel `siswa_pkl`
@@ -366,12 +370,6 @@ ALTER TABLE `siswa_pkl`
   ADD KEY `Id_siswaa` (`Id_siswaa`);
 
 --
--- Indeks untuk tabel `tabel_industri`
---
-ALTER TABLE `tabel_industri`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indeks untuk tabel `tb_admin`
 --
 ALTER TABLE `tb_admin`
@@ -382,7 +380,8 @@ ALTER TABLE `tb_admin`
 --
 ALTER TABLE `tb_cv`
   ADD PRIMARY KEY (`id_cv`),
-  ADD KEY `Id_siswaa` (`Id_siswaa`);
+  ADD KEY `Id_siswaa` (`Id_siswaa`),
+  ADD KEY `kode_guru` (`kode_guru`);
 
 --
 -- Indeks untuk tabel `tb_guru`
@@ -413,8 +412,8 @@ ALTER TABLE `tb_jurnal`
 --
 ALTER TABLE `tb_laporan`
   ADD PRIMARY KEY (`id_laporan`),
-  ADD UNIQUE KEY `id_siswa` (`id_siswa`),
-  ADD KEY `tb_laporan_ibfk_1` (`kode_guru`);
+  ADD UNIQUE KEY `id_siswa` (`Id_siswaa`),
+  ADD UNIQUE KEY `Id_siswaa` (`Id_siswaa`);
 
 --
 -- Indeks untuk tabel `tb_laporanmonir`
@@ -455,19 +454,13 @@ ALTER TABLE `tb_users`
 -- AUTO_INCREMENT untuk tabel `permohonan_pkl`
 --
 ALTER TABLE `permohonan_pkl`
-  MODIFY `id_permohonan` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id_permohonan` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT untuk tabel `siswa_pkl`
 --
 ALTER TABLE `siswa_pkl`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
-
---
--- AUTO_INCREMENT untuk tabel `tabel_industri`
---
-ALTER TABLE `tabel_industri`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_admin`
@@ -497,7 +490,7 @@ ALTER TABLE `tb_jurnal`
 -- AUTO_INCREMENT untuk tabel `tb_laporan`
 --
 ALTER TABLE `tb_laporan`
-  MODIFY `id_laporan` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_laporan` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_laporanmonir`
@@ -509,23 +502,29 @@ ALTER TABLE `tb_laporanmonir`
 -- AUTO_INCREMENT untuk tabel `tb_perusahaan`
 --
 ALTER TABLE `tb_perusahaan`
-  MODIFY `id_perusahaan` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_perusahaan` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_siswa`
 --
 ALTER TABLE `tb_siswa`
-  MODIFY `Id_siswaa` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `Id_siswaa` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT untuk tabel `tb_users`
 --
 ALTER TABLE `tb_users`
-  MODIFY `id_users` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_users` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
 --
+
+--
+-- Ketidakleluasaan untuk tabel `permohonan_pkl`
+--
+ALTER TABLE `permohonan_pkl`
+  ADD CONSTRAINT `permohonan_pkl_ibfk_1` FOREIGN KEY (`Id_siswaa`) REFERENCES `tb_siswa` (`Id_siswaa`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ketidakleluasaan untuk tabel `siswa_pkl`
@@ -560,8 +559,7 @@ ALTER TABLE `tb_jurnal`
 -- Ketidakleluasaan untuk tabel `tb_laporan`
 --
 ALTER TABLE `tb_laporan`
-  ADD CONSTRAINT `tb_laporan_ibfk_1` FOREIGN KEY (`kode_guru`) REFERENCES `tb_guru` (`kode_guru`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `tb_laporan_ibfk_2` FOREIGN KEY (`id_siswa`) REFERENCES `siswa_pkl` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `tb_laporan_ibfk_1` FOREIGN KEY (`Id_siswaa`) REFERENCES `tb_siswa` (`Id_siswaa`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ketidakleluasaan untuk tabel `tb_laporanmonir`

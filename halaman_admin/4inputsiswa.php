@@ -1,5 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
+<?php
+include "koneksi.php";
+
+$Nis = '';
+$Nama_siswa = '';
+$Kelas_siswa = '';
+$Jenis_kelamin = '';
+$Alamat = '';
+
+if (isset($_GET['ubah'])) {
+    $id = $_GET['ubah'];
+
+    $query = "SELECT * FROM tb_siswa WHERE Id_siswaa = '$id';";
+    $sql = mysqli_query($conn, $query);
+
+    $result = mysqli_fetch_assoc($sql);
+
+    if ($result) {
+        $Nis = $result['Nis'];
+        $Nama_siswa = $result['Nama_siswa'];
+        $Kelas_siswa = $result['Kelas_siswa'];
+        $Jenis_kelamin = $result['Jenis_kelamin'];
+        $Alamat = $result['Alamat'];
+    }
+}
+?>
 
 <head>
 
@@ -18,7 +44,7 @@
         rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="css/input.css" rel="stylesheet">
+    <link href="css/input.css?v1" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
 
     <!-- Custom styles for this page -->
@@ -47,7 +73,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="Dashboard.html" aria-label="Dashboard">
+                <a class="nav-link" href="dashboard.php" aria-label="Dashboard">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none"  xmlns="http://www.w3.org/2000/svg">
                         <path d="M12 9.81818C5.271 9.81818 0 7.662 0 4.90909C0 2.15618 5.271 0 12 0C18.729 0 24 2.15618 24 4.90909C24 7.662 18.729 9.81818 12 9.81818ZM12 1.09091C6.8916 1.09091 1.2 2.65909 1.2 4.90909C1.2 7.15909 6.8916 8.72727 12 8.72727C17.1084 8.72727 22.8 7.15909 22.8 4.90909C22.8 2.65909 17.1084 1.09091 12 1.09091Z" fill="black"/>
                         <path d="M12 14.1815C5.271 14.1815 0 12.0253 0 9.27237V4.90874C0 4.6071 0.2682 4.36328 0.6 4.36328C0.9318 4.36328 1.2 4.6071 1.2 4.90874V9.27237C1.2 11.5224 6.8916 13.0906 12 13.0906C17.1084 13.0906 22.8 11.5224 22.8 9.27237V4.90874C22.8 4.6071 23.0682 4.36328 23.4 4.36328C23.7318 4.36328 24 4.6071 24 4.90874V9.27237C24 12.0253 18.729 14.1815 12 14.1815Z" fill="black"/>
@@ -67,7 +93,7 @@
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link " href="Pengajuan siswa.html">
+                <a class="nav-link " href="pengajuansiswa.php">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M11.5 24H3.5C2.1215 24 1 22.8785 1 21.5V2.5C1 2.2235 1.224 2 1.5 2C1.776 2 2 2.2235 2 2.5V21.5C2 22.327 2.673 23 3.5 23H11.5C11.776 23 12 23.2235 12 23.5C12 23.7765 11.776 24 11.5 24Z" fill="#000"/>
                         <path d="M20.5 11.4995C20.224 11.4995 20 11.276 20 10.9995V5H3.5C2.1215 5 1 3.8785 1 2.5C1 1.1215 2.1215 0 3.5 0H20.5C20.776 0 21 0.2235 21 0.5C21 0.7765 20.776 1 20.5 1H3.5C2.673 1 2 1.673 2 2.5C2 3.327 2.673 4 3.5 4H21V10.9995C21 11.276 20.776 11.4995 20.5 11.4995Z" fill="#000"/>
@@ -83,7 +109,7 @@
 
                 <!-- Nav Item - Pages Collapse Menu -->
                 <li class="nav-item">
-                    <a class="nav-link collapsed" href="Data Industri.html">
+                    <a class="nav-link collapsed" href="dataindustri.php">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M11.5 24H3.5C2.1215 24 1 22.8785 1 21.5V2.5C1 2.2235 1.224 2 1.5 2C1.776 2 2 2.2235 2 2.5V21.5C2 22.327 2.673 23 3.5 23H11.5C11.776 23 12 23.2235 12 23.5C12 23.7765 11.776 24 11.5 24Z" fill="#000"/>
                             <path d="M20.5 11.4995C20.224 11.4995 20 11.276 20 10.9995V5H3.5C2.1215 5 1 3.8785 1 2.5C1 1.1215 2.1215 0 3.5 0H20.5C20.776 0 21 0.2235 21 0.5C21 0.7765 20.776 1 20.5 1H3.5C2.673 1 2 1.673 2 2.5C2 3.327 2.673 4 3.5 4H21V10.9995C21 11.276 20.776 11.4995 20.5 11.4995Z" fill="#000"/>
@@ -106,6 +132,17 @@
                         <path d="M12.5479 7.32227H11.457V23.4795H12.5479V7.32227Z" fill="black"/>
                         </svg>     
                     <span>Data Master Siswa</span>
+                </a>
+                
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="user.php">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 23.9999C11.9198 23.9999 11.8396 23.9832 11.7655 23.9493L0.310909 18.7373C0.121091 18.6507 0 18.4678 0 18.2666V2.10934C0 1.93057 0.096 1.76431 0.254182 1.6684C0.411818 1.57302 0.610909 1.56208 0.78 1.6387L12 6.74388L23.22 1.63818C23.3891 1.56208 23.5871 1.5725 23.7453 1.6684C23.904 1.76431 24 1.93057 24 2.10934V18.2666C24 18.4678 23.8789 18.6507 23.6891 18.7373L12.2345 23.9493C12.1604 23.9832 12.0802 23.9999 12 23.9999ZM1.09091 17.9372L12 22.9012L22.9091 17.9372V2.93493L12.2345 7.79201C12.0867 7.85925 11.9138 7.85925 11.766 7.79201L1.09091 2.93493V17.9372Z" fill="black"/>
+                        <path d="M11.9957 5.31821L2.48681 0.99171C2.21463 0.867663 2.09954 0.556505 2.22881 0.296946C2.35863 0.0368663 2.68372 -0.072065 2.9559 0.0498964L11.9957 4.16375L21.0355 0.0498964C21.3083 -0.072065 21.6328 0.0368663 21.7626 0.296946C21.8919 0.556505 21.7768 0.867663 21.5046 0.99171L11.9957 5.31821Z" fill="black"/>
+                        <path d="M12.5479 7.32227H11.457V23.4795H12.5479V7.32227Z" fill="black"/>
+                        </svg>     
+                    <span>Data User</span>
                 </a>
                 
             </li>
@@ -369,65 +406,62 @@
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        
-                                                    <form action="#" method="post">
+                                    <thead>                                 
+                                                    <form action="proses.php" method="POST">
                                                         <div class="form-group">
-                                                            <label for="foto-industri">Unggah Foto:</label>
-                                                            <input type="file" id="foto-industri" name="foto-industri" accept="image/*">
+                                                        <input type="hidden" value="<?php echo $id; ?>" name="id">
+                                                        <label for="Foto_siswa">Foto Siswa:</label>
+                                                        <input type="file" name="Foto_siswa" id="Foto_siswa" accept="image/*">
                                                           </div>
                                                         <div class="form-group">
-                                                            <label for="nama-industri">Nama</label>
-                                                            <input type="text" id="nama-industri" name="nama-industri">
+                                                            <label for="Nis">NIS</label>
+                                                            <input type="text" id="Nis" name="Nis" value="<?php echo isset($Nis) ? $Nis : ''; ?>">
                                                         </div>
                                         
                                                         <div class="form-group">
-                                                            <label for="bidang-industri">Alamat</label>
-                                                            <input type="text" id="bidang-industri" name="bidang-industri">
+                                                            <label for="Nama_siswa">Nama siswa</label>
+                                                            <input type="text" id="Nama_siswa" name="Nama_siswa" value="<?php echo isset($Nama_siswa) ? $Nama_siswa : ''; ?>">
                                                         </div>
                                         
                                                         <div class="form-group">
-                                                            <label for="status">Kelas</label>
-                                                            <select id="status" name="status">
-                                                                <option value=""></option>
-                                                                <option value="">XII RPL</option>
-                                                                <option value="">XII TKJ</option>
-                                                                <option value="">XII DKV</option>
-                                                                <option value="">XII TAV</option>
-                                                                <option value="">XII OTOMOTIF</option>
-                                                                <option value="">Tidak Aktif</option>
+                                                            <label for="Kelas_siswa">Kelas</label>
+                                                            <select id="Kelas_siswa" name="Kelas_siswa">
+                                                                <option value="">Pilih Kelas</option>
+                                                                <option value="XII RPL" <?php echo (isset($Kelas_siswa) && $Kelas_siswa == 'XII RPL') ? 'selected' : ''; ?>>XII RPL</option>
+                                                                <option value="XII RPL" <?php echo (isset($Kelas_siswa) && $Kelas_siswa == 'XII TKJ') ? 'selected' : ''; ?>>XII TKJ</option>
+                                                                <option value="XII DKV" <?php echo (isset($Kelas_siswa) && $Kelas_siswa == 'XII DKV') ? 'selected' : ''; ?>>XII DKV</option>
+                                                                <option value="XII TAV" <?php echo (isset($Kelas_siswa) && $Kelas_siswa == 'XII TAV') ? 'selected' : ''; ?>>XII TAV</option>
+                                                                <option value="XII OTOMOTIF" <?php echo (isset($Kelas_siswa) && $Kelas_siswa == 'XII OTOMOTIF') ? 'selected' : ''; ?>>XII OTOMOTIF</option>
                                                             </select>
                                                         </div>
                                         
                                                         <div class="form-group">
-                                                            <label for="jalan">Tempat</label>
-                                                            <input type="text" id="jalan" name="jalan">
-                                                        </div>
-                                        
-                                                        <div class="form-group">
-                                                            <label for="kabupaten">NIS</label>
-                                                            <input type="text" id="kabupaten" name="kabupaten">
-                                                        </div>
-                                        
-                                                        
-                                                        
-                                                        <div class="form-group">
-                                                            <label for="status">Jurusan</label>
-                                                            <select id="status" name="status">
-                                                                <option value=""></option>
-                                                                <option value=""> RPL</option>
-                                                                <option value=""> TKJ</option>
-                                                                <option value=""> DKV</option>
-                                                                <option value=""> TAV</option>
-                                                                <option value=""> OTOMOTIF</option>
-                                                                <option value="">Tidak Aktif</option>
+                                                            <label for="Jenis_kelamin">Jenis Kelamin</label>
+                                                            <select id="Jenis_kelamin" name="Jenis_kelamin">
+                                                                <option value="">Pilih Jenis Kelamin</option>
+                                                                <option value="P" <?php echo (isset($Jenis_kelamin) && $Jenis_kelamin == 'P') ? 'selected' : ''; ?>>P</option>
+                                                                <option value="L" <?php echo (isset($Jenis_kelamin) && $Jenis_kelamin == 'L') ? 'selected' : ''; ?>>L</option>
                                                             </select>
                                                         </div>
-                                                        
                                                         <div class="form-group">
-                                                            <input type="submit" value="Simpan" class="btn-submit">
+                                                            <label for="Alamat">Alamat</label>
+                                                            <input type="text" id="Alamat" name="Alamat"  value="<?php echo isset($Alamat) ? $Alamat : ''; ?>">
+                                                        </div>
+                                                        <div class="form-group">
+                                                        <?php
+                                                        // Cek jika parameter 'detail' tidak ada di URL
+                                                        if (!isset($_GET['detail'])) {
+                                                            // Jika ada parameter 'ubah', tampilkan tombol "Simpan Perubahan"
+                                                            if (isset($_GET['ubah'])) {
+                                                                echo '<input type="submit" name="aksi1" value="Simpan Perubahan" class="btn btn-submit">';
+                                                            } else {
+                                                                // Jika tidak ada parameter 'ubah', tampilkan tombol "Tambahkan"
+                                                                echo '<input type="submit" name="aksi1" value="Tambahkan" class="btn btn-submit">';
+                                                            }
+                                                        }
+                                                        ?>
                                                             <!-- <input type="submit" value="Batal" class="btn-cancel" onclick="document.getElementById('nama-industri').value=''; document.getElementById('bidang-industri').value=''; document.getElementById('ceo').value=''; document.getElementById('jalan').value=''; document.getElementById('kabupaten').value=''; document.getElementById('status').value='';"> -->
-                                                            <input type="button" value="Batal" class="btn-cancel" onclick="window.location.href='4Data master siswa.html';"> 
+                                                            <input type="button" value="Batal" class="btn-cancel" onclick="window.location.href='4Data master siswa.php';"> 
                                                             <!-- <input type="submit" value="Batal" class="btn-cancel"onclick="window.location.href='Pengajuan siswa.html';"> -->
                                                         </div>
                                                     </tbody>
@@ -523,3 +557,4 @@
 </body>
 
 </html>
+

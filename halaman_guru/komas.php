@@ -7,7 +7,7 @@ if (session_status() == PHP_SESSION_NONE) {
 // Validasi login dan role
 if (!isset($_SESSION['username']) || $_SESSION['role'] != "guru") {
     // Jika belum login atau role bukan guru, arahkan ke halaman login
-    header("location:../index.php");
+    header("location:../index1.php");
     exit();
 }
 

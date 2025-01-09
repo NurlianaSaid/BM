@@ -1,0 +1,21 @@
+.status-label {
+    padding: 5px 10px;
+    border-radius: 4px;
+    color: #fff;
+    text-transform: capitalize; /* Menyusun status menjadi kapital pertama */
+}
+
+.status-success {
+    border-radius: 10px;
+    background-color: #62F61D; /* Warna hijau untuk status 'menerima' */
+}
+
+.status-danger {
+    border-radius: 10px;
+    background-color: #FF3131; /* Warna merah untuk status 'menolak' */
+}
+
+.status-pending {
+    border-radius: 10px;
+    background-color: #295BDB; 
+}

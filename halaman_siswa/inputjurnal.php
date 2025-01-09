@@ -1,3 +1,44 @@
+<?php 
+include 'session.php';
+$kode_siswa = $_SESSION['Id_siswaa'];
+
+include 'koneksi.php';
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Ambil data dari form
+    $tanggal = $_POST['tanggal']; // Tanggal sudah terisi otomatis
+    $kegiatan = $_POST['kegiatan'];
+    $uraian = $_POST['uraian'];
+
+
+    // Ambil nomor urut otomatis berdasarkan data terakhir
+    $result = $conn->query("SELECT MAX(id_jurnal) AS last_id FROM tb_jurnal");
+    $row = $result->fetch_assoc();
+    $last_id = $row['last_id'];
+
+    // Menentukan nomor urut selanjutnya
+    $no_urut = $last_id + 1;
+
+    // Query untuk memasukkan data jurnal
+    $sql = "INSERT INTO tb_jurnal (id_jurnal, tanggal, kegiatan, uraian) 
+            VALUES ('$no_urut', '$tanggal', '$kegiatan', '$uraian')";
+
+    // Eksekusi query
+    if ($conn->query($sql) === TRUE) {
+        echo "<script>
+                alert('Data berhasil ditambahkan!');
+                window.location.href = 'Jurnal.php'; // Redirect ke halaman tampil data
+              </script>";
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+}
+
+$conn->close();
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -305,17 +346,54 @@
                 <!-- Begin Page Content -->
               
                     <div class="container1">
-                        <form class="form9">
+                        <form action="inputjurnal.php" method="POST" class="form9">
                             <label for="tanggal">Tanggal :</label>
-                            <input type="text" id="tanggal" value="11/09/2024" readonly>
+                            <input type="date" id="tanggal" name="tanggal" value="<?php echo date('Y-m-d'); ?>" required readonly>
                             <label for="kegiatan">Kegiatan :</label>
-                            <input type="text" id="kegiatan" value="Menginput data di Aplikasi E-Office">
+                            <input type="text" id="kegiatan" name="kegiatan" required>
                             <label for="uraian">Uraian :</label>
-                            <input type="text" id="uraian" value="Learning Bahasa Inggris dan menginput data di Aplikasi E-Office">
+                            <textarea id="uraian" name="uraian" required style="width: 100%;"></textarea>
+
                             <div class="buttons1">
-                                <button type="submit" class="save">Simpan</button>  
-                                <button type="button" class="cancel">Cancel</button>
-                            </div>
+    <button type="submit" class="save" onclick="handleSubmit(event)">Simpan</button>  
+    <button type="button" class="cancel" onclick="cancelAction()">Cancel</button>
+</div>
+
+<script>
+// Fungsi untuk mengirim data form menggunakan fetch
+function handleSubmit(event) {
+    event.preventDefault();  // Mencegah form submit secara default
+    
+    // Ambil data dari form
+    const formData = new FormData(document.querySelector('form'));
+
+    // Kirim data ke server menggunakan fetch
+    fetch('proses_jurnal.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())  // Menangani respons JSON dari server
+    .then(data => {
+        // Tindakan setelah data berhasil dikirim
+        if (data.success) {
+            alert('Data berhasil disimpan!');
+            window.location.href = 'Jurnal.php';  // Redirect ke halaman Jurnal.php
+        } else {
+            alert('Terjadi kesalahan, coba lagi!');
+        }
+    })
+    .catch(error => {
+        alert('Terjadi kesalahan: ' + error);
+    });
+}
+
+// Fungsi untuk tombol Cancel
+function cancelAction() {
+    // Kembali ke halaman sebelumnya atau ke halaman lain
+    window.location.href = 'halaman_sebelumnya.php';  // Ganti dengan halaman yang sesuai
+}
+</script>
+
                         </form>
                     </div>
             
@@ -327,7 +405,12 @@
 
             <!-- Footer -->
             <!-- End of Footer -->
-
+            <script>
+                                function handleSubmit(){
+                                    //kirim data dengan fetch atau Ajak jika Perlu
+                                    window.location.href = 'Jurnal.php';
+                                }
+                                </script>
         </div>
         <!-- End of Content Wrapper -->
 

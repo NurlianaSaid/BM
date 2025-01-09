@@ -11511,12 +11511,9 @@ letter-spacing: 1.4px;
 } */
 .btn-icon-split .icon {
   position: relative;
-  background: rgba(0, 0, 0, 0.15);
+  /* background: rgba(0, 0, 0, 0.15); */
   display: inline-flex;
   padding: 0.475rem 0.75rem;
-
-  
-  
 }
 
 

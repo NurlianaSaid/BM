@@ -316,46 +316,33 @@
                           <img src="img/9111147_map_pin_location_icon 1.svg" alt="Location" class="icon">
                           <span>KANTOR AFILA</span>
                         </div>
-                      </div>
+                    </div>
                 
                       <!-- Bagian Tombol Ambil Foto -->
                       <div class="photo-section">
-                        <button id="take-photo" class="photo-button">
-                          <svg viewBox="0 0 75 57" xmlns="http://www.w3.org/2000/svg">
-                            <g clip-path="url(#clip0_1_3)">
-                              <rect width="174.757" height="134.942" fill="#3E92CC"/>
-                              <path fill-rule="evenodd" clip-rule="evenodd" d="M60.9998 10.2666V4.04982H67.6974V10.2666H74.3951V16.4835H67.6974V22.7003H60.9998V16.4835H54.3021V10.2666H60.9998ZM20.6028 9.78601C20.8401 9.47985 21.1036 9.10505 21.4396 8.59967C21.6279 8.31647 22.3149 7.26163 22.4272 7.09113C25.2033 2.87604 27.2214 0.941406 30.8602 0.941406H47.6044V7.15823H30.8602C30.5698 7.15823 29.6563 8.03394 28.1416 10.3338C28.0444 10.4814 27.3472 11.5519 27.1392 11.8647C26.7275 12.4839 26.3853 12.9706 26.04 13.4163C24.5389 15.3533 23.0385 16.4835 20.8137 16.4835H10.7672C8.9177 16.4835 7.41838 17.8752 7.41838 19.5919V47.5676C7.41838 49.2844 8.9177 50.676 10.7672 50.676H64.3486C66.1981 50.676 67.6974 49.2844 67.6974 47.5676V28.9171H74.3951V47.5676C74.3951 52.7178 69.8971 56.8929 64.3486 56.8929H10.7672C5.21868 56.8929 0.720703 52.7178 0.720703 47.5676V19.5919C0.720703 14.4417 5.21868 10.2666 10.7672 10.2666H20.1982C20.3097 10.1483 20.4464 9.98791 20.6028 9.78601ZM37.5579 47.5676C28.3104 47.5676 20.8137 40.6092 20.8137 32.0255C20.8137 23.4419 28.3104 16.4835 37.5579 16.4835C46.8055 16.4835 54.3021 23.4419 54.3021 32.0255C54.3021 40.6092 46.8055 47.5676 37.5579 47.5676ZM37.5579 41.3508C43.1064 41.3508 47.6044 37.1757 47.6044 32.0255C47.6044 26.8754 43.1064 22.7003 37.5579 22.7003C32.0094 22.7003 27.5114 26.8754 27.5114 32.0255C27.5114 37.1757 32.0094 41.3508 37.5579 41.3508Z" fill="white"/>
-                            </g>
-                          </svg>
+                        <video id="video" autoplay muted></video>
+                        <canvas id="canvas"></canvas>
+                        <button id="startBtn" class="photo-button" style="background: blue;">Hidupkan Kamera
+                            <svg viewBox="0 0 75 57" xmlns="http://www.w3.org/2000/svg">
+                                <!-- SVG isi tombol -->
+                            </svg>
                         </button>
-                        <input type="file" id="photo-input" accept="image/*" style="display: none;">
-                      </div>
+                    </div>
+
+                    <div id="status">
                       <div class="status-section">
                         <img src="img/Ellipse 21.svg" alt="Clock">
+                      
+                      Status: <span id="attendanceStatus">Belum Hadir</span></div>
                       </div>
-                      <input type="text" value="Belum Hadir" class="status"></input>
                       <button id="submit-btn" class="submit-button" disabled>KIRIM ABSEN</button>
                     </div>
                 </div>  
-                  <script>document.getElementById("take-photo").addEventListener("click", function () {
-                    document.getElementById("photo-input").click();
-                  });
-                  
-                  document.getElementById("photo-input").addEventListener("change", function () {
-                    const file = this.files[0];
-                    if (file) {
-                      document.querySelector(".status").value = "Sudah Hadir";
-                      document.querySelector(".status").style.color = "green";
-                      const submitBtn = document.getElementById("submit-btn");
-                      submitBtn.disabled = false;
-                      submitBtn.classList.add("active");
-                    }
-                  });
-                  
-                  document.getElementById("submit-btn").addEventListener("click", function () {
-                    alert("Absensi telah dikirim!");
-                  });
-                  </script>
+                <script src="face-api.min.js"></script>
+                <script src="script.js"></script>
+                <!--  -->
+
+
                 <!-- /.container-fluid -->
 
             </div>
@@ -438,6 +425,67 @@
       }
     });
   </script>
+  <style>
+    .face-circle {
+    position: absolute;
+    top: 50%;  /* Tempatkan di tengah-tengah halaman */
+    left: 60%;
+    width: 150px;  /* Ukuran lingkaran */
+    height: 150px;  /* Ukuran lingkaran */
+    border: 3px solid red;  /* Warna border */
+    border-radius: 50%;  /* Membuat bentuk lingkaran */
+    background-color: transparent;  /* Bagian tengah lingkaran kosong */
+    transform: translate(-50%, -50%);  /* Menggeser lingkaran ke tengah elemen */
+    pointer-events: none;  /* Agar lingkaran tidak mengganggu interaksi */
+}
+
+#submitBtn.enabled {
+    background-color: green;
+    cursor: pointer;
+}
+
+#video {
+            width: 640px;
+            height: 480px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #status {
+            margin-top: 10px;
+            font-size: 18px;
+            color: #333;
+        }   
+
+</style>
+<script>
+    document.getElementById("#take-photo").addEventListener("click", function() {
+    // Menampilkan lingkaran setelah tombol "Take Photo" diklik
+    document.getElementById("#lingkaran_wajah").style.display = "block"; // Tampilkan lingkaran
+});
+</script>
+
 
 </body>
 

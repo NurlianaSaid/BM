@@ -1,136 +1,369 @@
-<?php 
-include "koneksi_login.php";
-session_start();
 
-$loginMessage = ""; // Inisialisasi variabel
 
-// Proses login hanya berjalan jika form dikirim dengan metode POST
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Ambil data dari form login
-    $username = $_POST['username'] ?? '';
-    $password = $_POST['password'] ?? '';
-
-    // Siapkan query dengan prepared statements
-    $stmt = $conn->prepare("SELECT * FROM tb_users WHERE username = ? AND password = ?");
-    $stmt->bind_param("ss", $username, $password);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    
-    // Periksa hasil query
-    if ($result->num_rows > 0) {
-        $data = $result->fetch_assoc();
-
-        // Cek peran pengguna
-        if ($data['role'] == "admin") {
-            $_SESSION['username'] = $username;
-            $_SESSION['role'] = "admin";
-            $loginMessage = "Admin"; 
-        } 
-        else if ($data['role'] == "guru") {
-            $_SESSION['username'] = $username;
-            $_SESSION['role'] = "guru";
-            $_SESSION['kode_guru'] = $data['kode_guru']; // Tambahkan sesi kode_guru
-            $loginMessage = "Guru"; // Set pesan login berhasil untuk guru
-        }
-        else if ($data['role'] == "siswa") {
-            $_SESSION['username'] = $username;
-            $_SESSION['role'] = "siswa";
-            $_SESSION['Id_siswaa'] = $data['Id_siswaa']; 
-            $loginMessage = "Siswa"; // Set pesan login berhasil untuk user
-
-            $stmt_perusahaan = $conn->prepare("SELECT id_perusahaan FROM siswa_pkl WHERE Id_siswaa = ?");
-            $stmt_perusahaan->bind_param("i", $data['Id_siswaa']); // Bind Id_siswaa
-            $stmt_perusahaan->execute();
-            $result_perusahaan = $stmt_perusahaan->get_result();
-        
-            if ($result_perusahaan->num_rows > 0) {
-                $perusahaan = $result_perusahaan->fetch_assoc();
-                $_SESSION['id_perusahaan'] = $perusahaan['id_perusahaan']; // Simpan id_perusahaan ke SESSION
-            } else {
-                $_SESSION['id_perusahaan'] = null; // Tidak ada perusahaan terkait
-            }
-            $stmt_perusahaan->close();
-        
-            $loginMessage = "Siswa"; 
-        }
-    } else {
-        $loginMessage = "Gagal"; // Set pesan login gagal
-    }
-    $stmt->close();
-}
-?>
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Absensi Magang</title>
-
-    <!-- SweetAlert CSS dan JavaScript -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    
-    <link rel="stylesheet" href="login3.css">
+    <title>website portofolio</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Icon Library -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="utama1.css">
 </head>
 <body>
-<div class="login-container">
-    <div class="login-box">
-        <div class="logo">
-            <img src="Screenshot (7).png" alt="Logo" class="logo-image">
+  
+    
+    <!-- design header -->
+    <header class="header" >
+        <a href="#" class="logo"><img src="img/BM.png " alt="" class="img">ABSEN<span>MAGANG</span></a>
+        <i class='bx bx-menu' id="menu-icon"></i>
+        <nav class="navbar">
+            <a href="#home" class="active">Home</a>
+            <a href="#about">About</a>
+            <a href="#team">Team</a>
+            <a href="index1.php"><button class="login">login</button></a>
+        </nav>
+    </header>
+    
+    <!-- home desgn -->
+    
+    <section class="home" id="home">
+        <div class="home-content">
+            <h3>Solusi Terbaik Untuk Anda</h3>
+            <h3>Kebutuhan <span class="multiple-text"></span></h3>
+            <p>Keunggulan dari aplikasi kami adalah dapat memanajemen waktu, memberikan pelayanan yang memadai,
+                memuaskan dan fleksibel kepada pengguna
+            </p>
+            <div class="social-media">
+                <!-- <a href="#"><i class='bx bxl-facebook'></i></a>
+                <a href="#"><i class='bx bxl-twitter'></i></a>
+                <a href="#"><i class='bx bxl-instagram-alt'></i></a>
+                <a href="#"><i class='bx bxl-linkedin'></i></a> -->
+                <a href="index1.php"><button class="button">Mulai Sekarang</button></a>
+                <a href="#" class="Selengkapnya"><button class="button1">Selengkapnya</button></a>
+            </div>
+            <div class="text">
+                <h1>240+</h1>
+                  <p>siswa magang</p>
+                  <div class="text2">
+                <h1>15K</h1>
+                <p>Seluruh Pengguna</p>
+            </div>
+            </div>
+            <a href="#" class="btn">    
+                BMPlatform</a>
         </div>
-        <h2>Silahkan Log In</h2>
-        <form action="" method="POST" name="form_input">
-            <div class="input-group">
-                <input type="text" id="username" name="username" placeholder="Username" required>
-            </div>
-            <div class="input-group">
-                <input type="password" id="password" name="password" placeholder="Password" required>
-            </div>
-            <button type="submit" class="login-button" name="input"><h1>Login</h1></button>
-        </form>
-    </div>
-</div>
+        <div class="home-img">
+            <img src="img/logo_login.png" alt="">
+        </div>
+            <!-- Tambahkan garis horizontal dengan teks -->
+             <p style="display: flex; position: absolute; margin-top: 480px; color: rgba(0, 0, 0, 0.50);
+             font-family: Inter;
+             font-size: 16px;
+             font-style: normal;
+             font-weight: 500;
+             line-height: normal;">Lebih dari 1.000 pengguna bergabung dengan BM</p>
+   <hr style="border: 3px solid #D9D9D9; display: flex; position: absolute; margin-top: 540px; width: 1140px;"> 
+    </section>
+    
+    <!-- about section design -->
+    
+    <section class="about" id="about">
+        <div class="About_content">
+            <h3> <span>Tingkatkan</span> Proses Anda</h3>
+           
+            <p class="p">Kami memberdayakan tim internal Anda dengan mengembangkan kemampuan layanan mandiri untuk mengelola ketidakhadiran siswa PKL secara efektif.
+            </p>
+            <div class="photo-gallery">
+                <div class="photo-item">
+                  <img src="img/1.png" alt="Deskripsi Foto 1">
+                  <h1>Laporan waktu nyata</h1>
+                  <p>Menilai data siswa terkini dan buat laporan 
+                    waktu nyata</p>
+                </div>
+                <div class="photo-item">
+                  <img src="img/2.png" alt="Deskripsi Foto 2">
+                  <h1>Proses yang disederhanakan</h1>
+                  <p>Menyederhanakan dan mengotomatiskan tugas 
+                    siswa untuk operasi yang efisien</p>
+                </div>
+                <div class="photo-item">
+                  <img src="img/3.png" alt="Deskripsi Foto 3">
+                  <h1>Waktu Lebih Efisien</h1>
+                  <p>Meningkatkan produktivitas dengan proses
+                    managen SDM yang efisien</p>
+                </div>
+                <div class="photo-item">
+                  <img src="img/4.png" alt="Deskripsi Foto 4">
+                  <h1>Laporan waktu nyata</h1>
+                  <p>Pantau kinerja siswa magang dan tetapkan
+                    tujuan untuk mendorong kesuksesan </p>
+                </div>
+                <div class="photo-item">
+                  <img src="img/5.png" alt="Deskripsi Foto 5">
+                  <h1>Keamanan Data</h1>
+                  <p>memastikan keamanan data dan keutamaan untuk
+                    informasi rahasia siswa</p>
+                </div>
+                <div class="photo-item">
+                  <img src="img/1.png" alt="Deskripsi Foto 6">
+                  <h1>Peningkatan kepatuhan</h1>
+                  <p>Memastikan kepatuhan terhadap peraturan dengan
+                    penegakan kebijakan yang berlaku</p>
+                </div>
+              </div>
+              
+      
+         
+    </section>
 
-<!-- SweetAlert Script -->
-<?php if ($loginMessage): ?>
-<script>
-    <?php if ($loginMessage == "Admin"): ?>
-        Swal.fire({
-            title: 'Login Berhasil!',
-            text: 'Selamat datang Admin!',
-            icon: 'success',
-            confirmButtonText: 'OK'
-        }).then(() => {
-            window.location = 'halaman_admin/0index.php';
-        });
-    <?php elseif ($loginMessage == "Guru"): ?>
-        Swal.fire({
-            title: 'Login Berhasil!',
-            text: 'Selamat datang Guru!',
-            icon: 'success',
-            confirmButtonText: 'OK'
-        }).then(() => {
-            window.location = 'halaman_guru/index.php';
-        });
-    <?php elseif ($loginMessage == "Siswa"): ?>
-        Swal.fire({
-            title: 'Login Berhasil!',
-            text: 'Selamat datang Siswa!',
-            icon: 'success',
-            confirmButtonText: 'OK'
-        }).then(() => {
-            window.location = 'halaman_siswa/beranda.php';
-        });
-    <?php elseif ($loginMessage == "Gagal"): ?>
-        Swal.fire({
-            title: 'Login Gagal!',
-            text: 'Username atau Password salah.',
-            icon: 'error',
-            confirmButtonText: 'Coba Lagi'
-        });
-    <?php endif; ?>
-</script>
-<?php endif; ?>
+    <!-- services Team -->
+    <section class="team" id="team">
+        <div class="team_content">
+            <h3> <span>Our</span> Team</h3>
+        <div class="card-container">
+            <!-- Card 1 -->
+            <div class="card">
+                <img src="img/anti.png" alt="Card Image" class="card-img">
+                <div class="card-content">
+                    <h2>Anti</h2>
+                    <p>UI/UX Designer</p>
+                </div>
+                <div class="social-icons-wrapper">
+                    <div class="social-icons">
+                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <g clip-path="url(#clip0_1012_87)">
+                              <path fill-rule="evenodd" clip-rule="evenodd" d="M12 0C18.623 0 24 5.37703 24 12C24 18.623 18.623 24 12 24C5.37703 24 0 18.623 0 12C0 5.37703 5.37703 0 12 0ZM12 4.5C9.96314 4.5 9.70772 4.50863 8.90775 4.54514C8.10947 4.58156 7.56427 4.70836 7.08717 4.89375C6.594 5.08542 6.17573 5.34188 5.75878 5.75883C5.34183 6.17578 5.08538 6.59405 4.8937 7.08722C4.70831 7.56427 4.58156 8.10947 4.54509 8.90775C4.50863 9.70772 4.5 9.96314 4.5 12C4.5 14.0369 4.50863 14.2923 4.54509 15.0922C4.58156 15.8905 4.70831 16.4357 4.8937 16.9128C5.08538 17.406 5.34183 17.8242 5.75878 18.2412C6.17573 18.6582 6.594 18.9146 7.08717 19.1063C7.56427 19.2916 8.10947 19.4184 8.90775 19.4549C9.70772 19.4914 9.96314 19.5 12 19.5C14.0369 19.5 14.2923 19.4914 15.0922 19.4549C15.8905 19.4184 16.4357 19.2916 16.9128 19.1063C17.406 18.9146 17.8242 18.6582 18.2412 18.2412C18.6582 17.8242 18.9146 17.406 19.1063 16.9128C19.2916 16.4357 19.4184 15.8905 19.4549 15.0922C19.4914 14.2923 19.5 14.0369 19.5 12C19.5 9.96314 19.4914 9.70772 19.4549 8.90775C19.4184 8.10947 19.2916 7.56427 19.1063 7.08722C18.9146 6.59405 18.6582 6.17578 18.2412 5.75883C17.8242 5.34188 17.406 5.08542 16.9128 4.89375C16.4357 4.70836 15.8905 4.58156 15.0922 4.54514C14.2923 4.50863 14.0369 4.5 12 4.5ZM12 5.85136C14.0026 5.85136 14.2398 5.859 15.0307 5.89509C15.7619 5.92847 16.159 6.05062 16.4233 6.15333C16.7734 6.28936 17.0232 6.45192 17.2856 6.71438C17.5481 6.97678 17.7106 7.22667 17.8467 7.57673C17.9494 7.84102 18.0716 8.23809 18.1049 8.96934C18.141 9.76022 18.1486 9.99741 18.1486 12C18.1486 14.0026 18.141 14.2398 18.1049 15.0307C18.0716 15.7619 17.9494 16.159 17.8467 16.4233C17.7106 16.7734 17.5481 17.0232 17.2856 17.2856C17.0232 17.5481 16.7734 17.7106 16.4233 17.8467C16.159 17.9494 15.7619 18.0716 15.0307 18.1049C14.2399 18.141 14.0027 18.1486 12 18.1486C9.99727 18.1486 9.76013 18.141 8.96934 18.1049C8.23809 18.0716 7.84102 17.9494 7.57673 17.8467C7.22662 17.7106 6.97678 17.5481 6.71433 17.2856C6.45187 17.0232 6.28936 16.7734 6.15333 16.4233C6.05062 16.159 5.92842 15.7619 5.89505 15.0307C5.85895 14.2398 5.85136 14.0026 5.85136 12C5.85136 9.99741 5.85895 9.76022 5.89505 8.96934C5.92842 8.23809 6.05062 7.84102 6.15333 7.57673C6.28936 7.22667 6.45187 6.97678 6.71433 6.71438C6.97678 6.45192 7.22662 6.28936 7.57673 6.15333C7.84102 6.05062 8.23809 5.92847 8.96934 5.89509C9.76022 5.859 9.99741 5.85136 12 5.85136ZM12 8.14866C9.87295 8.14866 8.14866 9.87295 8.14866 12C8.14866 14.127 9.87295 15.8513 12 15.8513C14.127 15.8513 15.8513 14.127 15.8513 12C15.8513 9.87295 14.127 8.14866 12 8.14866ZM12 14.5C10.6193 14.5 9.50002 13.3807 9.50002 12C9.50002 10.6193 10.6193 9.50002 12 9.50002C13.3807 9.50002 14.5 10.6193 14.5 12C14.5 13.3807 13.3807 14.5 12 14.5ZM16.9035 7.9965C16.9035 8.49356 16.5006 8.89645 16.0035 8.89645C15.5065 8.89645 15.1035 8.49356 15.1035 7.9965C15.1035 7.49944 15.5065 7.0965 16.0035 7.0965C16.5006 7.0965 16.9035 7.49944 16.9035 7.9965Z" fill="white"/>
+                            </g>
+                            <defs>
+                              <clipPath id="clip0_1012_87">
+                                <rect width="24" height="24" fill="white"/>
+                              </clipPath>
+                            </defs>
+                          </svg></a>
+                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M12 0C18.623 0 24 5.37703 24 12C24 18.623 18.623 24 12 24C5.37703 24 0 18.623 0 12C0 5.37703 5.37703 0 12 0ZM9.88636 18.3824C15.1965 18.3824 18.1 13.9822 18.1 10.1688C18.1 10.0431 18.1 9.91739 18.094 9.79763C18.6567 9.39056 19.1476 8.88169 19.5367 8.301C19.0219 8.52848 18.4651 8.68416 17.8785 8.75597C18.4771 8.39677 18.9321 7.83403 19.1476 7.15758C18.5909 7.48683 17.9743 7.72627 17.3157 7.85798C16.7889 7.29525 16.0406 6.94805 15.2085 6.94805C13.616 6.94805 12.3229 8.24114 12.3229 9.83358C12.3229 10.0611 12.3469 10.2825 12.4007 10.4921C10.0001 10.3724 7.87486 9.22294 6.45009 7.47483C6.20461 7.89989 6.06094 8.39677 6.06094 8.92359C6.06094 9.92334 6.56981 10.8094 7.34808 11.3242C6.87511 11.3122 6.43209 11.1805 6.04298 10.965V11.001C6.04298 12.4018 7.03673 13.5632 8.35978 13.8326C8.12034 13.8984 7.86291 13.9344 7.59952 13.9344C7.41389 13.9344 7.23431 13.9164 7.05473 13.8805C7.41989 15.0299 8.4855 15.8621 9.74869 15.886C8.76089 16.6583 7.5157 17.1193 6.1627 17.1193C5.92922 17.1193 5.70173 17.1073 5.47425 17.0774C6.73744 17.9035 8.25802 18.3824 9.88636 18.3824Z" fill="white"/>
+                          </svg></a>
+                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M12 0C18.623 0 24 5.37703 24 12C24 18.623 18.623 24 12 24C5.37703 24 0 18.623 0 12C0 5.37703 5.37703 0 12 0ZM19.1866 8.38959C19.0141 7.74417 18.5059 7.236 17.8605 7.0635C16.6906 6.75 12 6.75 12 6.75C12 6.75 7.30936 6.75 6.13945 7.0635C5.49422 7.236 4.98586 7.74417 4.81336 8.38959C4.5 9.55936 4.5 12.0001 4.5 12.0001C4.5 12.0001 4.5 14.4407 4.81336 15.6104C4.98586 16.2558 5.49422 16.7642 6.13945 16.9366C7.30936 17.25 12 17.25 12 17.25C12 17.25 16.6906 17.25 17.8605 16.9366C18.5059 16.7642 19.0141 16.2558 19.1866 15.6104C19.5 14.4407 19.5 12.0001 19.5 12.0001C19.5 12.0001 19.5 9.55936 19.1866 8.38959ZM10.5 14.2501V9.75005L14.397 12.0001L10.5 14.2501Z" fill="white"/>
+                          </svg></a>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Card 2 -->
+            <div class="card">
+                <img src="img/nurliana.jpg" alt="Card Image" class="card-img">
+                <div class="card-content">
+                    <h2>Nurliana</h2>
+                    <p>Backend Developer</p>
+                </div>
+                <div class="social-icons-wrapper">
+                    <div class="social-icons">
+                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <g clip-path="url(#clip0_1012_87)">
+                              <path fill-rule="evenodd" clip-rule="evenodd" d="M12 0C18.623 0 24 5.37703 24 12C24 18.623 18.623 24 12 24C5.37703 24 0 18.623 0 12C0 5.37703 5.37703 0 12 0ZM12 4.5C9.96314 4.5 9.70772 4.50863 8.90775 4.54514C8.10947 4.58156 7.56427 4.70836 7.08717 4.89375C6.594 5.08542 6.17573 5.34188 5.75878 5.75883C5.34183 6.17578 5.08538 6.59405 4.8937 7.08722C4.70831 7.56427 4.58156 8.10947 4.54509 8.90775C4.50863 9.70772 4.5 9.96314 4.5 12C4.5 14.0369 4.50863 14.2923 4.54509 15.0922C4.58156 15.8905 4.70831 16.4357 4.8937 16.9128C5.08538 17.406 5.34183 17.8242 5.75878 18.2412C6.17573 18.6582 6.594 18.9146 7.08717 19.1063C7.56427 19.2916 8.10947 19.4184 8.90775 19.4549C9.70772 19.4914 9.96314 19.5 12 19.5C14.0369 19.5 14.2923 19.4914 15.0922 19.4549C15.8905 19.4184 16.4357 19.2916 16.9128 19.1063C17.406 18.9146 17.8242 18.6582 18.2412 18.2412C18.6582 17.8242 18.9146 17.406 19.1063 16.9128C19.2916 16.4357 19.4184 15.8905 19.4549 15.0922C19.4914 14.2923 19.5 14.0369 19.5 12C19.5 9.96314 19.4914 9.70772 19.4549 8.90775C19.4184 8.10947 19.2916 7.56427 19.1063 7.08722C18.9146 6.59405 18.6582 6.17578 18.2412 5.75883C17.8242 5.34188 17.406 5.08542 16.9128 4.89375C16.4357 4.70836 15.8905 4.58156 15.0922 4.54514C14.2923 4.50863 14.0369 4.5 12 4.5ZM12 5.85136C14.0026 5.85136 14.2398 5.859 15.0307 5.89509C15.7619 5.92847 16.159 6.05062 16.4233 6.15333C16.7734 6.28936 17.0232 6.45192 17.2856 6.71438C17.5481 6.97678 17.7106 7.22667 17.8467 7.57673C17.9494 7.84102 18.0716 8.23809 18.1049 8.96934C18.141 9.76022 18.1486 9.99741 18.1486 12C18.1486 14.0026 18.141 14.2398 18.1049 15.0307C18.0716 15.7619 17.9494 16.159 17.8467 16.4233C17.7106 16.7734 17.5481 17.0232 17.2856 17.2856C17.0232 17.5481 16.7734 17.7106 16.4233 17.8467C16.159 17.9494 15.7619 18.0716 15.0307 18.1049C14.2399 18.141 14.0027 18.1486 12 18.1486C9.99727 18.1486 9.76013 18.141 8.96934 18.1049C8.23809 18.0716 7.84102 17.9494 7.57673 17.8467C7.22662 17.7106 6.97678 17.5481 6.71433 17.2856C6.45187 17.0232 6.28936 16.7734 6.15333 16.4233C6.05062 16.159 5.92842 15.7619 5.89505 15.0307C5.85895 14.2398 5.85136 14.0026 5.85136 12C5.85136 9.99741 5.85895 9.76022 5.89505 8.96934C5.92842 8.23809 6.05062 7.84102 6.15333 7.57673C6.28936 7.22667 6.45187 6.97678 6.71433 6.71438C6.97678 6.45192 7.22662 6.28936 7.57673 6.15333C7.84102 6.05062 8.23809 5.92847 8.96934 5.89509C9.76022 5.859 9.99741 5.85136 12 5.85136ZM12 8.14866C9.87295 8.14866 8.14866 9.87295 8.14866 12C8.14866 14.127 9.87295 15.8513 12 15.8513C14.127 15.8513 15.8513 14.127 15.8513 12C15.8513 9.87295 14.127 8.14866 12 8.14866ZM12 14.5C10.6193 14.5 9.50002 13.3807 9.50002 12C9.50002 10.6193 10.6193 9.50002 12 9.50002C13.3807 9.50002 14.5 10.6193 14.5 12C14.5 13.3807 13.3807 14.5 12 14.5ZM16.9035 7.9965C16.9035 8.49356 16.5006 8.89645 16.0035 8.89645C15.5065 8.89645 15.1035 8.49356 15.1035 7.9965C15.1035 7.49944 15.5065 7.0965 16.0035 7.0965C16.5006 7.0965 16.9035 7.49944 16.9035 7.9965Z" fill="white"/>
+                            </g>
+                            <defs>
+                              <clipPath id="clip0_1012_87">
+                                <rect width="24" height="24" fill="white"/>
+                              </clipPath>
+                            </defs>
+                          </svg></a>
+                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M12 0C18.623 0 24 5.37703 24 12C24 18.623 18.623 24 12 24C5.37703 24 0 18.623 0 12C0 5.37703 5.37703 0 12 0ZM9.88636 18.3824C15.1965 18.3824 18.1 13.9822 18.1 10.1688C18.1 10.0431 18.1 9.91739 18.094 9.79763C18.6567 9.39056 19.1476 8.88169 19.5367 8.301C19.0219 8.52848 18.4651 8.68416 17.8785 8.75597C18.4771 8.39677 18.9321 7.83403 19.1476 7.15758C18.5909 7.48683 17.9743 7.72627 17.3157 7.85798C16.7889 7.29525 16.0406 6.94805 15.2085 6.94805C13.616 6.94805 12.3229 8.24114 12.3229 9.83358C12.3229 10.0611 12.3469 10.2825 12.4007 10.4921C10.0001 10.3724 7.87486 9.22294 6.45009 7.47483C6.20461 7.89989 6.06094 8.39677 6.06094 8.92359C6.06094 9.92334 6.56981 10.8094 7.34808 11.3242C6.87511 11.3122 6.43209 11.1805 6.04298 10.965V11.001C6.04298 12.4018 7.03673 13.5632 8.35978 13.8326C8.12034 13.8984 7.86291 13.9344 7.59952 13.9344C7.41389 13.9344 7.23431 13.9164 7.05473 13.8805C7.41989 15.0299 8.4855 15.8621 9.74869 15.886C8.76089 16.6583 7.5157 17.1193 6.1627 17.1193C5.92922 17.1193 5.70173 17.1073 5.47425 17.0774C6.73744 17.9035 8.25802 18.3824 9.88636 18.3824Z" fill="white"/>
+                          </svg></a>
+                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M12 0C18.623 0 24 5.37703 24 12C24 18.623 18.623 24 12 24C5.37703 24 0 18.623 0 12C0 5.37703 5.37703 0 12 0ZM19.1866 8.38959C19.0141 7.74417 18.5059 7.236 17.8605 7.0635C16.6906 6.75 12 6.75 12 6.75C12 6.75 7.30936 6.75 6.13945 7.0635C5.49422 7.236 4.98586 7.74417 4.81336 8.38959C4.5 9.55936 4.5 12.0001 4.5 12.0001C4.5 12.0001 4.5 14.4407 4.81336 15.6104C4.98586 16.2558 5.49422 16.7642 6.13945 16.9366C7.30936 17.25 12 17.25 12 17.25C12 17.25 16.6906 17.25 17.8605 16.9366C18.5059 16.7642 19.0141 16.2558 19.1866 15.6104C19.5 14.4407 19.5 12.0001 19.5 12.0001C19.5 12.0001 19.5 9.55936 19.1866 8.38959ZM10.5 14.2501V9.75005L14.397 12.0001L10.5 14.2501Z" fill="white"/>
+                          </svg></a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Card 3 -->
+            <div class="card">
+                <img src="img/saskia.png" alt="Card Image" class="card-img">
+                <div class="card-content">
+                    <h2>Saskia</h2>
+                    <p>Frontend Developer</p>
+                </div>
+                <div class="social-icons-wrapper">
+                    <div class="social-icons">
+                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <g clip-path="url(#clip0_1012_87)">
+                              <path fill-rule="evenodd" clip-rule="evenodd" d="M12 0C18.623 0 24 5.37703 24 12C24 18.623 18.623 24 12 24C5.37703 24 0 18.623 0 12C0 5.37703 5.37703 0 12 0ZM12 4.5C9.96314 4.5 9.70772 4.50863 8.90775 4.54514C8.10947 4.58156 7.56427 4.70836 7.08717 4.89375C6.594 5.08542 6.17573 5.34188 5.75878 5.75883C5.34183 6.17578 5.08538 6.59405 4.8937 7.08722C4.70831 7.56427 4.58156 8.10947 4.54509 8.90775C4.50863 9.70772 4.5 9.96314 4.5 12C4.5 14.0369 4.50863 14.2923 4.54509 15.0922C4.58156 15.8905 4.70831 16.4357 4.8937 16.9128C5.08538 17.406 5.34183 17.8242 5.75878 18.2412C6.17573 18.6582 6.594 18.9146 7.08717 19.1063C7.56427 19.2916 8.10947 19.4184 8.90775 19.4549C9.70772 19.4914 9.96314 19.5 12 19.5C14.0369 19.5 14.2923 19.4914 15.0922 19.4549C15.8905 19.4184 16.4357 19.2916 16.9128 19.1063C17.406 18.9146 17.8242 18.6582 18.2412 18.2412C18.6582 17.8242 18.9146 17.406 19.1063 16.9128C19.2916 16.4357 19.4184 15.8905 19.4549 15.0922C19.4914 14.2923 19.5 14.0369 19.5 12C19.5 9.96314 19.4914 9.70772 19.4549 8.90775C19.4184 8.10947 19.2916 7.56427 19.1063 7.08722C18.9146 6.59405 18.6582 6.17578 18.2412 5.75883C17.8242 5.34188 17.406 5.08542 16.9128 4.89375C16.4357 4.70836 15.8905 4.58156 15.0922 4.54514C14.2923 4.50863 14.0369 4.5 12 4.5ZM12 5.85136C14.0026 5.85136 14.2398 5.859 15.0307 5.89509C15.7619 5.92847 16.159 6.05062 16.4233 6.15333C16.7734 6.28936 17.0232 6.45192 17.2856 6.71438C17.5481 6.97678 17.7106 7.22667 17.8467 7.57673C17.9494 7.84102 18.0716 8.23809 18.1049 8.96934C18.141 9.76022 18.1486 9.99741 18.1486 12C18.1486 14.0026 18.141 14.2398 18.1049 15.0307C18.0716 15.7619 17.9494 16.159 17.8467 16.4233C17.7106 16.7734 17.5481 17.0232 17.2856 17.2856C17.0232 17.5481 16.7734 17.7106 16.4233 17.8467C16.159 17.9494 15.7619 18.0716 15.0307 18.1049C14.2399 18.141 14.0027 18.1486 12 18.1486C9.99727 18.1486 9.76013 18.141 8.96934 18.1049C8.23809 18.0716 7.84102 17.9494 7.57673 17.8467C7.22662 17.7106 6.97678 17.5481 6.71433 17.2856C6.45187 17.0232 6.28936 16.7734 6.15333 16.4233C6.05062 16.159 5.92842 15.7619 5.89505 15.0307C5.85895 14.2398 5.85136 14.0026 5.85136 12C5.85136 9.99741 5.85895 9.76022 5.89505 8.96934C5.92842 8.23809 6.05062 7.84102 6.15333 7.57673C6.28936 7.22667 6.45187 6.97678 6.71433 6.71438C6.97678 6.45192 7.22662 6.28936 7.57673 6.15333C7.84102 6.05062 8.23809 5.92847 8.96934 5.89509C9.76022 5.859 9.99741 5.85136 12 5.85136ZM12 8.14866C9.87295 8.14866 8.14866 9.87295 8.14866 12C8.14866 14.127 9.87295 15.8513 12 15.8513C14.127 15.8513 15.8513 14.127 15.8513 12C15.8513 9.87295 14.127 8.14866 12 8.14866ZM12 14.5C10.6193 14.5 9.50002 13.3807 9.50002 12C9.50002 10.6193 10.6193 9.50002 12 9.50002C13.3807 9.50002 14.5 10.6193 14.5 12C14.5 13.3807 13.3807 14.5 12 14.5ZM16.9035 7.9965C16.9035 8.49356 16.5006 8.89645 16.0035 8.89645C15.5065 8.89645 15.1035 8.49356 15.1035 7.9965C15.1035 7.49944 15.5065 7.0965 16.0035 7.0965C16.5006 7.0965 16.9035 7.49944 16.9035 7.9965Z" fill="white"/>
+                            </g>
+                            <defs>
+                              <clipPath id="clip0_1012_87">
+                                <rect width="24" height="24" fill="white"/>
+                              </clipPath>
+                            </defs>
+                          </svg></a>
+                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M12 0C18.623 0 24 5.37703 24 12C24 18.623 18.623 24 12 24C5.37703 24 0 18.623 0 12C0 5.37703 5.37703 0 12 0ZM9.88636 18.3824C15.1965 18.3824 18.1 13.9822 18.1 10.1688C18.1 10.0431 18.1 9.91739 18.094 9.79763C18.6567 9.39056 19.1476 8.88169 19.5367 8.301C19.0219 8.52848 18.4651 8.68416 17.8785 8.75597C18.4771 8.39677 18.9321 7.83403 19.1476 7.15758C18.5909 7.48683 17.9743 7.72627 17.3157 7.85798C16.7889 7.29525 16.0406 6.94805 15.2085 6.94805C13.616 6.94805 12.3229 8.24114 12.3229 9.83358C12.3229 10.0611 12.3469 10.2825 12.4007 10.4921C10.0001 10.3724 7.87486 9.22294 6.45009 7.47483C6.20461 7.89989 6.06094 8.39677 6.06094 8.92359C6.06094 9.92334 6.56981 10.8094 7.34808 11.3242C6.87511 11.3122 6.43209 11.1805 6.04298 10.965V11.001C6.04298 12.4018 7.03673 13.5632 8.35978 13.8326C8.12034 13.8984 7.86291 13.9344 7.59952 13.9344C7.41389 13.9344 7.23431 13.9164 7.05473 13.8805C7.41989 15.0299 8.4855 15.8621 9.74869 15.886C8.76089 16.6583 7.5157 17.1193 6.1627 17.1193C5.92922 17.1193 5.70173 17.1073 5.47425 17.0774C6.73744 17.9035 8.25802 18.3824 9.88636 18.3824Z" fill="white"/>
+                          </svg></a>
+                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M12 0C18.623 0 24 5.37703 24 12C24 18.623 18.623 24 12 24C5.37703 24 0 18.623 0 12C0 5.37703 5.37703 0 12 0ZM19.1866 8.38959C19.0141 7.74417 18.5059 7.236 17.8605 7.0635C16.6906 6.75 12 6.75 12 6.75C12 6.75 7.30936 6.75 6.13945 7.0635C5.49422 7.236 4.98586 7.74417 4.81336 8.38959C4.5 9.55936 4.5 12.0001 4.5 12.0001C4.5 12.0001 4.5 14.4407 4.81336 15.6104C4.98586 16.2558 5.49422 16.7642 6.13945 16.9366C7.30936 17.25 12 17.25 12 17.25C12 17.25 16.6906 17.25 17.8605 16.9366C18.5059 16.7642 19.0141 16.2558 19.1866 15.6104C19.5 14.4407 19.5 12.0001 19.5 12.0001C19.5 12.0001 19.5 9.55936 19.1866 8.38959ZM10.5 14.2501V9.75005L14.397 12.0001L10.5 14.2501Z" fill="white"/>
+                          </svg></a>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Card 4 -->
+            <div class="card">
+                <img src="img/home.jpg" alt="Card Image" class="card-img">
+                <div class="card-content">
+                    <h2>Taufik</h2>
+                    <p>Frontend Developer</p>
+                </div>
+                <div class="social-icons-wrapper">
+                    <div class="social-icons">
+                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <g clip-path="url(#clip0_1012_87)">
+                              <path fill-rule="evenodd" clip-rule="evenodd" d="M12 0C18.623 0 24 5.37703 24 12C24 18.623 18.623 24 12 24C5.37703 24 0 18.623 0 12C0 5.37703 5.37703 0 12 0ZM12 4.5C9.96314 4.5 9.70772 4.50863 8.90775 4.54514C8.10947 4.58156 7.56427 4.70836 7.08717 4.89375C6.594 5.08542 6.17573 5.34188 5.75878 5.75883C5.34183 6.17578 5.08538 6.59405 4.8937 7.08722C4.70831 7.56427 4.58156 8.10947 4.54509 8.90775C4.50863 9.70772 4.5 9.96314 4.5 12C4.5 14.0369 4.50863 14.2923 4.54509 15.0922C4.58156 15.8905 4.70831 16.4357 4.8937 16.9128C5.08538 17.406 5.34183 17.8242 5.75878 18.2412C6.17573 18.6582 6.594 18.9146 7.08717 19.1063C7.56427 19.2916 8.10947 19.4184 8.90775 19.4549C9.70772 19.4914 9.96314 19.5 12 19.5C14.0369 19.5 14.2923 19.4914 15.0922 19.4549C15.8905 19.4184 16.4357 19.2916 16.9128 19.1063C17.406 18.9146 17.8242 18.6582 18.2412 18.2412C18.6582 17.8242 18.9146 17.406 19.1063 16.9128C19.2916 16.4357 19.4184 15.8905 19.4549 15.0922C19.4914 14.2923 19.5 14.0369 19.5 12C19.5 9.96314 19.4914 9.70772 19.4549 8.90775C19.4184 8.10947 19.2916 7.56427 19.1063 7.08722C18.9146 6.59405 18.6582 6.17578 18.2412 5.75883C17.8242 5.34188 17.406 5.08542 16.9128 4.89375C16.4357 4.70836 15.8905 4.58156 15.0922 4.54514C14.2923 4.50863 14.0369 4.5 12 4.5ZM12 5.85136C14.0026 5.85136 14.2398 5.859 15.0307 5.89509C15.7619 5.92847 16.159 6.05062 16.4233 6.15333C16.7734 6.28936 17.0232 6.45192 17.2856 6.71438C17.5481 6.97678 17.7106 7.22667 17.8467 7.57673C17.9494 7.84102 18.0716 8.23809 18.1049 8.96934C18.141 9.76022 18.1486 9.99741 18.1486 12C18.1486 14.0026 18.141 14.2398 18.1049 15.0307C18.0716 15.7619 17.9494 16.159 17.8467 16.4233C17.7106 16.7734 17.5481 17.0232 17.2856 17.2856C17.0232 17.5481 16.7734 17.7106 16.4233 17.8467C16.159 17.9494 15.7619 18.0716 15.0307 18.1049C14.2399 18.141 14.0027 18.1486 12 18.1486C9.99727 18.1486 9.76013 18.141 8.96934 18.1049C8.23809 18.0716 7.84102 17.9494 7.57673 17.8467C7.22662 17.7106 6.97678 17.5481 6.71433 17.2856C6.45187 17.0232 6.28936 16.7734 6.15333 16.4233C6.05062 16.159 5.92842 15.7619 5.89505 15.0307C5.85895 14.2398 5.85136 14.0026 5.85136 12C5.85136 9.99741 5.85895 9.76022 5.89505 8.96934C5.92842 8.23809 6.05062 7.84102 6.15333 7.57673C6.28936 7.22667 6.45187 6.97678 6.71433 6.71438C6.97678 6.45192 7.22662 6.28936 7.57673 6.15333C7.84102 6.05062 8.23809 5.92847 8.96934 5.89509C9.76022 5.859 9.99741 5.85136 12 5.85136ZM12 8.14866C9.87295 8.14866 8.14866 9.87295 8.14866 12C8.14866 14.127 9.87295 15.8513 12 15.8513C14.127 15.8513 15.8513 14.127 15.8513 12C15.8513 9.87295 14.127 8.14866 12 8.14866ZM12 14.5C10.6193 14.5 9.50002 13.3807 9.50002 12C9.50002 10.6193 10.6193 9.50002 12 9.50002C13.3807 9.50002 14.5 10.6193 14.5 12C14.5 13.3807 13.3807 14.5 12 14.5ZM16.9035 7.9965C16.9035 8.49356 16.5006 8.89645 16.0035 8.89645C15.5065 8.89645 15.1035 8.49356 15.1035 7.9965C15.1035 7.49944 15.5065 7.0965 16.0035 7.0965C16.5006 7.0965 16.9035 7.49944 16.9035 7.9965Z" fill="white"/>
+                            </g>
+                            <defs>
+                              <clipPath id="clip0_1012_87">
+                                <rect width="24" height="24" fill="white"/>
+                              </clipPath>
+                            </defs>
+                          </svg></a>
+                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M12 0C18.623 0 24 5.37703 24 12C24 18.623 18.623 24 12 24C5.37703 24 0 18.623 0 12C0 5.37703 5.37703 0 12 0ZM9.88636 18.3824C15.1965 18.3824 18.1 13.9822 18.1 10.1688C18.1 10.0431 18.1 9.91739 18.094 9.79763C18.6567 9.39056 19.1476 8.88169 19.5367 8.301C19.0219 8.52848 18.4651 8.68416 17.8785 8.75597C18.4771 8.39677 18.9321 7.83403 19.1476 7.15758C18.5909 7.48683 17.9743 7.72627 17.3157 7.85798C16.7889 7.29525 16.0406 6.94805 15.2085 6.94805C13.616 6.94805 12.3229 8.24114 12.3229 9.83358C12.3229 10.0611 12.3469 10.2825 12.4007 10.4921C10.0001 10.3724 7.87486 9.22294 6.45009 7.47483C6.20461 7.89989 6.06094 8.39677 6.06094 8.92359C6.06094 9.92334 6.56981 10.8094 7.34808 11.3242C6.87511 11.3122 6.43209 11.1805 6.04298 10.965V11.001C6.04298 12.4018 7.03673 13.5632 8.35978 13.8326C8.12034 13.8984 7.86291 13.9344 7.59952 13.9344C7.41389 13.9344 7.23431 13.9164 7.05473 13.8805C7.41989 15.0299 8.4855 15.8621 9.74869 15.886C8.76089 16.6583 7.5157 17.1193 6.1627 17.1193C5.92922 17.1193 5.70173 17.1073 5.47425 17.0774C6.73744 17.9035 8.25802 18.3824 9.88636 18.3824Z" fill="white"/>
+                          </svg></a>
+                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M12 0C18.623 0 24 5.37703 24 12C24 18.623 18.623 24 12 24C5.37703 24 0 18.623 0 12C0 5.37703 5.37703 0 12 0ZM19.1866 8.38959C19.0141 7.74417 18.5059 7.236 17.8605 7.0635C16.6906 6.75 12 6.75 12 6.75C12 6.75 7.30936 6.75 6.13945 7.0635C5.49422 7.236 4.98586 7.74417 4.81336 8.38959C4.5 9.55936 4.5 12.0001 4.5 12.0001C4.5 12.0001 4.5 14.4407 4.81336 15.6104C4.98586 16.2558 5.49422 16.7642 6.13945 16.9366C7.30936 17.25 12 17.25 12 17.25C12 17.25 16.6906 17.25 17.8605 16.9366C18.5059 16.7642 19.0141 16.2558 19.1866 15.6104C19.5 14.4407 19.5 12.0001 19.5 12.0001C19.5 12.0001 19.5 9.55936 19.1866 8.38959ZM10.5 14.2501V9.75005L14.397 12.0001L10.5 14.2501Z" fill="white"/>
+                          </svg></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- portofolio design -->
+    <footer>
+      <div class="footer-container">
+          <div class="footer-section logo-section">
+              <div class="header-icons">
+                  <h3>ABSEN<span class="highlight">MAGANG</span></h3>
+                  <div class="social-icons">
+                      <i style="background: #000;"><svg xmlns="http://www.w3.org/2000/svg" width="29" height="30" viewBox="0 0 29 30" fill="none">
+                        <g clip-path="url(#clip0_1012_8)">
+                          <path fill-rule="evenodd" clip-rule="evenodd" d="M14.5 0C22.5028 0 29 6.72129 29 15C29 23.2787 22.5028 30 14.5 30C6.49725 30 0 23.2787 0 15C0 6.72129 6.49725 0 14.5 0ZM23.1839 10.487C22.9754 9.68021 22.3613 9.045 21.5815 8.82938C20.1679 8.4375 14.5 8.4375 14.5 8.4375C14.5 8.4375 8.83214 8.4375 7.41851 8.82938C6.63885 9.045 6.02458 9.68021 5.81614 10.487C5.4375 11.9492 5.4375 15.0001 5.4375 15.0001C5.4375 15.0001 5.4375 18.0509 5.81614 19.513C6.02458 20.3198 6.63885 20.9552 7.41851 21.1708C8.83214 21.5625 14.5 21.5625 14.5 21.5625C14.5 21.5625 20.1679 21.5625 21.5815 21.1708C22.3613 20.9552 22.9754 20.3198 23.1839 19.513C23.5625 18.0509 23.5625 15.0001 23.5625 15.0001C23.5625 15.0001 23.5625 11.9492 23.1839 10.487ZM12.6874 17.8127V12.1876L17.3964 15.0001L12.6874 17.8127Z" fill="black"/>
+                        </g>
+                        <defs>
+                          <clipPath id="clip0_1012_8">
+                            <rect width="29" height="30" fill="white"/>
+                          </clipPath>
+                        </defs>
+                      </svg></i>
+                      <i class="fab fa-facebook"></i>
+                      <i class="fab fa-instagram"></i>
+                  </div>
+              </div>
+          </div>
 
+          <!-- Garis Pembatas -->
+          <hr class="divider">
+
+          <div class="footer-section">
+              <p class="section-title">Magang</p>
+              <p>
+                  Kami Berkomitmen untuk menyediakan solusi absen yang praktis dan simpel, 
+                  membantu anda menghemat waktu dan meningkatkan produktifitas.
+              </p>
+          </div>
+
+          <div class="footer-section">
+              <h4>Permalinks</h4>
+              <ul>
+                  <li><a href="#">Home</a></li>
+                  <li><a href="#">About</a></li>
+                  <li><a href="#">Team</a></li>
+                  <li><a href="#">Login</a></li>
+              </ul>
+          </div>
+
+          <div class="footer-section">
+              <h4>Contact As</h4>
+              <table class="contact-form">
+                  <tr>    
+                      <td><input type="text" placeholder="Kirim Pesan ..." /></td>
+                      <td><button>Submit</button></td>
+                  </tr>
+              </table>
+              <p>+62 831 3782 5133</p>
+              <p>AbsensiMagang@gmail.com</p>
+          </div>
+          <hr class="divider">
+      </div>    
+
+      
+    <!-- footer design -->
+    <footer class="footer">
+        <div class="footer-text">
+            <p>Support by SMK Negeri Labuang</p>
+        </div>
+        <div class="footer-iconTop">
+            <a href="#home"><i class='bx bx-up-arrow-alt'></i></a>
+        </div>
+    </footer>
+
+    <!-- scrool reveal -->
+    <script src="https://unpkg.com/scrollreveal"></script>
+
+    <!-- typed js -->
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <script src="script.js"></script>
+ 
+    
+    <script type="text/javascript">
+        const cursor = document.querySelector(".cursor");
+        var timeout;
+        // follow cusroe
+        document.addEventListener("mousemove", (e) => {
+            let x = e.pageX;
+            let y = e.pageY;
+
+            cursor.style.top = y + "px";
+            cursor.style.left = x + "px";
+            cursor.style.display = "block";
+
+            //cursor effect mouse stopped
+            function mouseStopped(){
+                cursor.style.display = "none";
+            }
+            clearTimeout(timeout);
+            timeout = setTimeout(mouseStopped, 1000);
+        });
+
+        // cusror efec mouseout
+        document.addEventListener("mouseout", () => {
+            cursor.style.display = "none";
+
+        
+        });
+        </script>
+       <script>
+        let lastScrollY = 0; // Posisi scroll terakhir
+        const header = document.querySelector('.header'); // Seleksi elemen header
+    
+        window.addEventListener('scroll', () => {
+            const currentScrollY = window.scrollY; // Posisi scroll saat ini
+    
+            if (currentScrollY > lastScrollY) {
+                // Scroll ke bawah: sembunyikan header
+                header.style.transform = 'translateY(-100%)';
+            } else {
+                // Scroll ke atas: tampilkan header
+                header.style.transform = 'translateY(0)';
+            }
+    
+            lastScrollY = currentScrollY; // Perbarui posisi scroll terakhir
+        });
+    </script>
+        
 </body>
 </html>
+

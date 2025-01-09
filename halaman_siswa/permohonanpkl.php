@@ -11,8 +11,7 @@ include 'koneksi.php';
 // Ambil ID siswa dari session
 $id_siswaa = $_SESSION['Id_siswaa'];
 
-// Periksa apakah siswa sudah mendaftar
-$check_query = "SELECT * FROM permohonan_pkl WHERE id_siswaa = ? LIMIT 1";
+$check_query = "SELECT * FROM permohonan_pkl WHERE id_siswaa = ?";
 $stmt = $conn->prepare($check_query);
 $stmt->bind_param("i", $id_siswaa);
 $stmt->execute();
@@ -28,7 +27,7 @@ if ($check_result && $check_result->num_rows > 0) {
 }
 $stmt->close();
 
-// Ambil detail perusahaan jika sudah mendaftar
+
 $detail = null;
 if ($id_perusahaan_didaftarkan !== null) {
     $query = "SELECT 
@@ -44,9 +43,9 @@ if ($id_perusahaan_didaftarkan !== null) {
               JOIN 
                 tb_perusahaan p ON pp.id_perusahaan = p.id_perusahaan
               WHERE
-                pp.id_perusahaan = ?";
+                pp.id_perusahaan = ? AND pp.id_siswaa = ?";
     $stmt = $conn->prepare($query);
-    $stmt->bind_param("i", $id_perusahaan_didaftarkan);
+    $stmt->bind_param("ii", $id_perusahaan_didaftarkan, $id_siswaa);
     $stmt->execute();
     $result = $stmt->get_result();
 
@@ -55,15 +54,32 @@ if ($id_perusahaan_didaftarkan !== null) {
         $status = $detail['status']; // Ambil status dari query
     }
     $stmt->close();
-    
 }
-
-$query = "SELECT * FROM tb_perusahaan";
-$result = $conn->query($query);
-
-
-
 ?>
+
+
+
+<!-- $query = "SELECT 
+             p.pendiri, 
+             p.nama_perusahaan AS perusahaan,
+             p.bidang_industri, 
+             p.lokasi, 
+             p.jalan, 
+             p.tahun_didirikan AS tahun_berdiri,
+             pp.status 
+         FROM 
+             permohonan_pkl pp
+         JOIN 
+             tb_perusahaan p ON pp.id_perusahaan = p.id_perusahaan
+         WHERE
+             pp.id_perusahaan = ? AND pp.id_siswaa = ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("ii", $id_perusahaan_didaftarkan, $id_siswaa);
+
+
+
+
+?> -->
 
 
 <!DOCTYPE html>
@@ -428,6 +444,9 @@ $result = $conn->query($query);
     </thead>
     <tbody>
         <?php
+         $query = "SELECT * FROM tb_perusahaan";
+         $result = $conn->query($query);
+        
         if ($result->num_rows > 0) {
             $no = 1;
             while ($row = $result->fetch_assoc()) {
@@ -489,7 +508,7 @@ $result = $conn->query($query);
     
                     </div>
                                                         <td>
-                                        <?php if ($sudah_daftar && $detail): ?>
+                                                        <?php if ($sudah_daftar && $detail): ?>
 <div class="container1">
     <h2>Rincian Informasi
         <span class="dropdown-icon" onclick="toggleForm()">
@@ -511,8 +530,10 @@ $result = $conn->query($query);
                                 echo "Permohonan PKL sedang menunggu konfirmasi.";
                             } elseif ($status == 'diterima') {
                                 echo "Permohonan PKL diterima. Silakan berkonsultasi dengan guru pembimbing.";
-                            } else {
+                            } elseif ($status == 'ditolak') {
                                 echo "Permohonan PKL ditolak.";
+                            } else {
+                                echo "Status permohonan tidak diketahui.";
                             }
                         }
                         ?>
@@ -547,43 +568,29 @@ $result = $conn->query($query);
     </form>
 </div>
 <?php endif; ?>
-   
                                      </td>
-
                 </div>
-              
-                
-
-                           
-                <!-- /.container-fluid -->
-
             </div>
-            <!-- End of Main Content -->
-
-            <!-- End of Footer -->
 
         </div>
-        <!-- End of Content Wrapper -->
-
     </div>
-    <!-- End of Page Wrapper -->
 
     <script>
-        const currentLocation = location.href; // Mendapatkan URL halaman saat ini
-        const menuItem = document.querySelectorAll('li.nav-item a'); // Mendapatkan semua elemen 'a' di dalam 'li.nav-item'
+        const currentLocation = location.href; 
+        const menuItem = document.querySelectorAll('li.nav-item a'); 
         
         menuItem.forEach(item => {
-          if(item.href.includes("Pengajuan siswa.php")){ 
-            b item.classList.add('active'); // Tambahkan class 'active' jika URL mengandung "industri.php"
+          if(item.href.includes("pengajuansiswa.php")){ 
+            item.classList.add('active'); 
           }
         });
-      </script>
+      </script> 
       <script>
         function toggleForm() {
             const form = document.querySelector('.form1');
             const icon = document.querySelector('.dropdown-icon');
             form.classList.toggle('show');
-            icon.classList.toggle('open');  // Toggle class for icon direction
+            icon.classList.toggle('open');  
         }
     
         document.addEventListener('DOMContentLoaded', () => {
@@ -591,7 +598,5 @@ $result = $conn->query($query);
             form.classList.remove('show');
         });
     </script>
-<!-- </body>
 
-</html> -->
 <?php include 'footer.php' ?>

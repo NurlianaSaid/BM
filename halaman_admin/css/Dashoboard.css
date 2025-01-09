@@ -10908,9 +10908,10 @@ a:focus {
 }
 
 .btn-icon-split .icon {
-  background: rgba(0, 0, 0, 0.15);
-  display: inline-block;
-  padding: 0.375rem 0.75rem;
+  position: relative;
+  /* background: rgba(0, 0, 0, 0.15); */
+  display: inline-flex;
+  padding: 0.475rem 0.75rem;
 }
 
 
@@ -11497,7 +11498,7 @@ footer {
 }
 
 .copyright span {
-  margin-left: 400px;
+  margin-left: 0px;
   font-size: 14px; /* Ukuran font */
   color: #000; /* Warna teks */
 }

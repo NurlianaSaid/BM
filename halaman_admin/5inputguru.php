@@ -1,5 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
+<?php
+include 'session.php';
+include "koneksi.php";
+
+
+$nama_guru = '';
+$kode_guru = '';
+$wilayah_Monitoring = '';
+$kontak = '';
+
+if (isset($_GET['ubah'])) {
+    $id = $_GET['ubah'];
+
+    $query = "SELECT * FROM tb_guru WHERE kode_guru = '$id';";
+    $sql = mysqli_query($conn, $query);
+
+    $result = mysqli_fetch_assoc($sql);
+
+    if ($result) {
+        $nama_guru = $result['nama_guru'];
+        $kode_guru = $result['kode_guru'];
+        $wilayah_Monitoring = $result['wilayah_mnr'];
+        $kontak = $result['kontak'];
+    }
+}
+?>
+
 
 <head>
 
@@ -18,7 +45,7 @@
         rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="css/input guru.css" rel="stylesheet">
+    <link href="css/input guru.css?v1" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
 
     <!-- Custom styles for this page -->
@@ -47,7 +74,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="Dashboard.html" aria-label="Dashboard">
+                <a class="nav-link" href="dashboard.php" aria-label="Dashboard">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none"  xmlns="http://www.w3.org/2000/svg">
                         <path d="M12 9.81818C5.271 9.81818 0 7.662 0 4.90909C0 2.15618 5.271 0 12 0C18.729 0 24 2.15618 24 4.90909C24 7.662 18.729 9.81818 12 9.81818ZM12 1.09091C6.8916 1.09091 1.2 2.65909 1.2 4.90909C1.2 7.15909 6.8916 8.72727 12 8.72727C17.1084 8.72727 22.8 7.15909 22.8 4.90909C22.8 2.65909 17.1084 1.09091 12 1.09091Z" fill="black"/>
                         <path d="M12 14.1815C5.271 14.1815 0 12.0253 0 9.27237V4.90874C0 4.6071 0.2682 4.36328 0.6 4.36328C0.9318 4.36328 1.2 4.6071 1.2 4.90874V9.27237C1.2 11.5224 6.8916 13.0906 12 13.0906C17.1084 13.0906 22.8 11.5224 22.8 9.27237V4.90874C22.8 4.6071 23.0682 4.36328 23.4 4.36328C23.7318 4.36328 24 4.6071 24 4.90874V9.27237C24 12.0253 18.729 14.1815 12 14.1815Z" fill="black"/>
@@ -67,7 +94,7 @@
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link " href="Pengajuan siswa.html">
+                <a class="nav-link " href="pengajuansiswa.php">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M11.5 24H3.5C2.1215 24 1 22.8785 1 21.5V2.5C1 2.2235 1.224 2 1.5 2C1.776 2 2 2.2235 2 2.5V21.5C2 22.327 2.673 23 3.5 23H11.5C11.776 23 12 23.2235 12 23.5C12 23.7765 11.776 24 11.5 24Z" fill="#000"/>
                         <path d="M20.5 11.4995C20.224 11.4995 20 11.276 20 10.9995V5H3.5C2.1215 5 1 3.8785 1 2.5C1 1.1215 2.1215 0 3.5 0H20.5C20.776 0 21 0.2235 21 0.5C21 0.7765 20.776 1 20.5 1H3.5C2.673 1 2 1.673 2 2.5C2 3.327 2.673 4 3.5 4H21V10.9995C21 11.276 20.776 11.4995 20.5 11.4995Z" fill="#000"/>
@@ -83,7 +110,7 @@
 
                 <!-- Nav Item - Pages Collapse Menu -->
                 <li class="nav-item">
-                    <a class="nav-link collapsed" href="Data Industri.html">
+                    <a class="nav-link collapsed" href="dataindustri.php">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M11.5 24H3.5C2.1215 24 1 22.8785 1 21.5V2.5C1 2.2235 1.224 2 1.5 2C1.776 2 2 2.2235 2 2.5V21.5C2 22.327 2.673 23 3.5 23H11.5C11.776 23 12 23.2235 12 23.5C12 23.7765 11.776 24 11.5 24Z" fill="#000"/>
                             <path d="M20.5 11.4995C20.224 11.4995 20 11.276 20 10.9995V5H3.5C2.1215 5 1 3.8785 1 2.5C1 1.1215 2.1215 0 3.5 0H20.5C20.776 0 21 0.2235 21 0.5C21 0.7765 20.776 1 20.5 1H3.5C2.673 1 2 1.673 2 2.5C2 3.327 2.673 4 3.5 4H21V10.9995C21 11.276 20.776 11.4995 20.5 11.4995Z" fill="#000"/>
@@ -96,7 +123,17 @@
                     </a> 
                    
                 </li>
-
+                <li class="nav-item">
+                <a class="nav-link" href="user.php">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 23.9999C11.9198 23.9999 11.8396 23.9832 11.7655 23.9493L0.310909 18.7373C0.121091 18.6507 0 18.4678 0 18.2666V2.10934C0 1.93057 0.096 1.76431 0.254182 1.6684C0.411818 1.57302 0.610909 1.56208 0.78 1.6387L12 6.74388L23.22 1.63818C23.3891 1.56208 23.5871 1.5725 23.7453 1.6684C23.904 1.76431 24 1.93057 24 2.10934V18.2666C24 18.4678 23.8789 18.6507 23.6891 18.7373L12.2345 23.9493C12.1604 23.9832 12.0802 23.9999 12 23.9999ZM1.09091 17.9372L12 22.9012L22.9091 17.9372V2.93493L12.2345 7.79201C12.0867 7.85925 11.9138 7.85925 11.766 7.79201L1.09091 2.93493V17.9372Z" fill="black"/>
+                        <path d="M11.9957 5.31821L2.48681 0.99171C2.21463 0.867663 2.09954 0.556505 2.22881 0.296946C2.35863 0.0368663 2.68372 -0.072065 2.9559 0.0498964L11.9957 4.16375L21.0355 0.0498964C21.3083 -0.072065 21.6328 0.0368663 21.7626 0.296946C21.8919 0.556505 21.7768 0.867663 21.5046 0.99171L11.9957 5.31821Z" fill="black"/>
+                        <path d="M12.5479 7.32227H11.457V23.4795H12.5479V7.32227Z" fill="black"/>
+                        </svg>     
+                    <span>Data User</span>
+                </a>
+                
+            </li>
             <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link " >
@@ -330,11 +367,17 @@
 
                         
 
-                        <!-- Nav Item - User Information -->
-                        <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link1 dropdown-toggle" href="#" id="userDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                
+                        <div class="topbar-divider d-none d-sm-block"></div> 
+
+
+<!-- Nav Item - User Information -->
+<li class="nav-item dropdown no-arrow">
+<a class="nav-link1 dropdown-toggle" href="#" id="userDropdown" role="button"
+        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        
+        <span class="mr-2 d-none d-lg-inline text-gray-600 small">
+      <?= "Hai, " . $_SESSION['username']; ?>
+       </span>
                                 <img class="img-profile"
                                     src="img/profil.svg">
                             </a>
@@ -372,26 +415,49 @@
                                         <div class="card-body">
                                             <div class="table-responsive">
                                                 <div class="form-container">
-                                                    <form action="#" method="post">
+                                                    <form action="proses.php" method="POST">
+                                                    <div class="form-group">
+    <label for="nama_guru">Nama Guru</label>
+    <input type="text" id="nama_guru" name="nama_guru" value="<?php echo $nama_guru; ?>">
+</div>
+
+<div class="form-group">
+    <label for="kode_guru">Kode Guru</label>
+    <input type="text" id="kode_guru" name="kode_guru" value="<?php echo $kode_guru; ?>">
+</div>
+
+<div class="form-group">
+    <label for="wilayah_Monitoring">Wilayah Monitoring</label>
+    <input type="text" id="wilayah_Monitoring" name="wilayah_Monitoring" value="<?php echo $wilayah_Monitoring; ?>">
+</div>
+
+<div class="form-group">
+    <label for="kontak">Kontak</label>
+    <input type="text" id="kontak" name="kontak" value="<?php echo $kontak; ?>">
+</div>
+
                                                         <div class="form-group">
-                                                            <label for="nama-industri">Nama</label>
-                                                            <input type="text" id="nama-industri" name="nama-industri">
-                                                        </div>
-                                        
-                                                        <div class="form-group">
-                                                            <label for="bidang-industri">Kode Guru</label>
-                                                            <input type="text" id="bidang-industri" name="bidang-industri">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="bidang-industri">Kabupaten</label>
-                                                            <input type="text" id="bidang-industri" name="bidang-industri">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <input type="submit" value="Simpan" class="btn-submit">
-                                                            <!-- <input type="submit" value="Batal" class="btn-cancel" onclick="document.getElementById('nama-industri').value=''; document.getElementById('bidang-industri').value=''; document.getElementById('ceo').value=''; document.getElementById('jalan').value=''; document.getElementById('kabupaten').value=''; document.getElementById('status').value='';"> -->
-                                                            <input type="button" value="Batal" class="btn-cancel" onclick="window.location.href='5Data master guru.html';"> 
-                                                            <!-- <input type="submit" value="Batal" class="btn-cancel"onclick="window.location.href='Pengajuan siswa.html';"> -->
-                                                        </div>
+                                                        <?php
+                                                        if (!isset($_GET['detail'])) {
+                                                            // Jika ada parameter 'ubah', tampilkan tombol "Simpan Perubahan"
+                                                            if (isset($_GET['ubah'])) {
+                                                                echo '<input type="submit" name="aksi2" value="Simpan Perubahan" class="btn btn-submit">';
+                                                            } else {
+                                                                // Jika tidak ada parameter 'ubah', tampilkan tombol "Tambahkan"
+                                                                echo '<input type="submit" name="aksi2" value="Tambahkan" class="btn btn-submit">';
+                                                            }
+                                                        }
+                                                        ?>
+
+                                                        <?php
+                                                        // Tampilkan hanya tombol "Lihat Saja" jika parameter 'detail' ada di URL
+                                                        if (isset($_GET['detail'])) {
+                                                            echo '<input type="button" value="Lihat Saja" class="btn-cancel" onclick="window.location.href=\'dataindustri.php\';">';
+                                                        } else {
+                                                            // Jika 'detail' tidak ada, tampilkan tombol "Batal"
+                                                            echo '<input type="button" value="Batal" class="btn-cancel" onclick="window.location.href=\'datamasterguru.php\';">';
+                                                        }
+                                                        ?></div>
                                                     </form>
                                                 </div>
                                             </div>
@@ -410,72 +476,7 @@
             <!-- End of Main Content -->
 
             <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span> @smkn_labuang</span>
-                    </div>
-                </div>
-            </footer -->
-            <!-- End of Footer -->
-
-        </div>
-        <!-- End of Content Wrapper -->
-
-    </div>
-    <!-- End of Page Wrapper -->
-
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
-
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Apakah Anda Yakin Ingin Logout</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                
-                <div class="modal-footer">
-                    <a class="btn btn-primary" style="width: 125.184px;" href="login2.php">Yes,Logout</a>
-                    <button class="btn btn-white" type="button" data-dismiss="modal" style="border: 1px solid #D9D9D9; width: 89px;">Cancel</button>
-                   
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
-
-    <!-- Page level plugins -->
-    <script src="vendor/chart.js/Chart.min.js"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="js/demo/chart-area-demo.js"></script>
-    <script src="js/demo/chart-pie-demo.js"></script>
-  <!-- Page level plugins -->
-  <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-  <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
-  <!-- Page level custom scripts -->
-  <script src="js/demo/datatables-demo.js"></script>
-
-
+           
   <script>
     const currentLocation = location.href; // Mendapatkan URL halaman saat ini
     const menuItem = document.querySelectorAll('li.nav-item a'); // Mendapatkan semua elemen 'a' di dalam 'li.nav-item'
@@ -487,6 +488,4 @@
     });
   </script>
 
-</body>
-
-</html>
+<?php include 'footer.php' ?>

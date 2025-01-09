@@ -90,10 +90,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['a
             $namaSiswaString = implode(";", $siswa);
             $perkembanganString = implode(";", $perkembangan);
             $pelanggaranString = implode(";", $pelanggaran);
+            $kode_guru = $_SESSION['kode_guru']; // Pastikan kode_guru sudah diatur saat login
 
-            // Siapkan dan bind untuk memasukkan data ke tabel laporan
-            $stmt = $conn->prepare("INSERT INTO tb_laporanmonir (Nama_perusahaan, Tanggal, Kelas, Kabupaten, Jumlah_siswa, Nama_siswa, Cttn_perkembangan, Cttn_pelanggaran, Gambar) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            $stmt->bind_param("sssssssss", $perusahaan, $tanggal, $kelas, $alamat, $jumlah, $namaSiswaString, $perkembanganString, $pelanggaranString, $target_file);
+
+            $stmt = $conn->prepare("INSERT INTO tb_laporanmonir (kode_guru, Nama_perusahaan, Tanggal, Kelas, Kabupaten, Jumlah_siswa, Nama_siswa, Cttn_perkembangan, Cttn_pelanggaran, Gambar) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param("ssssssssss", $kode_guru, $perusahaan, $tanggal, $kelas, $alamat, $jumlah, $namaSiswaString, $perkembanganString, $pelanggaranString, $target_file);
 
             // Eksekusi statement
             if ($stmt->execute()) {

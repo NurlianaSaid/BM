@@ -1,0 +1,214 @@
+
+
+footer {
+    background-color: #fff;  /* Background footer menjadi putih */
+    padding: 40px 0;
+    color: #333;
+}
+
+/* Footer Container */
+.footer-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Logo Section */
+.logo-section {
+    flex: 1;
+    min-width: 250px;
+}
+
+.header-icons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;  /* Mengurangi jarak antara teks dan ikon */
+}
+
+.header-icons h3 {
+    font-size: 24px;
+    color: #333;
+    margin-right: 10px; /* Mengurangi jarak antara teks dan ikon */
+}
+
+.header-icons .highlight {
+    color: #007bff;
+}
+
+.social-icons {
+    display: flex;
+    gap: 10px;  /* Mengurangi jarak antara ikon */
+}
+
+.social-icons i {
+    font-size: 20px;  /* Ukuran font standar untuk ikon */
+    color: #333;
+    width: 29px;  /* Mengatur lebar ikon */
+    height: 30px;  /* Mengatur tinggi ikon */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 5px;  /* Membuat ikon lebih halus dengan border-radius */
+    transition: background-color 0.3s ease;  /* Menambahkan efek transisi */
+}
+
+.social-icons i:hover {
+    color: #007bff;
+    background-color: #f0f0f0;  /* Menambahkan efek hover dengan latar belakang */
+}
+
+/* Divider */
+.divider {
+    width: 100%;
+    border: 1px solid #ddd;
+    margin: 10px 0;  /* Mengurangi jarak antara garis dan elemen di atas dan bawahnya */
+}
+
+/* Footer Sections */
+.footer-section {
+    flex: 1;
+    min-width: 200px;
+    margin: 10px;
+}
+
+.footer-section h4 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+/* Untuk Magang */
+.footer-section p {
+    margin-left: 50px;
+    margin-bottom: 10px; /* Mengurangi jarak antar paragraf */
+    text-align: justify; /* Meratakan teks di dalam paragraf */
+    color: rgba(0, 0, 0, 0.80);
+text-align: center;
+font-family: Inter;
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+letter-spacing: 0.7px;
+}
+
+.footer-section .section-title {
+    margin-left: 25px;
+    color: #000;
+    text-align: center;
+    font-family: Inter;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    margin-bottom: 10px;
+}
+
+/* Untuk Permalinks */
+.footer-section h4 {
+    font-weight: bold; /* Membuat teks lebih tebal */
+    color: #000;
+    text-align: center;
+    font-family: Inter;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    margin-bottom: 10px;
+    text-align: center;  /* Menjadikan teks Permalinks berada di tengah */
+}
+
+.footer-section ul {
+    list-style-type: none;
+    padding: 0;
+    text-align: center;  /* Menjadikan teks link berada di tengah */
+}
+
+.footer-section ul li {
+    margin: 5px 0;
+}
+
+.footer-section ul li a {
+    text-decoration: none;
+    color: rgba(0, 0, 0, 0.80);
+text-align: center;
+font-family: Inter;
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+letter-spacing: 0.7px;
+    transition: color 0.3s ease;
+}
+
+.footer-section ul li a:hover {
+    color: #007bff;  /* Menambahkan efek hover */
+}
+
+/* Form dalam tabel */
+.contact-form {
+    margin-left: 50px;
+    width: 100%;
+    margin-top: 10px;
+    border-collapse: collapse;
+}
+
+.contact-form input {
+    width: 65%;  /* Mengurangi lebar input agar sesuai dengan tombol */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.contact-form button {
+    margin-left: -120px;
+    margin-right: 100px;
+    position: relative;
+    width: 80px;
+    height: 30px;
+    padding: 7px 19px 8px 19px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    background: #2563EB;
+    color: white;
+    cursor: pointer;
+
+    color: #FFF;
+text-align: center;
+font-family: Inter;
+font-size: 12px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+}
+
+.contact-form button:hover {
+    background-color: #0056b3;
+}
+
+.contact-form td {
+    padding: 5px;  /* Menambah sedikit padding agar lebih rapi */
+}
+
+.contact-form input,
+.contact-form button {
+    width: 100%;  /* Menyesuaikan ukuran agar input dan tombol berada dalam satu kolom */
+}
+
+.contact-form td:first-child {
+    padding-right: 10px;  /* Memberikan jarak antara input dan tombol */
+}
+
+
+/* Footer Bottom */
+.footer-bottom {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #333;
+}

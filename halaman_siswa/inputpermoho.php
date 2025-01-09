@@ -9,21 +9,46 @@ if (isset($_SESSION['Id_siswaa'])) {
    header("location: ../index.php");
    exit();
 }
-// Proses saat formulir disubmit
+
+
+// Query untuk mengambil data siswa berdasarkan Id_siswaa
+$query = "SELECT Nama_siswa, Kelas_siswa, Nis, Jenis_kelamin FROM tb_siswa WHERE Id_siswaa = ?";
+if ($stmt = mysqli_prepare($conn, $query)) {
+    mysqli_stmt_bind_param($stmt, "i", $Id_siswaa); // Binding Id_siswaa ke parameter query
+    mysqli_stmt_execute($stmt); // Menjalankan query
+    $result = mysqli_stmt_get_result($stmt); // Mendapatkan hasil query
+    
+    // Jika data ditemukan, simpan dalam variabel
+    if ($row = mysqli_fetch_assoc($result)) {
+        $nama = $row['Nama_siswa'];
+        $kelas = $row['Kelas_siswa'];
+        $nis = $row['Nis'];
+        $jenis_kelamin = $row['Jenis_kelamin'];
+    } else {
+        // Jika tidak ada data ditemukan
+        $nama = $kelas = $nis = $jenis_kelamin = "Data tidak ditemukan";
+    }
+    mysqli_stmt_close($stmt);
+} else {
+    echo "Error: " . mysqli_error($conn);
+}
+
+// Cek jika form telah disubmit
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $id_perusahaan = $_POST['id_perusahaan'];
-    $nama = $_POST['nama'];
-    $kelas = $_POST['kelas'];
-    $nisn = $_POST['nisn'];
-    $jenis_kelamin = $_POST['jenis_kelamin'];
+    $id_perusahaan = $_POST['id_perusahaan']; // Ambil id_perusahaan dari form
 
+    // Periksa apakah siswa sudah mendaftar
+    $check_registration_query = "SELECT * FROM permohonan_pkl WHERE Id_siswaa = ?";
+    if ($stmt = mysqli_prepare($conn, $check_registration_query)) {
+        mysqli_stmt_bind_param($stmt, "i", $Id_siswaa);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
 
-        // Periksa apakah siswa sudah mendaftar
-        $check_query = "SELECT * FROM permohonan_pkl WHERE Id_siswaa = '$Id_siswaa' LIMIT 1";
-        $check_result = mysqli_query($conn, $check_query);
-        if (mysqli_num_rows($check_result) > 0) {
-            // Siswa sudah mendaftar, tampilkan pesan kesalahan
-            echo "<script>
+        if ($result && mysqli_num_rows($result) > 0) {
+            // Jika siswa sudah mendaftar ke perusahaan lain
+            echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
+            echo "
+            <script>
             Swal.fire({
                 icon: 'error',
                 title: 'Gagal!',
@@ -31,46 +56,90 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }).then(() => {
                 window.location.href = 'permohonanpkl.php';
             });
-          </script>";    
+            </script>";
             exit;
         }
+        mysqli_stmt_close($stmt);
+    }
+
     // Proses unggah file CV
     $cv = $_FILES['cv'];
     $cv_name = $cv['name'];
     $cv_tmp_name = $cv['tmp_name'];
     $cv_error = $cv['error'];
+    $cv_size = $cv['size'];
 
-    if ($cv_error === 0) {
-        $cv_extension = pathinfo($cv_name, PATHINFO_EXTENSION);
-        $allowed_extensions = ['pdf'];
-        
-        if (in_array(strtolower($cv_extension), $allowed_extensions)) {
-            $cv_new_name = uniqid() . "." . $cv_extension;
-            $cv_upload_path = "uploads/" . $cv_new_name;
+    // Validasi ukuran file
+    $max_file_size = 2 * 1024 * 1024; // Maksimal 2 MB
+    if ($cv_size > $max_file_size) {
+        echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
+        echo "<script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Gagal!',
+            text: 'Ukuran file terlalu besar. Maksimal 2 MB.',
+        }).then(() => {
+            window.location.href = 'permohonanpkl.php';
+        });
+        </script>";
+        exit;
+    }
 
-            // Pindahkan file ke folder uploads 
-            if (move_uploaded_file($cv_tmp_name, $cv_upload_path)) {
-                // Simpan data ke database
-                $query = "INSERT INTO permohonan_pkl (id_perusahaan, Id_siswaa, nama, kelas, nisn, jenis_kelamin, cv, status) 
-                VALUES ('$id_perusahaan', '$Id_siswaa', '$nama', '$kelas', '$nisn', '$jenis_kelamin', '$cv_new_name', 'menunggu')";      
+// Proses unggah file CV dan pengecekan
+if ($cv_error === 0) {
+    $cv_extension = pathinfo($cv_name, PATHINFO_EXTENSION);
+    $allowed_extensions = ['pdf'];
 
-                if (mysqli_query($conn, $query)) {
-                    // Redirect ke permohonanpkl.php dengan membawa id_perusahaan
-                    header("Location: permohonanpkl.php?id_perusahaan=$id_perusahaan");
+    if (in_array(strtolower($cv_extension), $allowed_extensions)) {
+        $cv_new_name = uniqid() . "." . $cv_extension;
+        $cv_upload_path = "uploads/" . $cv_new_name;
+
+        // Pindahkan file ke folder uploads
+        if (move_uploaded_file($cv_tmp_name, $cv_upload_path)) {
+            // Simpan data permohonan ke database
+            $query = "INSERT INTO permohonan_pkl (id_perusahaan, Id_siswaa, cv, status) 
+                      VALUES (?, ?, ?, 'menunggu')";
+            if ($stmt = mysqli_prepare($conn, $query)) {
+                mysqli_stmt_bind_param($stmt, "iis", $id_perusahaan, $Id_siswaa, $cv_new_name);
+                if (mysqli_stmt_execute($stmt)) {
+                    // Menampilkan alert berhasil
+                    echo "<script>
+                    alert('Permohonan Anda berhasil diajukan.');
+                    window.location.href = 'permohonanpkl.php?id_perusahaan=$id_perusahaan';
+                    </script>";
                     exit;
                 } else {
                     echo "Gagal menyimpan data: " . mysqli_error($conn);
                 }
-            } else {
-                echo "Gagal mengunggah file CV.";
             }
-        } else {
-            echo "Format file tidak diperbolehkan. Hanya PDF, DOCX, dan DOC.";
         }
     } else {
-        echo "Terjadi kesalahan saat mengunggah file.";
+        echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
+        echo "<script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Gagal!',
+            text: 'Format file yang diperbolehkan hanya PDF.',
+        }).then(() => {
+            window.location.href = 'permohonanpkl.php';
+        });
+        </script>";
     }
+} else {
+    echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
+    echo "<script>
+    Swal.fire({
+        icon: 'error',
+        title: 'Gagal!',
+        text: 'Terjadi kesalahan saat mengunggah file.',
+    }).then(() => {
+        window.location.href = 'permohonanpkl.php';
+    });
+    </script>";
 }
+
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -84,6 +153,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="author" content="">
 
     <title>Project Absensi Magang</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.7/dist/sweetalert2.min.css" rel="stylesheet">
+
+<!-- SweetAlert2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.7/dist/sweetalert2.all.min.js"></script>
+
 
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -260,32 +335,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <!-- Main Content -->
                         <div class="main-content">
                             <div class="section-title">Input Data</div>
-
+                            <input type="hidden" name="id_perusahaan" value="<?php echo htmlspecialchars($_GET['id_perusahaan']); ?>">
                             <form action="" method="POST" enctype="multipart/form-data">
                                 <input type="hidden" name="id_perusahaan" value="<?php echo $_GET['id_perusahaan']; ?>">
                                 <label for="nama">Nama Lengkap</label>
-                                <input type="text" id="nama" name="nama" placeholder="Masukkan Nama Lengkap" required>
+                                <input type="text" id="nama" value="<?php echo htmlspecialchars($nama); ?>" readonly>
                                 <label for="kelas">Kelas</label>
-                                <input type="text" id="kelas" name="kelas" placeholder="Masukkan Kelas" required>
+                                <input type="text" id="kelas" value="<?php echo htmlspecialchars($kelas); ?>" readonly>
                                 <label for="nis">NIS</label>
-                                <input type="text" id="nisn" name="nisn"  placeholder="Masukkan NISN" required>
+                                <input type="text" id="nis" value="<?php echo htmlspecialchars($nis); ?>" readonly>
                                 <div class="form-group">
                                 <div>
                                 <label for="jenis_kelamin">Jenis Kelamin</label>
-                               <select id="jenis_kelamin" name="jenis_kelamin" required>
-                               <option value="Laki-laki">Pilih</option>
-                               <option value="Laki-laki">Laki-Laki</option>
-                               <option value="Perempuan">Perempuan</option>
-                               </select>
+                                <input type="text" id="jenis_kelamin" value="<?php echo htmlspecialchars($jenis_kelamin == 'P' ? 'Perempuan' : ($jenis_kelamin == 'L' ? 'Laki-laki' : 'Data tidak valid')); ?>" readonly>
+
                                 </div>
                                 <div>
                                 <label for="cv">Unggah CV</label>
                                 <input type="file" id="cv" name="cv" required>
-                                <p class="info-text">Unggah CV dalam format PDF, DOCX, atau DOC.</p>
+                                <p class="info-text">Unggah CV dalam format PDF.</p>
                                 </div>
                                 </div>
                                 <div class="button-container">
-                                    <button type="submit" onclick="window.location.href='permohonanpkl.php'">Ajukan Permohonan</button>
+                                    <button type="submit" >Ajukan Permohonan</button>
                                 </div>
                             </form>
                         </div>

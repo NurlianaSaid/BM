@@ -11514,11 +11514,13 @@ footer {
 
 .btn-icon-split {
   display: inline-block;
-  top: 10rem; /* Atur posisi dengan properti top */
+  top: 11.4rem; /* Atur posisi dengan properti top */
   margin-top: 1px; /* Hapus margin-top */
   padding: 0;
   align-items: center;
   justify-content: center;
+  position: absolute;
+
 }
 .btn-icon-split .text {
   margin-right: 10px;
@@ -11578,12 +11580,30 @@ color: blue;
 }
 
 .status-danger {
-  background-color: #FFED4F;
+  /* background-color: rgb(238, 131, 131);  */
+  background-color: #FF7F0A !important;
+    color: #fff !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    padding: 4px 8px !important;
+    border-radius: 10px !important;
+    display: inline-block !important;
+    cursor: pointer !important;
 }
 
 .status-success {
-  background-color: #6FFF2C;
+
+    background-color: #008000; /* Warna hijau */
+    color: #fff; /* Warna teks putih */
+    font-size: 14px; /* Ukuran font */
+    font-weight: 600; /* Ketebalan font */
+    padding: 4px 8px; /* Padding untuk spasi di sekitar teks */
+    border-radius: 10px; /* Membulatkan sudut jika diinginkan */
+    display: inline-block; /* Menggunakan inline-block untuk mengatur ukuran elemen sesuai konten */
+    cursor: pointer; 
 }
+
+
 
 .dropdown-containertabel {
   /* display: flex; */
@@ -11592,9 +11612,8 @@ color: blue;
 
 .month-dropdown {
   margin-top: 7px;
-  position:absolute;
-  margin-bottom: -200px;
-  margin-left: 600px;
+  margin-bottom: 0px;
+  margin-left: 0px;
   padding: 5px;
   font-size: 16px;
   border-radius: 3px;
@@ -11603,15 +11622,49 @@ color: blue;
   box-shadow: #ccc;
   outline: none;
   cursor: pointer;
-  /* appearance: none; Menghapus ikon dropdown default */
-  /* -webkit-appearance: none; Untuk Safari */
-  /* -moz-appearance: none; Untuk Firefox */
   width: 178px;
   height: 33px;
-  z-index: 100000;
 }
+
+.month-dropdown.absolute {
+  position: absolute !important;
+  top: 7px; /* Atur jarak dari atas jika diperlukan */
+  margin-bottom: -200px;
+  margin-left: 600px;
+  z-index: 1000 !important;
+}
+
+
 
 .month-dropdown:focus {
   border-color: #ccc;
   box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+/* cetak */
+.parent-container {
+  display: flex;
+  justify-content: flex-end; /* Meletakkan tombol di kanan */
+}
+
+.btn-cetak {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-cetak:hover {
+  background-color: #0056b3;
+}
+
+.btn-cetak svg {
+  margin-right: 8px;
+  fill: #FFFFFF;
+stroke : #FFFFFF;
+
 }
